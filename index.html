@@ -922,16 +922,12 @@ details[open] summary::before { transform: rotate(90deg); color: var(--accent-bl
     if(i.value.length===6){
       if(await check(i.value)){
         document.getElementById('lockScreen').classList.add('hidden');
-        sessionStorage.setItem('unlocked','1');
       } else {
         i.classList.add('shake');
         setTimeout(function(){i.classList.remove('shake');i.value='';},400);
       }
     }
   });
-  if(sessionStorage.getItem('unlocked')==='1'){
-    document.getElementById('lockScreen').classList.add('hidden');
-  }
 })();
 </script>
 

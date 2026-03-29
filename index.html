@@ -3328,9 +3328,7 @@ details[open] summary::before { transform: rotate(90deg); color: var(--accent-bl
     <a href="javascript:void(0)" onclick="jumpTo('er-normal')" class="nav-blue">노멀</a>
     <a href="javascript:void(0)" onclick="jumpTo('er-hard')" class="nav-gold">하드</a>
     <a href="javascript:void(0)" onclick="jumpTo('er-expert')" class="nav-red">익스퍼트</a>
-    <a href="javascript:void(0)" onclick="jumpTo('er-mistake')" class="nav-red">실패방지</a>
-    <a href="javascript:void(0)" onclick="jumpTo('er-comp')" class="nav-gold">범용편성</a>
-    <a href="javascript:void(0)" onclick="jumpTo('er-setup')" class="nav-blue">세팅</a>
+    <a href="javascript:void(0)" onclick="jumpTo('er-setup')" class="nav-blue">세팅가이드</a>
     <a href="javascript:void(0)" onclick="jumpTo('er-roadmap')" class="nav-gold">육성맵</a>
   </div>
 
@@ -3342,13 +3340,13 @@ details[open] summary::before { transform: rotate(90deg); color: var(--accent-bl
     </div>
 
     <div class="card">
-      <div class="card-title"><span class="dot green"></span>콘텐츠 설명</div>
+      <div class="card-title"><span class="dot green"></span>콘텐츠 기본 정보</div>
       <ul>
-        <li>시리즈별 또는 태그별 제한이 걸리는 고난도 엔드 콘텐츠</li>
+        <li>메인 스토리 <strong>건담 Stage 14</strong> 클리어 후 해금</li>
         <li>난이도 3단계: <strong>노멀 &rarr; 하드 &rarr; 익스퍼트</strong></li>
+        <li>시리즈 또는 태그별 출격 제한이 걸리는 엔드 콘텐츠</li>
+        <li>초회 클리어 보상이 매우 풍성 &mdash; 다이아, SP화 칩, 얼티밋 개발 재료 등</li>
         <li>세이브/로드 불가 &mdash; 진입 전 철저한 계획 필수</li>
-        <li>1주년 업데이트 이후: 유닛/캐릭터 태그별 전용 로드 추가, 매일 새 태그 스테이지가 5일간 순차 오픈</li>
-        <li>스테이지마다 보스급 적에게 <strong>지원 방어 3회</strong> 친위대가 붙는 패턴이 자주 등장 &rarr; 보스 직접 공격보다 친위대 먼저 처치하거나 맵병기로 한꺼번에 정리</li>
       </ul>
     </div>
 
@@ -3359,9 +3357,9 @@ details[open] summary::before { transform: rotate(90deg); color: var(--accent-bl
           <tr><th>난이도</th><th>주요 보상</th></tr>
         </thead>
         <tbody>
-          <tr><td>노멀</td><td>다이아, 유닛 강화 데이터, 기본 옵션 파츠</td></tr>
-          <tr><td>하드</td><td>다이아(증가), 무장 강화 파츠 SR~SSR, SP화 칩</td></tr>
-          <tr><td>익스퍼트</td><td>다이아(대량), 무장 강화 파츠 UR, SP화 칩, 얼티밋 유닛 개발 재료</td></tr>
+          <tr><td>노멀 (19스테이지)</td><td>다이아, 유닛 강화 데이터, 기본 옵션 파츠</td></tr>
+          <tr><td>하드 (27스테이지)</td><td>다이아(증가), 무장 강화 파츠 SR~SSR, SP화 칩</td></tr>
+          <tr><td>익스퍼트 (16+스테이지)</td><td>다이아(대량), 무장 강화 파츠 UR, SP화 칩, 얼티밋 유닛 개발 재료</td></tr>
         </tbody>
       </table>
       <div class="highlight">
@@ -3374,109 +3372,242 @@ details[open] summary::before { transform: rotate(90deg); color: var(--accent-bl
     </div>
   </section>
 
-  <!-- ===== 노멀 ===== -->
+  <!-- ===== 노멀 전체 ===== -->
   <section class="section" id="er-normal">
     <div class="section-header">
       <div class="section-icon blue">N</div>
-      <div class="section-title">노멀 (1~5)</div>
+      <div class="section-title">노멀 스테이지 (No.1~19)</div>
     </div>
 
     <div class="card">
-      <div class="card-title"><span class="dot blue"></span>노멀 공략 요약</div>
-      <ul>
-        <li>1순위 육성 캐릭만 있으면 대부분 무난히 클리어 가능</li>
-        <li>기본 구성: <strong>딜러 1 + 디버프/방어캐 1 + 방어캐 3</strong></li>
-        <li>방캐릭은 죽어도 되는 저등급 캐릭으로 채워도 OK</li>
-        <li>오토 플레이로도 충분히 클리어 가능한 구간</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <div class="card-title"><span class="dot blue"></span>스테이지별 간단 팁</div>
-      <ul>
-        <li><strong>노멀 1~3:</strong> 시리즈 제한 없이 자유 편성. 주력 UR 딜러 1기만 있으면 충분</li>
-        <li><strong>노멀 4:</strong> 시리즈 제한 시작. 해당 시리즈 SR 이상 기체 5기 확보 권장</li>
-        <li><strong>노멀 5:</strong> 적 HP 상승. 맵병기 보유 기체 배치 시 효율적 클리어</li>
-      </ul>
-    </div>
-
-    <div class="tip">
-      <strong>추천 편성</strong> &mdash; 노멀은 시리즈 제한이 느슨하므로, 보유한 최강 UR/SSR 딜러를 중심으로 편성. 서포터는 공격력 버프 위주로 선택.
-    </div>
-  </section>
-
-  <!-- ===== 하드 ===== -->
-  <section class="section" id="er-hard">
-    <div class="section-header">
-      <div class="section-icon gold">H</div>
-      <div class="section-title">하드</div>
-    </div>
-
-    <div class="card">
-      <div class="card-title"><span class="dot gold"></span>하드 공략 요약</div>
-      <ul>
-        <li>시리즈별 캐릭터를 맞춰야 클리어 가능 &mdash; 폭넓은 시리즈 육성 필요</li>
-        <li><strong>SEED</strong>가 가장 쉬운 편 (기체풀 풍부, 강력 UR 다수)</li>
-        <li><strong>G건담/건담X</strong> 미션이 하드 중 가장 어려움 &rarr; 샤이닝 건담/건담X SP화 강력 추천</li>
-        <li>맵병기 기체 + 방어기체 동반 필수</li>
-        <li>보스의 지원 방어 3회 패턴이 본격적으로 등장 &rarr; 친위대 우선 처치 또는 맵병기 일소</li>
-      </ul>
+      <div class="card-title"><span class="dot blue"></span>전체 스테이지 일람</div>
+      <table class="tier-table">
+        <thead>
+          <tr><th>No.</th><th>시리즈/태그</th><th>난이도</th><th>핵심 유닛</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>기동전사 건담</td><td><span class="tier-badge tier-b">1/5</span></td><td>건담, 건캐논, 자쿠II</td></tr>
+          <tr><td>2</td><td>Z건담</td><td><span class="tier-badge tier-b">1/5</span></td><td>제타, 백식</td></tr>
+          <tr><td>3</td><td>SEED</td><td><span class="tier-badge tier-b">1/5</span></td><td>프리덤(맵병기 핵심)</td></tr>
+          <tr><td>4</td><td>ZZ</td><td><span class="tier-badge tier-a">2/5</span></td><td>ZZ건담</td></tr>
+          <tr><td>5</td><td>W</td><td><span class="tier-badge tier-a">2/5</span></td><td>에피온, 윙제로</td></tr>
+          <tr><td>6</td><td>G건담</td><td><span class="tier-badge tier-a">2/5</span></td><td>갓건담, 마스터건담</td></tr>
+          <tr><td>7</td><td>건담X</td><td><span class="tier-badge tier-a">2/5</span></td><td>건담X(새틀라이트캐논)</td></tr>
+          <tr><td>8</td><td>00</td><td><span class="tier-badge tier-b">1/5</span></td><td>엑시아, 더블오라이저</td></tr>
+          <tr><td>9</td><td>철혈의 오펀스</td><td><span class="tier-badge tier-a">2/5</span></td><td>바르바토스</td></tr>
+          <tr><td>10</td><td>수성의 마녀</td><td><span class="tier-badge tier-b">1/5</span></td><td>에어리얼(EX)</td></tr>
+          <tr><td>11</td><td>역습의 샤아</td><td><span class="tier-badge tier-a">2/5</span></td><td>Hi-Nu, 사자비(EX)</td></tr>
+          <tr><td>12</td><td>SEED DESTINY</td><td><span class="tier-badge tier-b">1/5</span></td><td>스트라이크 프리덤</td></tr>
+          <tr><td>13</td><td>UC</td><td><span class="tier-badge tier-a">2/5</span></td><td>유니콘, 바나지, 시난주</td></tr>
+          <tr><td>14</td><td>짐/연방</td><td><span class="tier-badge tier-s">3/5</span></td><td>짐 계열만 사용</td></tr>
+          <tr><td>15</td><td>자쿠/지온</td><td><span class="tier-badge tier-s">3/5</span></td><td>자쿠 계열만 사용</td></tr>
+          <tr><td>16</td><td>모노아이</td><td><span class="tier-badge tier-s">3/5</span></td><td>모노아이 유닛</td></tr>
+          <tr><td>17</td><td>모빌아머</td><td><span class="tier-badge tier-a">2/5</span></td><td>빅잠, 사이코건담</td></tr>
+          <tr><td>18</td><td>G제네 시리즈</td><td><span class="tier-badge tier-a">2/5</span></td><td>피닉스 건담</td></tr>
+          <tr><td>19</td><td>AGE</td><td><span class="tier-badge tier-a">2/5</span></td><td>AGE-1/2/3/FX (2026.02 추가)</td></tr>
+        </tbody>
+      </table>
     </div>
 
     <details>
-      <summary>하드 &mdash; 시리즈별 난이도 & 추천 유닛</summary>
+      <summary>노멀 1~5 (시리즈별 기본)</summary>
       <div class="details-body">
-        <table class="tier-table">
-          <thead>
-            <tr><th>시리즈</th><th>난이도</th><th>추천 핵심 유닛</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>SEED</td><td><span class="tier-badge tier-b">쉬움</span></td><td>프리덤, 저스티스, 스트라이크 프리덤, 데스티니</td></tr>
-            <tr><td>우주세기 (UC)</td><td><span class="tier-badge tier-a">보통</span></td><td>뉴건담, ZZ건담, 유니콘건담, Hi-v건담</td></tr>
-            <tr><td>00</td><td><span class="tier-badge tier-a">보통</span></td><td>더블오 라이저, 엑시아, 큐안타</td></tr>
-            <tr><td>W</td><td><span class="tier-badge tier-s">어려움</span></td><td>윙건담 제로 커스텀, 에피온</td></tr>
-            <tr><td>G건담</td><td><span class="tier-badge tier-ss">매우 어려움</span></td><td>갓건담, 샤이닝건담(SP화 권장)</td></tr>
-            <tr><td>건담X</td><td><span class="tier-badge tier-ss">매우 어려움</span></td><td>건담X(SP화 권장), DX건담</td></tr>
-          </tbody>
-        </table>
-        <div class="warn">
-          <strong>주의:</strong> G건담/건담X는 기체풀이 좁아 하드에서도 육성 부담이 큼. SP화/SSP화 투자를 미리 계획하자.
+        <ul>
+          <li><strong>No.1 기동전사 건담:</strong> <span class="tier-badge tier-a">SR</span> 유닛으로 충분. 건담/건캐논/자쿠II 편성. 입문용</li>
+          <li><strong>No.2 Z건담:</strong> 제타 + 백식 조합. 표준적인 난이도</li>
+          <li><strong>No.3 SEED:</strong> 프리덤의 맵병기가 핵심. 맵병기 한 방으로 잡몹 정리 가능</li>
+          <li><strong>No.4 ZZ:</strong> 적 ZZ 6기 등장 &mdash; 한 기씩 집중 격파할 것. 화력 분산 금지</li>
+          <li><strong>No.5 W:</strong> 에피온 + 윙제로 콤보로 쉽게 클리어. 근접 + 원거리 조합</li>
+        </ul>
+        <div class="tip">
+          <strong>공통 팁:</strong> SR 유닛만으로 전부 클리어 가능. 딜러 1~2기 + 방어 유닛 3기 구성이 안정적.
         </div>
       </div>
     </details>
 
     <details>
-      <summary>하드 &mdash; 신규 추가 스테이지 (1주년 이후)</summary>
+      <summary>노멀 6~13 (시리즈별 확장)</summary>
       <div class="details-body">
         <ul>
-          <li>1주년 업데이트로 <strong>태그 제한 하드</strong> 스테이지 추가 (주인공 태그, 라이벌 태그 등)</li>
-          <li>시리즈 제한이 아닌 유닛/캐릭터 태그 제한 &rarr; 크로스 시리즈 편성 가능</li>
-          <li>태그 제한 하드의 경우 해당 태그 보유 기체를 최소 5기 이상 확보해야 안정 클리어</li>
-          <li>디시 마갤에 최저 스펙 공략이 올라와 있으니 참고</li>
+          <li><strong>No.6 G건담:</strong> 격투 위주 스테이지. 갓건담/마스터건담이 핵심 딜러</li>
+          <li><strong>No.7 건담X:</strong> 새틀라이트 캐논 버스트 딜 활용. 기체풀 좁으므로 보유 유닛 확인 필수</li>
+          <li><strong>No.8 00:</strong> 강력한 개발 유닛이 많아 수월. 엑시아/더블오라이저 중심</li>
+          <li><strong>No.9 철혈:</strong> 바르바토스가 메인 DPS. 격투 중심 편성</li>
+          <li><strong>No.10 수마녀:</strong> 에어리얼 <span class="tier-badge tier-ss">EX</span>가 있으면 압도적 클리어</li>
+          <li><strong>No.11 역샤:</strong> Hi-Nu + 사자비 <span class="tier-badge tier-ss">EX</span> 조합. 기체풀 제한 주의</li>
+          <li><strong>No.12 SEED DESTINY:</strong> 스트라이크 프리덤이 지배적. SEED 기체풀 공유로 수월</li>
+          <li><strong>No.13 UC:</strong> 유니콘/바나지/시난주 편성. NT-D 발동 시 화력 급상승</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>노멀 14~19 (태그 제한 + 신규)</summary>
+      <div class="details-body">
+        <div class="warn">
+          <strong>주의:</strong> 14~16번은 유닛 풀이 매우 제한적. 해당 태그 유닛을 미리 확보하고 육성해야 클리어 가능.
+        </div>
+        <ul>
+          <li><strong>No.14 짐/연방:</strong> GM 계열 유닛만 출격 가능. 기체풀 매우 좁아 도전적</li>
+          <li><strong>No.15 자쿠/지온:</strong> 자쿠 계열 유닛만 출격 가능. 14번과 유사한 제한</li>
+          <li><strong>No.16 모노아이:</strong> 모노아이(단안 카메라) 유닛 한정. 지온 계열 중심</li>
+          <li><strong>No.17 모빌아머:</strong> 빅잠/사이코건담 등 대형기 중심. 맵병기 화력이 강점</li>
+          <li><strong>No.18 G제네 시리즈:</strong> 피닉스 건담 등 오리지널 유닛 활용</li>
+          <li><strong>No.19 AGE:</strong> 2026년 2월 추가. AGE-1/2/3/FX 편성. 시리즈 유닛 확보 필요</li>
         </ul>
       </div>
     </details>
 
     <div class="tip">
-      <strong>하드 실패 원인 Top 3:</strong> (1) 시리즈 기체 육성 부족, (2) 맵병기 미배치, (3) 보스 친위대(지원방어) 무시하고 보스만 공격
+      <strong>노멀 공통:</strong> 대부분 SR~SSR 유닛으로 클리어 가능. 14~16번 태그 제한 스테이지만 별도 준비 필요. 오토 플레이로도 충분한 구간.
     </div>
   </section>
 
-  <!-- ===== 익스퍼트 ===== -->
+  <!-- ===== 하드 전체 ===== -->
+  <section class="section" id="er-hard">
+    <div class="section-header">
+      <div class="section-icon gold">H</div>
+      <div class="section-title">하드 스테이지 (No.1~27)</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>전체 스테이지 일람</div>
+      <table class="tier-table">
+        <thead>
+          <tr><th>No.</th><th>시리즈/태그</th><th>난이도</th><th>핵심 유닛</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>우주세기 통합</td><td><span class="tier-badge tier-a">2/5</span></td><td>뉴건담, ZZ, 유니콘</td></tr>
+          <tr><td>2</td><td>얼터너티브 통합</td><td><span class="tier-badge tier-a">2/5</span></td><td>프리덤, 윙제로, 갓건담</td></tr>
+          <tr><td>3</td><td>1st 건담</td><td><span class="tier-badge tier-a">2/5</span></td><td>Ez8(EX), 빅잠</td></tr>
+          <tr><td>4</td><td>Z건담</td><td><span class="tier-badge tier-a">2/5</span></td><td>백식 필수</td></tr>
+          <tr><td>5</td><td>SEED</td><td><span class="tier-badge tier-b">1/5</span></td><td>프리덤 UR/EX 맵병기</td></tr>
+          <tr><td>6</td><td>ZZ</td><td><span class="tier-badge tier-a">2/5</span></td><td>풀아머 ZZ, 큐베레이</td></tr>
+          <tr><td>7</td><td>W</td><td><span class="tier-badge tier-a">2/5</span></td><td>에피온+윙제로 "날먹"</td></tr>
+          <tr><td>8</td><td>SEED 통합</td><td><span class="tier-badge tier-a">2/5</span></td><td>기체풀 넓음, 맵병기 다수</td></tr>
+          <tr><td>9</td><td>주인공 태그</td><td><span class="tier-badge tier-s">3/5</span></td><td>유닛 태그 제한, 파일럿 자유</td></tr>
+          <tr><td>10</td><td>라이벌 태그</td><td><span class="tier-badge tier-s">3/5</span></td><td>적 43기, 버프 제공 유닛 우선</td></tr>
+          <tr><td>11</td><td>역습의 샤아</td><td><span class="tier-badge tier-ss">4/5</span></td><td>알파 아지르 4기, 최소 4유닛 클리어 가능</td></tr>
+          <tr><td>12</td><td>전용기</td><td><span class="tier-badge tier-s">3/5</span></td><td>네임드 전용기만</td></tr>
+          <tr><td>13</td><td>돌파력</td><td><span class="tier-badge tier-s">3/5</span></td><td>돌파력 태그 유닛</td></tr>
+          <tr><td>14</td><td>G건담</td><td><span class="tier-badge tier-ss">4/5</span></td><td>갓건담, 마스터건담</td></tr>
+          <tr><td>15</td><td>UC</td><td><span class="tier-badge tier-s">3/5</span></td><td>유니콘, 바나지</td></tr>
+          <tr><td>16</td><td>공중용/루키</td><td><span class="tier-badge tier-s">3/5</span></td><td>공중 적성 + 루키 태그</td></tr>
+          <tr><td>17</td><td>수중용/베테랑</td><td><span class="tier-badge tier-s">3/5</span></td><td>수중 적성 + 베테랑 태그</td></tr>
+          <tr><td>18</td><td>양산기/민간인</td><td><span class="tier-badge tier-ss">4/5</span></td><td>GM+민간인 태그, 매우 제한적</td></tr>
+          <tr><td>19</td><td>지휘관기/리더</td><td><span class="tier-badge tier-s">3/5</span></td><td>지휘관기 태그</td></tr>
+          <tr><td>20</td><td>흑색/신체강화</td><td><span class="tier-badge tier-s">3/5</span></td><td>흑색+신체강화 태그</td></tr>
+          <tr><td>21</td><td>철혈의 오펀스</td><td><span class="tier-badge tier-s">3/5</span></td><td>바르바토스 6th</td></tr>
+          <tr><td>22</td><td>일격필살</td><td><span class="tier-badge tier-s">3/5</span></td><td>일격필살 태그</td></tr>
+          <tr><td>23</td><td>견뢰</td><td><span class="tier-badge tier-ss">4/5</span></td><td>견뢰 태그, 고난도</td></tr>
+          <tr><td>24</td><td>수성의 마녀</td><td><span class="tier-badge tier-s">3/5</span></td><td>에어리얼(EX)</td></tr>
+          <tr><td>25</td><td>SEED DESTINY</td><td><span class="tier-badge tier-a">2/5</span></td><td>스트라이크 프리덤(EX)</td></tr>
+          <tr><td>26</td><td>건담X</td><td><span class="tier-badge tier-ss">4/5</span></td><td>건담X SP화 필수</td></tr>
+          <tr><td>27</td><td>AGE</td><td><span class="tier-badge tier-s">3/5</span></td><td>AGE-FX (2026.02 추가)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <details>
+      <summary>하드 1~2 (우주세기/얼터너티브 통합)</summary>
+      <div class="details-body">
+        <ul>
+          <li><strong>No.1 우주세기 통합:</strong> 우주세기 전체 시리즈 기체 출격 가능. 기체풀 넓어 비교적 수월. 뉴건담/ZZ/유니콘 중심 편성</li>
+          <li><strong>No.2 얼터너티브 통합:</strong> 비우주세기 전체 시리즈 출격 가능. 프리덤/윙제로/갓건담 등 강력 유닛 다수 활용</li>
+        </ul>
+        <div class="tip">
+          <strong>입문 추천:</strong> 하드 1~2는 시리즈 통합이라 기체 선택지가 넓어 하드 입문에 적합.
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>하드 3~8 (시리즈별)</summary>
+      <div class="details-body">
+        <ul>
+          <li><strong>No.3 1st 건담:</strong> Ez8 <span class="tier-badge tier-ss">EX</span>가 있으면 "노리트라이 날먹" 가능. 빅잠 맵병기로 잡몹 일소. UR 없이도 클리어 가능한 편</li>
+          <li><strong>No.4 Z건담:</strong> 백식이 필수급. UR 없이도 백식(SP) + 제타 조합으로 클리어 가능</li>
+          <li><strong>No.5 SEED:</strong> 프리덤 <span class="tier-badge tier-ss">UR/EX</span> 맵병기가 결정적. SEED 기체풀이 가장 풍부해 하드 중 가장 쉬움</li>
+          <li><strong>No.6 ZZ:</strong> 풀아머 ZZ + 큐베레이 편성. SP 유닛이 있으면 큰 도움</li>
+          <li><strong>No.7 W:</strong> 에피온 + 윙제로 조합으로 "날먹 클리어" 가능. 두 기체만 제대로 육성하면 충분</li>
+          <li><strong>No.8 SEED 통합:</strong> SEED + DESTINY 전체 기체풀. 맵병기 보유 유닛이 많아 수월</li>
+        </ul>
+        <div class="warn">
+          <strong>하드 시리즈별 진행 추천 순서:</strong> 5(SEED) &rarr; 8(SEED통합) &rarr; 7(W) &rarr; 3(1st) &rarr; 4(Z) &rarr; 6(ZZ)
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>하드 9~13 (태그 제한)</summary>
+      <div class="details-body">
+        <ul>
+          <li><strong>No.9 주인공 태그:</strong> 유닛 태그가 "주인공"인 기체만 출격 가능. 단, 파일럿은 자유 선택 &mdash; 이 점을 활용하여 강력 파일럿 배치</li>
+          <li><strong>No.10 라이벌 태그:</strong> 적 43기 등장. GM캐논II(공격력 50% 버프), 스트라이크 루주(방어 버프), 메타스(HP회복) 제공 유닛을 우선 처치</li>
+          <li><strong>No.11 역습의 샤아:</strong> 알파 아지르 4기 등장. 난이도 <span class="tier-badge tier-ss">4/5</span>. 최소 4유닛만으로도 클리어 가능하지만 고육성 필수</li>
+          <li><strong>No.12 전용기:</strong> 네임드 캐릭터 전용기만 출격. 범용 양산기 사용 불가</li>
+          <li><strong>No.13 돌파력:</strong> 돌파력(Breakthrough) 태그 보유 유닛만 출격</li>
+        </ul>
+        <div class="highlight">
+          <strong>No.9 핵심:</strong> 유닛 태그만 제한이고 파일럿은 자유라는 점이 다른 태그 제한 스테이지와 가장 큰 차이. 최강 파일럿을 배치하자.
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>하드 14~20 (시리즈+태그 혼합)</summary>
+      <div class="details-body">
+        <ul>
+          <li><strong>No.14 G건담:</strong> 난이도 <span class="tier-badge tier-ss">4/5</span>. 기체풀 극소. 갓건담/마스터건담 SP화 권장</li>
+          <li><strong>No.15 UC:</strong> 유니콘/바나지 중심. NT-D 발동 타이밍 관리가 핵심</li>
+          <li><strong>No.16 공중용/루키:</strong> 공중 적성 + 루키 태그 복합 제한. 해당 조건 유닛 사전 확인 필수</li>
+          <li><strong>No.17 수중용/베테랑:</strong> 수중 적성 + 베테랑 태그 복합 제한</li>
+          <li><strong>No.18 양산기/민간인:</strong> 난이도 <span class="tier-badge tier-ss">4/5</span>. GM 계열 + 민간인 태그만 사용 가능. 극도로 제한적인 기체풀</li>
+          <li><strong>No.19 지휘관기/리더:</strong> 지휘관기 태그 유닛 한정</li>
+          <li><strong>No.20 흑색/신체강화:</strong> 흑색(Black) + 신체강화 태그 복합</li>
+        </ul>
+        <div class="warn">
+          <strong>No.18 양산기/민간인</strong>은 하드 전체에서 가장 기체풀이 좁은 스테이지 중 하나. 해당 태그 유닛을 장기 육성 계획에 포함시킬 것.
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>하드 21~27 (최신 추가)</summary>
+      <div class="details-body">
+        <ul>
+          <li><strong>No.21 철혈의 오펀스:</strong> 바르바토스 6th 중심. 격투 DPS 집중</li>
+          <li><strong>No.22 일격필살:</strong> 일격필살 태그 유닛. 고화력 단타 위주</li>
+          <li><strong>No.23 견뢰:</strong> 난이도 <span class="tier-badge tier-ss">4/5</span>. 견뢰(방어 특화) 태그. 적 HP가 높아 장기전</li>
+          <li><strong>No.24 수성의 마녀:</strong> 에어리얼 <span class="tier-badge tier-ss">EX</span>가 핵심. 수마녀 시리즈 유닛 필요</li>
+          <li><strong>No.25 SEED DESTINY:</strong> 스트라이크 프리덤 <span class="tier-badge tier-ss">EX</span> 중심. 기체풀 풍부해 비교적 수월</li>
+          <li><strong>No.26 건담X:</strong> 난이도 <span class="tier-badge tier-ss">4/5</span>. 건담X SP화 필수. 기체풀 극소</li>
+          <li><strong>No.27 AGE:</strong> 2026년 2월 추가. AGE-FX 중심. 시리즈 유닛 확보 필요</li>
+        </ul>
+      </div>
+    </details>
+
+    <div class="tip">
+      <strong>하드 실패 원인 Top 3:</strong> (1) 시리즈/태그 기체 육성 부족, (2) 맵병기 미배치, (3) 보스 친위대(지원방어) 무시하고 보스만 공격
+    </div>
+  </section>
+
+  <!-- ===== 익스퍼트 전체 ===== -->
   <section class="section" id="er-expert">
     <div class="section-header">
       <div class="section-icon red">EX</div>
-      <div class="section-title">익스퍼트 (Expert)</div>
+      <div class="section-title">익스퍼트 스테이지 (No.1~16+)</div>
     </div>
 
     <div class="card">
       <div class="card-title"><span class="dot red"></span>익스퍼트 공통 특징</div>
       <ul>
-        <li>보스 총 HP 약 <strong>110만</strong> 수준, 방어력도 대폭 강화</li>
-        <li>턴 제한 <strong>3턴</strong> &mdash; 턴당 고정 데미지가 매우 높아야 함</li>
-        <li>적 지원 방어 3회 + 고화력 반격 패턴 상시</li>
+        <li>무장 레벨 <strong>5 이상</strong> 필수</li>
+        <li><span class="tier-badge tier-ss">UR</span> 유닛 강력 권장</li>
+        <li>각 스테이지마다 고유 승리 조건 존재</li>
+        <li>턴 제한 보통 <strong>3턴</strong> &mdash; 턴당 요구 DPS 매우 높음</li>
+        <li>2026년 3월 기준 총 <strong>16+</strong> 스테이지</li>
         <li>SSP화 도입 이후 저등급 기체 전력이 상승하여 클리어 난도가 다소 완화</li>
-        <li>디시 마갤에 <strong>노중복/노SP/노UR파일럿</strong> 저스펙 공략 존재 &rarr; 참고 가치 높음</li>
       </ul>
     </div>
 
@@ -3486,224 +3617,296 @@ details[open] summary::before { transform: rotate(90deg); color: var(--accent-bl
 
     <!-- EX 1 -->
     <details>
-      <summary>익스퍼트 1 &mdash; 우주세기 (U.C.) 시리즈</summary>
+      <summary>EX1 우주세기</summary>
       <div class="details-body">
         <div class="highlight">
-          <strong>핵심 보스:</strong> 사이코 건담 + 퀸만사 &mdash; 사이코 건담 우선 처치
+          <strong>보스:</strong> 빅잠 + 퀸만사 + 사이코건담 &mdash; 전부 맵병기 보유, 턴당 <strong>2회 행동</strong>
         </div>
-        <ul>
-          <li><strong>국룰 전략:</strong> 1턴 진형 세팅 &rarr; 반격으로 버티기 &rarr; 2턴 집중 화력으로 사이코건담 격파</li>
-          <li>사이코건담은 <strong>사거리 5 공격 없음</strong> &rarr; 지원공격 진형(1팀 3번/5번 슬롯에 지원기 배치) + 스웨이로 1턴 처치 가능</li>
-          <li>사이코건담이 지원 방어를 하므로, 퀸만사보다 사이코건담을 먼저 처치하는 것이 효율적</li>
-          <li>사이코건담 격파 후 남은 턴에 퀸만사 집중 공격</li>
-        </ul>
+        <p style="margin:12px 0;"><strong>추천 편성:</strong></p>
+        <table class="tier-table">
+          <thead><tr><th>팀</th><th>유닛</th><th>역할</th></tr></thead>
+          <tbody>
+            <tr><td rowspan="5">1팀</td><td>Ez8 <span class="tier-badge tier-ss">EX</span></td><td>메인 딜러</td></tr>
+            <tr><td>피닉스 건담 <span class="tier-badge tier-ss">EX</span></td><td>맵병기 소탕</td></tr>
+            <tr><td>풀아머 ZZ</td><td>서브 딜러</td></tr>
+            <tr><td>디오</td><td>지원</td></tr>
+            <tr><td>서포터</td><td>버프/힐</td></tr>
+            <tr><td rowspan="4">2팀</td><td>제타 III P2</td><td>딜러</td></tr>
+            <tr><td>사이코 건담</td><td>맵병기</td></tr>
+            <tr><td>GQuuuuuuX</td><td>서브</td></tr>
+            <tr><td>제타</td><td>지원</td></tr>
+          </tbody>
+        </table>
+        <p style="margin:12px 0;"><strong>전략:</strong></p>
+        <ol class="priority-list">
+          <li><strong>퀸만사 우선 격파</strong> &rarr; 가장 위협적인 맵병기 보유</li>
+          <li>사이코건담 고립시켜 처리</li>
+          <li>유닛 3기 이상 맵병기 사거리 내 밀집 금지 &mdash; 반드시 분산 배치</li>
+        </ol>
         <div class="tip">
-          <strong>추천 유닛:</strong> 뉴건담, Hi-v건담, ZZ건담, 유니콘건담. 맵병기 보유 기체로 잡몹 일소 후 보스 집중.
+          <strong>무과금:</strong> 건담 RX-78 탱커 + 스트라이커 커스텀/크로스본 X1/Ez8 조합으로 F2P 클리어 가능
         </div>
       </div>
     </details>
 
     <!-- EX 2 -->
     <details>
-      <summary>익스퍼트 2 &mdash; 얼터너티브 시리즈</summary>
+      <summary>EX2 얼터너티브</summary>
       <div class="details-body">
         <div class="highlight">
-          <strong>핵심 보스:</strong> 알바토레 + 데빌건담 + 파투리아 &mdash; 알바토레 우선 처치
+          <strong>보스:</strong> 알바토레(~110만 HP) + 데빌건담 + 파투리아 &mdash; <strong>3턴 제한</strong>
         </div>
-        <ul>
-          <li>EX1보다 체감 난이도 낮은 편</li>
-          <li><strong>알바토레의 지원 공격이 극히 성가심</strong> &rarr; 반드시 1턴에 처치하여 아군 피해 최소화</li>
-          <li>알바토레 격파 후: 1부대 데빌건담, 2부대 파투리아 순서로 분담 처리</li>
-          <li>데빌건담은 HP 재생 능력 보유 &rarr; 한 턴에 집중 화력으로 격파 필요</li>
-        </ul>
-        <div class="tip">
-          <strong>추천 유닛:</strong> 더블오 라이저, 갓건담, 윙건담 제로(커스텀). 고화력 단일 타격 유닛 우선.
-        </div>
+        <p style="margin:12px 0;"><strong>추천 편성:</strong></p>
+        <table class="tier-table">
+          <thead><tr><th>팀</th><th>유닛</th><th>역할</th></tr></thead>
+          <tbody>
+            <tr><td rowspan="5">1팀</td><td>프리덤 <span class="tier-badge tier-ss">EX</span></td><td>메인 딜러</td></tr>
+            <tr><td>에어리얼 <span class="tier-badge tier-ss">EX</span></td><td>서브 딜러</td></tr>
+            <tr><td>스트라이크 프리덤 <span class="tier-badge tier-ss">EX</span></td><td>화력 집중</td></tr>
+            <tr><td>저스티스 <span class="tier-badge tier-ss">EX</span></td><td>지원</td></tr>
+            <tr><td>아마츠</td><td>디버프</td></tr>
+            <tr><td rowspan="5">2팀</td><td>바르바토스 6th <span class="tier-badge tier-ss">EX</span></td><td>메인 딜러</td></tr>
+            <tr><td>마스터건담</td><td>격투</td></tr>
+            <tr><td>프로비던스</td><td>원거리</td></tr>
+            <tr><td>윙제로</td><td>맵병기</td></tr>
+            <tr><td>프리덤 미티어</td><td>지원</td></tr>
+          </tbody>
+        </table>
+        <p style="margin:12px 0;"><strong>전략:</strong></p>
+        <ol class="priority-list">
+          <li><strong>1턴에 알바토레 격파</strong> &mdash; 지원 공격이 극히 성가시므로 최우선</li>
+          <li>데빌건담: 2칸 거리에서 공격 (HP 재생 있으므로 한 턴에 집중)</li>
+          <li>파투리아: 1칸 거리에서 근접 공격</li>
+        </ol>
       </div>
     </details>
 
     <!-- EX 3 -->
     <details>
-      <summary>익스퍼트 3 &mdash; SEED 시리즈</summary>
+      <summary>EX3 SEED</summary>
       <div class="details-body">
         <div class="highlight">
-          <strong>핵심:</strong> SEED 기체풀이 풍부하여 익스퍼트 중 가장 접근성이 높음
+          <strong>핵심:</strong> 초기 적 34기 + 증원 20기. 골드프레임 아마츠 = <strong>즉사기</strong> 주의
         </div>
-        <ul>
-          <li>스트라이크 프리덤, 데스티니, 인피니트 저스티스 등 고화력 UR 기체 다수 활용 가능</li>
-          <li>배포 기체 + 개발 기체만으로도 클리어 가능 (디시 마갤 무과금 공략 참고)</li>
-          <li>맵병기로 잡몹 정리 &rarr; 보스에 3인 지원공격 집중</li>
-          <li>SEED 시리즈 SP/SSP화 유닛이 많아 전력 확보 용이</li>
-        </ul>
-        <div class="tip">
-          <strong>추천 유닛:</strong> 스트라이크 프리덤, 데스티니, 인피니트 저스티스, 프리덤. 서포터는 라크스(공버프) 추천.
-        </div>
+        <p style="margin:12px 0;"><strong>추천 편성:</strong></p>
+        <table class="tier-table">
+          <thead><tr><th>유닛</th><th>역할</th></tr></thead>
+          <tbody>
+            <tr><td>프리덤 <span class="tier-badge tier-ss">EX</span></td><td>맵병기 소탕</td></tr>
+            <tr><td>프리덤</td><td>추가 맵병기</td></tr>
+            <tr><td>스트라이크 프리덤 <span class="tier-badge tier-ss">EX</span></td><td>메인 딜러</td></tr>
+            <tr><td>저스티스 <span class="tier-badge tier-ss">EX</span></td><td>지원</td></tr>
+            <tr><td>아마츠</td><td>디버프/서브</td></tr>
+          </tbody>
+        </table>
+        <p style="margin:12px 0;"><strong>전략:</strong></p>
+        <ol class="priority-list">
+          <li>1턴에 맵병기로 34기 최대한 정리</li>
+          <li>증원 20기 대응 &mdash; 맵병기 2차 사용</li>
+          <li><strong>골드프레임 아마츠 최우선 처치</strong> (즉사 공격 보유)</li>
+        </ol>
       </div>
     </details>
 
     <!-- EX 4 -->
     <details>
-      <summary>익스퍼트 4 &mdash; 주인공(Protagonist) 태그 한정</summary>
+      <summary>EX4 주인공 태그</summary>
       <div class="details-body">
-        <ul>
-          <li><strong>주인공 태그</strong> 보유 유닛만 출격 가능 &rarr; 크로스 시리즈 편성 가능하지만 유닛 선택지 제한</li>
-          <li>주인공 태그 보유 고화력 유닛: 아무로(뉴건담), 키라(스프리덤), 세츠나(더블오 라이저), 히이로(윙제로) 등</li>
-          <li>맵병기 보유 주인공기가 적으므로 잡몹 처리에 시간 소모 주의</li>
-          <li>지원공격 시너지가 좋은 주인공기 조합을 미리 테스트할 것</li>
-        </ul>
+        <div class="warn">
+          <strong>위험:</strong> GP02A가 원자바주카 맵병기 보유 &mdash; 발사 전에 반드시 파괴해야 함
+        </div>
+        <p style="margin:12px 0;"><strong>추천 편성:</strong></p>
+        <table class="tier-table">
+          <thead><tr><th>유닛</th><th>역할</th></tr></thead>
+          <tbody>
+            <tr><td>Ez8 <span class="tier-badge tier-ss">EX</span></td><td>메인 딜러</td></tr>
+            <tr><td>제타</td><td>서브 딜러</td></tr>
+            <tr><td>엑시아</td><td>격투 DPS</td></tr>
+            <tr><td>풀아머 ZZ</td><td>화력 지원</td></tr>
+            <tr><td>건담 <span class="tier-badge tier-ss">EX</span></td><td>탱커/서브</td></tr>
+          </tbody>
+        </table>
+        <p style="margin:8px 0;"><strong>핵심:</strong> GP02A 원자바주카 발사 전 격파가 최우선 목표. 발사 허용 시 아군 궤멸.</p>
       </div>
     </details>
 
     <!-- EX 5 -->
     <details>
-      <summary>익스퍼트 5 &mdash; 라이벌(Rival) 태그 한정</summary>
+      <summary>EX5 라이벌 태그</summary>
       <div class="details-body">
-        <ul>
-          <li><strong>라이벌 태그</strong> 보유 유닛만 출격 가능</li>
-          <li>라이벌 태그 유닛: 샤아(사자비), 크루제(프로비던스), 그라함(브레이브), 제크스(에피온) 등</li>
-          <li>라이벌 기체는 고화력/저내구가 많으므로 방어 유닛 편성이 특히 중요</li>
-          <li>사자비의 맵병기 활용이 핵심 &mdash; 잡몹 정리 후 보스 집중</li>
-        </ul>
+        <div class="highlight">
+          <strong>핵심:</strong> 적 43기 등장. 버프 제공 유닛 우선 처치 필수
+        </div>
+        <p style="margin:8px 0;"><strong>우선 처치 순서:</strong></p>
+        <ol class="priority-list">
+          <li><strong>GM캐논 II</strong> &mdash; 아군에게 공격력 50% 버프 제공 (제거 시 적 화력 급감)</li>
+          <li><strong>스트라이크 루주</strong> &mdash; 방어 버프 제공</li>
+          <li><strong>메타스</strong> &mdash; HP 회복 제공</li>
+        </ol>
+        <p style="margin:12px 0;"><strong>추천 편성:</strong></p>
+        <table class="tier-table">
+          <thead><tr><th>유닛</th><th>역할</th></tr></thead>
+          <tbody>
+            <tr><td>아마츠</td><td>즉사/디버프</td></tr>
+            <tr><td>마스터건담</td><td>격투 DPS</td></tr>
+            <tr><td>디오 <span class="tier-badge tier-ss">EX</span></td><td>서브 딜러</td></tr>
+            <tr><td>저스티스 <span class="tier-badge tier-ss">EX</span></td><td>지원</td></tr>
+            <tr><td>1.5 건담</td><td>원거리</td></tr>
+          </tbody>
+        </table>
       </div>
     </details>
 
     <!-- EX 6 -->
     <details>
-      <summary>익스퍼트 6 &mdash; 역습의 샤아 (Char's Counterattack)</summary>
+      <summary>EX6 역습의 샤아</summary>
       <div class="details-body">
-        <ul>
-          <li>역습의 샤아 작품 기체만 사용 가능 &rarr; 기체풀 매우 제한적</li>
-          <li><strong>필수 유닛:</strong> 뉴건담, 사자비, Hi-v건담, 나이팅게일</li>
-          <li>기체 수가 적으므로 보유 기체의 SP화/SSP화 필수</li>
-          <li>뉴건담의 핀 판넬 맵병기가 잡몹 처리의 생명선</li>
-        </ul>
         <div class="warn">
-          <strong>주의:</strong> 역샤 기체풀이 좁아 가장 준비가 오래 걸리는 익스퍼트 중 하나. 장기 육성 계획 필요.
+          <strong>주의:</strong> 나이팅게일은 HP 50% 이하 시 공격력/방어력 <strong>100% 부스트</strong> 발동 &mdash; 50% 아래로 섣불리 밀지 말 것!
         </div>
+        <p style="margin:12px 0;"><strong>추천 편성:</strong></p>
+        <table class="tier-table">
+          <thead><tr><th>유닛</th><th>역할</th></tr></thead>
+          <tbody>
+            <tr><td>Hi-Nu <span class="tier-badge tier-ss">EX</span></td><td>메인 딜러</td></tr>
+            <tr><td>나이팅게일</td><td>서브/주의 관리</td></tr>
+            <tr><td>사자비 <span class="tier-badge tier-ss">EX</span></td><td>맵병기/딜러</td></tr>
+            <tr><td>Hi-Nu</td><td>추가 화력</td></tr>
+            <tr><td>뉴건담</td><td>지원</td></tr>
+          </tbody>
+        </table>
+        <p style="margin:12px 0;"><strong>전략:</strong></p>
+        <ol class="priority-list">
+          <li><strong>중앙 뉴건담 먼저 격파</strong></li>
+          <li>나이팅게일 HP를 신중하게 관리 &mdash; 50% 밑으로 밀기 전에 한 턴 킬 준비 완료할 것</li>
+          <li>나머지 유닛 순차 정리</li>
+        </ol>
       </div>
     </details>
 
     <!-- EX 7 -->
     <details>
-      <summary>익스퍼트 7 &mdash; 기동전사 건담 (1st Gundam)</summary>
+      <summary>EX7 기동전사 건담</summary>
       <div class="details-body">
-        <ul>
-          <li>1st 건담 시리즈 기체만 사용 가능</li>
-          <li>핵심 유닛: 건담, 겔구그, 자쿠II, 짐 계열</li>
-          <li>저등급 기체가 많아 SSP화의 혜택을 가장 많이 받는 스테이지</li>
-          <li>건담의 빔 라이플 + 잡몹 정리 후 보스 집중 패턴</li>
-        </ul>
+        <div class="highlight">
+          <strong>핵심:</strong> 적 29기 + 증원(5기 격파 시, 12기 격파 시). G-3 건담, NT-1이 위협적
+        </div>
+        <p style="margin:12px 0;"><strong>추천 편성:</strong></p>
+        <table class="tier-table">
+          <thead><tr><th>유닛</th><th>역할</th></tr></thead>
+          <tbody>
+            <tr><td>Ez8 <span class="tier-badge tier-ss">EX</span></td><td>메인 딜러</td></tr>
+            <tr><td>빅잠</td><td>맵병기 소탕</td></tr>
+            <tr><td>건담 <span class="tier-badge tier-ss">EX</span></td><td>서브 딜러</td></tr>
+            <tr><td>스트라이커 커스텀 <span class="tier-badge tier-ss">EX</span></td><td>격투 DPS</td></tr>
+            <tr><td>GP02A <span class="tier-badge tier-ss">EX</span></td><td>맵병기/화력</td></tr>
+          </tbody>
+        </table>
+        <p style="margin:8px 0;">증원 타이밍(5킬, 12킬)을 숙지하고 맵병기 사용 타이밍 조절. G-3 건담/NT-1 우선 처치.</p>
       </div>
     </details>
 
     <!-- EX 8 -->
     <details>
-      <summary>익스퍼트 8 &mdash; 기동전사 Z건담</summary>
+      <summary>EX8 Z건담</summary>
       <div class="details-body">
-        <ul>
-          <li>Z건담 시리즈 기체만 사용 가능</li>
-          <li>핵심 유닛: Z건담, 메타스, 백식, 디아스</li>
-          <li>Z건담의 변형(웨이브 라이더) 활용 맵병기가 효과적</li>
-          <li>백식을 방어/디버프 역할로 활용, Z건담 집중 딜링</li>
-        </ul>
+        <div class="warn">
+          <strong>호위 미션!</strong> 아군 3기 보호 필수 &mdash; 1기라도 격파당하면 실패. 3개 전선 동시 관리.
+        </div>
+        <p style="margin:8px 0;">보스는 HP 50% 이하 시 <strong>50% 부스트</strong> 발동</p>
+        <p style="margin:12px 0;"><strong>추천 편성:</strong></p>
+        <table class="tier-table">
+          <thead><tr><th>유닛</th><th>역할</th></tr></thead>
+          <tbody>
+            <tr><td>제타</td><td>메인 딜러</td></tr>
+            <tr><td>제타 III P2</td><td>서브 딜러</td></tr>
+            <tr><td>디오 <span class="tier-badge tier-ss">EX</span></td><td>탱커/보스 관리</td></tr>
+            <tr><td>사이코건담</td><td>맵병기 소탕</td></tr>
+            <tr><td>백식</td><td>디버프/지원</td></tr>
+          </tbody>
+        </table>
+        <p style="margin:8px 0;">3개 전선에 유닛 분배. 아군 NPC 근처에 탱커 배치하여 보호.</p>
       </div>
     </details>
 
     <!-- EX 9 -->
     <details>
-      <summary>익스퍼트 9 &mdash; 특수 유닛 한정</summary>
+      <summary>EX9 전용기</summary>
       <div class="details-body">
-        <ul>
-          <li>특정 조건의 특수 유닛만 출격 가능 &rarr; 조건 확인 필수</li>
-          <li>개발 기체 + 배포 기체 위주로 편성해야 하는 경우 많음</li>
-          <li>SP 추천 유닛 공략이 커뮤니티에 다수 공유됨 (Vortex Gaming 참고)</li>
-        </ul>
+        <div class="highlight">
+          <strong>4턴 제한.</strong> 사탄건담 격파 후 히든 보스 <strong>블랙드래곤</strong>(HP 70만+) 출현!
+        </div>
+        <p style="margin:12px 0;"><strong>추천 편성:</strong></p>
+        <table class="tier-table">
+          <thead><tr><th>유닛</th><th>역할</th></tr></thead>
+          <tbody>
+            <tr><td>바르바토스 6th</td><td>메인 딜러</td></tr>
+            <tr><td>데스사이즈헬 EW <span class="tier-badge tier-ss">EX</span></td><td>격투 DPS</td></tr>
+            <tr><td>나이트건담</td><td>서브</td></tr>
+            <tr><td>나이트 지옹</td><td>탱커</td></tr>
+          </tbody>
+        </table>
+        <p style="margin:8px 0;">사탄건담을 빠르게 처치하되, 블랙드래곤 등장 대비 화력 온존. 4턴 내 양쪽 모두 처치해야 함.</p>
       </div>
     </details>
 
-    <!-- EX 10-11 -->
+    <!-- EX 10 -->
     <details>
-      <summary>익스퍼트 10~11 &mdash; 태그 복합 제한</summary>
+      <summary>EX10 ZZ</summary>
+      <div class="details-body">
+        <div class="highlight">
+          <strong>3개 전선 + 3턴 제한.</strong> 가즈R/가즈L이 HP 회복 보유 &mdash; <strong>반드시 1턴에 격파</strong>
+        </div>
+        <p style="margin:12px 0;"><strong>추천 편성:</strong></p>
+        <table class="tier-table">
+          <thead><tr><th>팀</th><th>유닛</th><th>역할</th></tr></thead>
+          <tbody>
+            <tr><td rowspan="3">1팀</td><td>풀아머 ZZ <span class="tier-badge tier-ss">EX</span></td><td>메인 딜러</td></tr>
+            <tr><td>제타 <span class="tier-badge tier-ss">EX</span></td><td>서브 딜러</td></tr>
+            <tr><td>S건담</td><td>화력 지원</td></tr>
+            <tr><td rowspan="3">2팀</td><td>프루의 큐베레이 Mk-II</td><td>딜러</td></tr>
+            <tr><td>큐베레이 ZZ <span class="tier-badge tier-ss">EX</span></td><td>서브</td></tr>
+            <tr><td>퀸만사</td><td>누적 방어력 다운</td></tr>
+          </tbody>
+        </table>
+        <p style="margin:8px 0;"><strong>핵심:</strong> 퀸만사의 누적 방어력 다운이 보스전에서 결정적. 가즈R+L은 HP 회복 때문에 반드시 1턴 킬.</p>
+      </div>
+    </details>
+
+    <!-- EX 11 -->
+    <details>
+      <summary>EX11 돌파력 (BREAKTHROUGH)</summary>
+      <div class="details-body">
+        <div class="warn">
+          <strong>섬멸전이 아님!</strong> 3턴 내에 목표 지점까지 <strong>도달</strong>해야 하는 스테이지 (20칸+ 이동 필요)
+        </div>
+        <p style="margin:8px 0;"><strong>핵심 메커니즘:</strong> 찬스 스텝 킬을 연쇄하여 연속 이동</p>
+        <div class="highlight">
+          <strong>필수 유닛:</strong> 피닉스 건담 역량해방 <span class="tier-badge tier-ss">EX</span> &mdash; 유일하게 <strong>"이동 후 맵병기"</strong> 사용 가능한 유닛
+        </div>
+        <div class="warn">
+          <strong>주의:</strong> 남쪽 ZZ건담을 절대 격파하지 말 것! 격파 시 증원이 소환되어 클리어 불가능해짐.
+        </div>
+        <p style="margin:8px 0;">찬스 스텝으로 적을 처치하며 전진 &rarr; 맵병기로 경로상 적 일소 &rarr; 3턴 내 목표 도달</p>
+      </div>
+    </details>
+
+    <!-- EX 12~16 -->
+    <details>
+      <summary>EX12~16 (2025.09~2025.11 추가)</summary>
       <div class="details-body">
         <ul>
-          <li>복수 태그 조건이 걸리는 고난도 스테이지</li>
-          <li>보스 HP가 익스퍼트 1~9 대비 추가 상승</li>
-          <li>공격/방어 버프 가더 점거가 이전보다 더 중요 &mdash; 메인 DPS는 반드시 공격 버프 영역에 배치</li>
-          <li>내구 유닛은 방어 버프 영역에 배치하여 생존력 극대화</li>
-          <li>NPC/지원기 생존이 클리어 전제 조건인 경우 있으므로 보호에 주의</li>
+          <li><strong>EX12:</strong> G건담 시리즈. 격투 중심 고난도. 갓건담/마스터건담 SP화 권장</li>
+          <li><strong>EX13:</strong> UC 시리즈. 유니콘/바나지 핵심. NT-D 활용 전략</li>
+          <li><strong>EX14:</strong> 복합 태그 제한. 다양한 시리즈에서 조건 충족 유닛 수집 필요</li>
+          <li><strong>EX15:</strong> 복합 태그 고난도. 풀돌 UR + SP/SSP화 거의 필수</li>
+          <li><strong>EX16 견뢰 (Tough as Nails):</strong> 2025/11/30 추가. 방어 특화 적 다수 &mdash; 방어력 다운 디버프가 핵심</li>
         </ul>
         <div class="tip">
-          <strong>전략:</strong> 고위협 타겟(맵병기 적, 고공격 엘리트)을 최우선 처치. 화력 분산 금지 &mdash; 한 적을 확실히 처치하고 다음으로 이동.
+          <strong>공통:</strong> EX12~16은 모두 기존 익스퍼트 대비 적 HP/방어력이 추가 상승. 최소 무장 레벨 5 + SP/SSP화 유닛 다수 필요.
         </div>
       </div>
     </details>
-
-    <!-- EX 12-15 -->
-    <details>
-      <summary>익스퍼트 12~15 &mdash; 최신 추가 스테이지 (1주년~)</summary>
-      <div class="details-body">
-        <ul>
-          <li>1주년 전후로 추가된 최고 난도 스테이지</li>
-          <li><strong>EX 13:</strong> 건담 유닛 생산 & 생존 조건 &mdash; 지정된 건담 기체를 개발/생산하면서 동시에 아군 전멸 방지 필요</li>
-          <li><strong>EX 15:</strong> 건설(Construction) 유닛 한정 + 무사망 조건 &mdash; 한 기도 격파당하지 않으면서 클리어 (최고 난도)</li>
-          <li>고정 데미지/턴당 요구 DPS가 극도로 높으므로, 풀돌 UR + SP/SSP화 유닛이 거의 필수</li>
-        </ul>
-        <div class="warn">
-          <strong>EX 15 주의:</strong> 무사망 조건은 방어 유닛의 내구가 반드시 적 최대 공격을 견뎌야 함. 방어 버프 가더 점거 + 서포터 방어 버프 중첩 필수.
-        </div>
-      </div>
-    </details>
-  </section>
-
-  <!-- ===== 공통 실패 원인 ===== -->
-  <section class="section" id="er-mistake">
-    <div class="section-header">
-      <div class="section-icon red">!</div>
-      <div class="section-title">자주 하는 실수 & 실패 방지</div>
-    </div>
-
-    <div class="card">
-      <div class="card-title"><span class="dot red"></span>실패 원인 Top 5</div>
-      <ol class="priority-list">
-        <li><strong>보스 친위대(지원방어) 무시</strong> &mdash; 보스에 직접 공격이 지원방어에 막혀 딜 손실. 친위대 우선 처치 또는 맵병기 활용</li>
-        <li><strong>버프 가더 미점거</strong> &mdash; 공격 버프 가더를 점거하지 않으면 보스 HP를 턴 내 깎지 못함</li>
-        <li><strong>화력 분산</strong> &mdash; 여러 적을 동시 공격하면 아무도 못 죽임. 한 적 집중 &rarr; 격파 &rarr; 다음 적</li>
-        <li><strong>시리즈/태그 기체 육성 부족</strong> &mdash; 하드/익스퍼트는 제한 조건 기체가 부족하면 입장 자체가 어려움</li>
-        <li><strong>방어 유닛 미배치</strong> &mdash; 딜러만 가득 넣으면 적의 집중 공격에 1턴에 궤멸. 최소 2기 이상 탱커/방어 유닛 필수</li>
-      </ol>
-    </div>
-
-    <div class="tip">
-      <strong>실전 팁:</strong> 첫 턴에 무리해서 보스를 공격하지 말고, 진형 세팅 + 가더 점거 + 반격 버티기로 시작. 2턴째부터 집중 화력 투입이 안정적.
-    </div>
-  </section>
-
-  <!-- ===== 추천 범용 편성 ===== -->
-  <section class="section" id="er-comp">
-    <div class="section-header">
-      <div class="section-icon gold">&#9733;</div>
-      <div class="section-title">범용 추천 편성 가이드</div>
-    </div>
-
-    <div class="card">
-      <div class="card-title"><span class="dot gold"></span>기본 템플릿</div>
-      <table class="tier-table">
-        <thead>
-          <tr><th>슬롯</th><th>역할</th><th>설명</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>1번</td><td>메인 딜러</td><td>최고 화력 UR 기체, 공격 버프 가더 위에 배치</td></tr>
-          <tr><td>2번</td><td>서브 딜러/맵병기</td><td>맵병기로 잡몹 정리 + 보스 추가 딜</td></tr>
-          <tr><td>3번</td><td>지원 공격기</td><td>메인 딜러의 지원 공격 범위에 배치</td></tr>
-          <tr><td>4번</td><td>탱커/방어기</td><td>방어 버프 가더 위에 배치, 적 공격 흡수</td></tr>
-          <tr><td>5번</td><td>서포터/디버프</td><td>공격/방어 버프 또는 적 디버프 역할</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="highlight">
-      <strong>2부대 운용 시:</strong> 1부대가 메인 보스 처리, 2부대가 서브 보스/잡몹 처리로 역할 분담. 두 부대 모두 탱커 최소 1기 포함.
-    </div>
   </section>
 
   <!-- ===== 난이도별 세팅 가이드 ===== -->

@@ -1,0 +1,4922 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SD건담 G제네레이션 이터널 — 공략본</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&display=swap');
+
+:root {
+  --bg-primary: #0c0c0e;
+  --bg-secondary: #1c1c1e;
+  --bg-card: rgba(28,28,30,0.8);
+  --bg-card-hover: rgba(38,38,40,0.9);
+  --accent-red: #ff453a;
+  --accent-gold: #ffd60a;
+  --accent-blue: #64d2ff;
+  --accent-green: #30d158;
+  --accent-purple: #bf5af2;
+  --text-primary: #f5f5f7;
+  --text-secondary: #98989d;
+  --text-dim: #636366;
+  --border-subtle: rgba(255,255,255,0.08);
+  --glow-red: rgba(255,69,58,0.15);
+  --glow-gold: rgba(255,214,10,0.12);
+  --glow-blue: rgba(100,210,255,0.1);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+  line-height: 1.8;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scanline overlay — moved to .hero::after */
+
+/* Hero */
+.hero {
+  position: relative;
+  padding: 100px 24px 80px;
+  text-align: center;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(255,69,58,0.06) 0%, var(--bg-primary) 60%);
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+}
+.hero::after { display: none; }
+.hero-label {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent-red);
+  margin-bottom: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-label::before, .hero-label::after {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: rgba(255,69,58,0.4);
+}
+.hero h1 {
+  font-family: 'Orbitron', 'Noto Sans KR', sans-serif;
+  font-weight: 900;
+  font-size: clamp(32px, 5vw, 52px);
+  letter-spacing: 2px;
+  line-height: 1.15;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #fff 30%, rgba(255,255,255,0.7) 60%, var(--accent-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: none;
+}
+.hero-sub {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+}
+
+/* Navigation */
+.nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(12,12,14,0.72);
+  backdrop-filter: blur(24px) saturate(1.8);
+  -webkit-backdrop-filter: blur(24px) saturate(1.8);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 0 24px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.nav-bar::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 48px;
+  background: linear-gradient(to right, transparent, rgba(12,12,14,0.8));
+  pointer-events: none;
+  z-index: 1;
+}
+
+.nav-bar::-webkit-scrollbar { height: 0; }
+
+.nav-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  gap: 4px;
+  padding: 8px 0;
+}
+
+.nav-btn {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 20px;
+  color: var(--text-dim);
+  cursor: pointer;
+  white-space: nowrap;
+  position: relative;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  letter-spacing: 0;
+}
+.nav-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255,255,255,0.06);
+}
+.nav-btn.active {
+  color: var(--text-primary);
+  background: transparent;
+  font-weight: 600;
+  position: relative;
+}
+.nav-btn.active::after {
+  display: block;
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 2px;
+  background: var(--accent-red);
+  border-radius: 1px;
+  box-shadow: 0 0 8px rgba(255,69,58,0.3);
+}
+
+/* Main content */
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 48px 24px 120px;
+}
+
+/* Section */
+.section {
+  margin-bottom: 64px;
+  animation: fadeUp 0.4s ease both;
+  scroll-margin-top: 70px;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: none;
+  position: relative;
+}
+.section-header::before { display: none; }
+.section-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent-red), transparent 40%);
+  opacity: 0.3;
+}
+
+.section-icon {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 8px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.section-icon.red { background: rgba(255,69,58,0.12); color: var(--accent-red); box-shadow: none; }
+.section-icon.gold { background: rgba(255,214,10,0.1); color: var(--accent-gold); box-shadow: none; }
+.section-icon.blue { background: rgba(100,210,255,0.1); color: var(--accent-blue); box-shadow: none; }
+.section-icon.green { background: rgba(48,209,88,0.1); color: var(--accent-green); box-shadow: none; }
+.section-icon.purple { background: rgba(191,90,242,0.1); color: var(--accent-purple); box-shadow: none; }
+
+.section-title {
+  font-family: 'Rajdhani', 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  font-size: 21px;
+  letter-spacing: 0.5px;
+  color: var(--text-primary);
+}
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px 16px 16px 4px;
+  padding: 24px;
+  margin-bottom: 14px;
+  transition: all 0.2s ease;
+  position: relative;
+}
+.card::before, .card::after { display: none; }
+.card:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(255,255,255,0.12);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.card-title {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-title .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: none;
+}
+.dot.red { background: var(--accent-red); }
+.dot.gold { background: var(--accent-gold); }
+.dot.blue { background: var(--accent-blue); }
+.dot.green { background: var(--accent-green); }
+.dot.purple { background: var(--accent-purple); }
+
+.card p, .card li {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.card li {
+  padding: 4px 0 4px 18px;
+  position: relative;
+}
+.card li::before {
+  content: '\25B8';
+  position: absolute;
+  left: 0;
+  color: var(--text-dim);
+  font-size: 11px;
+}
+
+/* Highlight boxes */
+.highlight {
+  background: rgba(255,214,10,0.03);
+  border-left: 2px solid rgba(255,214,10,0.5);
+  border-top: 1px solid rgba(255,214,10,0.1);
+  border-radius: 0 14px 14px 0;
+  padding: 18px 24px;
+  margin: 18px 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+  box-shadow: none;
+}
+.highlight strong { color: var(--accent-gold); font-weight: 600; }
+
+.warn {
+  background: rgba(255,69,58,0.03);
+  border-left: 2px solid rgba(255,69,58,0.5);
+  border-top: 1px solid rgba(255,69,58,0.1);
+  border-radius: 0 14px 14px 0;
+  padding: 18px 24px;
+  margin: 18px 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+  box-shadow: none;
+}
+.warn strong { color: var(--accent-red); font-weight: 600; }
+
+.tip {
+  background: rgba(100,210,255,0.03);
+  border-left: 2px solid rgba(100,210,255,0.5);
+  border-top: 1px solid rgba(100,210,255,0.1);
+  border-radius: 0 14px 14px 0;
+  padding: 18px 24px;
+  margin: 18px 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+  box-shadow: none;
+}
+.tip strong { color: var(--accent-blue); font-weight: 600; }
+
+/* Tier table */
+.tier-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 16px 0;
+  font-size: 14px;
+}
+
+.tier-table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--text-dim);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border-subtle);
+  background: transparent;
+}
+
+.tier-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: var(--text-secondary);
+  transition: background 0.15s;
+}
+.tier-table tr:hover td {
+  background: rgba(255,255,255,0.02);
+}
+.tier-table tr:last-child td {
+  border-bottom: none;
+}
+
+.tier-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 2px 6px 6px 2px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-shadow: none;
+}
+.tier-ss { background: rgba(255,69,58,0.12); color: var(--accent-red); border: none; }
+.tier-s { background: rgba(255,214,10,0.1); color: var(--accent-gold); border: none; }
+.tier-a { background: rgba(100,210,255,0.1); color: var(--accent-blue); border: none; }
+.tier-b { background: rgba(48,209,88,0.1); color: var(--accent-green); border: none; }
+
+/* Priority list */
+.priority-list {
+  counter-reset: priority;
+  list-style: none;
+  padding: 0;
+}
+.priority-list li {
+  counter-increment: priority;
+  padding: 12px 16px 12px 52px;
+  position: relative;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+.priority-list li:last-child { border-bottom: none; }
+.priority-list li::before {
+  content: counter(priority);
+  position: absolute;
+  left: 16px;
+  top: 12px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--accent-gold);
+  text-shadow: none;
+}
+
+/* Flow chart style */
+.flow-step {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 4px;
+}
+
+.flow-line {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 24px;
+  flex-shrink: 0;
+}
+
+.flow-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--accent-blue);
+  flex-shrink: 0;
+  margin-top: 6px;
+  box-shadow: none;
+}
+
+.flow-connector {
+  width: 2px;
+  flex: 1;
+  background: rgba(76,201,240,0.2);
+  min-height: 20px;
+}
+
+.flow-content {
+  padding-bottom: 20px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+.flow-content strong {
+  color: var(--text-primary);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Unit images */
+.unit-img {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 2px solid var(--border-subtle);
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+.unit-img.large {
+  width: 80px;
+  height: 80px;
+}
+
+/* Unit card with image */
+.unit-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.unit-row:last-child { border-bottom: none; }
+.unit-info { flex: 1; min-width: 0; }
+.unit-info .unit-name {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+.unit-info .unit-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.unit-info .unit-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+.unit-tag {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.unit-tag.ur { background: rgba(230,57,70,0.15); color: var(--accent-red); }
+.unit-tag.ssr { background: rgba(244,197,66,0.15); color: var(--accent-gold); }
+.unit-tag.sr { background: rgba(76,201,240,0.15); color: var(--accent-blue); }
+
+/* Screenshot / infographic embed */
+.screenshot-wrap {
+  margin: 20px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-secondary);
+}
+.screenshot-wrap img {
+  width: 100%;
+  display: block;
+}
+.screenshot-caption {
+  padding: 10px 16px;
+  font-size: 12px;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+/* Gallery grid for multiple images */
+.img-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  margin: 16px 0;
+}
+.img-gallery img {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-secondary);
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.img-gallery img:hover {
+  transform: scale(1.03);
+  border-color: rgba(255,255,255,0.15);
+}
+
+/* Lightbox */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0,0,0,0.9);
+  justify-content: center;
+  align-items: center;
+  cursor: zoom-out;
+}
+.lightbox.open { display: flex; }
+.lightbox img {
+  max-width: 95vw;
+  max-height: 95vh;
+  border-radius: 8px;
+}
+
+/* Links section */
+.link-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.link-card {
+  display: block;
+  padding: 18px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.link-card:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(255,255,255,0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+.link-card .link-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+.link-card .link-desc {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+/* Collapsible */
+details {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+details[open] {
+  background: var(--bg-card-hover);
+  border-color: rgba(255,255,255,0.1);
+}
+summary {
+  padding: 16px 20px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  list-style: none;
+  transition: color 0.2s;
+  color: var(--text-primary);
+}
+summary:hover {
+  color: var(--accent-blue);
+}
+summary::-webkit-details-marker { display: none; }
+summary::before {
+  content: '\25B8';
+  font-size: 11px;
+  color: var(--text-dim);
+  transition: transform 0.25s ease;
+  opacity: 1;
+}
+details[open] summary::before { transform: rotate(90deg); color: var(--accent-blue); }
+
+.details-body {
+  padding: 0 20px 20px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+.details-body ul {
+  list-style: none;
+  padding: 0;
+}
+.details-body li {
+  padding: 4px 0 4px 18px;
+  position: relative;
+}
+.details-body li::before {
+  content: '\25B8';
+  position: absolute;
+  left: 0;
+  color: var(--text-dim);
+  font-size: 11px;
+  top: 6px;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--text-dim);
+  font-size: 12px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  background: transparent;
+  letter-spacing: 0;
+}
+
+/* Back navigation for section pages */
+.back-nav {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 16px 24px 0;
+}
+.back-nav a {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-dim);
+  text-decoration: none;
+  letter-spacing: 0;
+  transition: color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.back-nav a:hover { color: var(--text-primary); }
+
+/* Index page grid */
+.index-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 48px 24px 120px;
+}
+
+.index-card {
+  display: block;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 18px;
+  padding: 28px 24px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+.index-card::before { display: none; }
+.index-card:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(255,255,255,0.12);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.3);
+}
+.index-card .ic-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+.index-card .ic-title {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--text-primary);
+  letter-spacing: -0.2px;
+  margin-bottom: 6px;
+}
+.index-card .ic-desc {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* Tab panel styles */
+.tab-panel { display: none; }
+.tab-panel.active {
+  display: block;
+  animation: tabFadeIn 0.3s ease-out;
+}
+@keyframes tabFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Section mini-nav (intra-tab TOC) */
+.section-nav {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px 24px 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.section-nav::before { display: none; }
+.section-nav a {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 14px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 20px;
+  color: var(--text-dim);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+.section-nav a::before { display: none; }
+.section-nav a:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.15);
+  color: var(--text-primary);
+  transform: none;
+}
+
+/* Color variants */
+.section-nav a.nav-red, .section-nav a.nav-gold, .section-nav a.nav-blue, .section-nav a.nav-green, .section-nav a.nav-purple {
+  border-color: rgba(255,255,255,0.06);
+}
+.section-nav a.nav-red:hover { color: var(--accent-red); border-color: rgba(255,69,58,0.3); background: rgba(255,69,58,0.08); }
+.section-nav a.nav-gold:hover { color: var(--accent-gold); border-color: rgba(255,214,10,0.3); background: rgba(255,214,10,0.06); }
+.section-nav a.nav-blue:hover { color: var(--accent-blue); border-color: rgba(100,210,255,0.3); background: rgba(100,210,255,0.06); }
+.section-nav a.nav-green:hover { color: var(--accent-green); border-color: rgba(48,209,88,0.3); background: rgba(48,209,88,0.06); }
+.section-nav a.nav-purple:hover { color: var(--accent-purple); border-color: rgba(191,90,242,0.3); background: rgba(191,90,242,0.06); }
+
+/* Scroll-to-top button */
+.scroll-top {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--text-secondary);
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 200;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  transform: translateY(10px);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+}
+.scroll-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.scroll-top:hover {
+  background: rgba(255,255,255,0.14);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .hero { padding: 80px 20px 60px; }
+  .content { padding: 32px 20px 100px; }
+  .card { padding: 20px; border-radius: 14px 14px 14px 4px; }
+  .link-grid { grid-template-columns: 1fr; }
+  .index-grid { padding: 32px 20px 100px; }
+  .section-nav { padding: 14px 20px 0; gap: 6px; }
+  .section-nav a { font-size: 12px; padding: 5px 12px; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-label">STRATEGY GUIDE — 2026.03 최신판</div>
+  <h1>G-GENERATION ETERNAL</h1>
+  <div class="hero-sub">SD건담 G제네레이션 이터널 — 종합 공략본 (1주년 업데이트 반영)</div>
+</div>
+
+<nav class="nav-bar">
+  <div class="nav-inner" role="tablist">
+    <button class="nav-btn active" role="tab" aria-selected="true" onclick="showTab('최신')">1주년 최신</button>
+    <button class="nav-btn" role="tab" aria-selected="false" onclick="showTab('육성')">육성 · SP/SSP화</button>
+    <button class="nav-btn" role="tab" aria-selected="false" onclick="showTab('시리즈별')">시리즈별 추천</button>
+    <button class="nav-btn" role="tab" aria-selected="false" onclick="showTab('편성')">부대편성</button>
+    <button class="nav-btn" role="tab" aria-selected="false" onclick="showTab('전투')">전투 팁</button>
+    <button class="nav-btn" role="tab" aria-selected="false" onclick="showTab('이터널로드')">이터널 로드</button>
+    <button class="nav-btn" role="tab" aria-selected="false" onclick="showTab('제네타워')">제네타워</button>
+    <button class="nav-btn" role="tab" aria-selected="false" onclick="showTab('맵이벤트')">맵 이벤트</button>
+    <button class="nav-btn" role="tab" aria-selected="false" onclick="showTab('참고')">참고 링크</button>
+  </div>
+</nav>
+
+<div id="최신" class="tab-panel active">
+  <main class="content">
+
+  <div class="section-nav">
+    <a href="javascript:void(0)" onclick="jumpTo('최신-roadmap')" class="nav-red">로드맵</a>
+    <a href="javascript:void(0)" onclick="jumpTo('최신-gacha')" class="nav-gold">가챠</a>
+    <a href="javascript:void(0)" onclick="jumpTo('최신-reward')" class="nav-green">보상</a>
+    <a href="javascript:void(0)" onclick="jumpTo('최신-content')" class="nav-blue">콘텐츠</a>
+    <a href="javascript:void(0)" onclick="jumpTo('최신-qol')" class="nav-purple">개편</a>
+  </div>
+
+  <!-- ===== 1주년 로드맵 ===== -->
+  <section class="section" id="최신-roadmap">
+    <div class="section-header">
+      <div class="section-icon red">★</div>
+      <div class="section-title">1주년 로드맵 (2026.03.24 생방송 발표)</div>
+    </div>
+
+    <div class="tip">
+      <strong>1주년 생방송 요약</strong><br>
+      3월 24일 오후 8시, 유튜브 라이브로 진행된 1주년 로드맵 발표 생방송에서 성우 타케다 카이토와 프로듀서 코지마 쇼고가 출연하여 향후 6개월간의 업데이트 로드맵을 공개했습니다. 6개 신규 참전작, 1주년 한정 UR, 대규모 보상, 편의성 개편 등이 발표되었습니다.
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>신규 참전 작품 6종 (4월~6월)</div>
+      <p style="margin-bottom:12px; color: var(--text-primary); font-weight:600;">메인 스테이지 추가 (4월 1일~)</p>
+      <ul>
+        <li><strong>기동전사 건담 00 (후반):</strong> 세컨드 시즌 스토리. 더블오 건담, 더블오라이저, 아리오스 건담, 켈딤 건담, 세라비 건담, 어헤드, 스사노오, 가가, 리본즈 건담 등 개발 가능 유닛 다수 추가. 이노베이터 세력의 기체들도 포함</li>
+        <li><strong>신기동전기 건담 W Endless Waltz:</strong> 건담 W 30주년 기념 참전. 윙건담 제로(EW), 건담 데스사이즈 헬(EW), 건담 헤비암즈 커스텀(EW), 건담 샌드록 커스텀(EW), 알트론 건담(EW), 톨기스 III 등 EW 버전 기체 라인업</li>
+      </ul>
+      <p style="margin-top:16px; margin-bottom:12px; color: var(--text-primary); font-weight:600;">순차 합류 (4~6월)</p>
+      <ul>
+        <li><strong>기동전사 건담 NT (4~5월):</strong> 내러티브 건담, 시난주 스타인, 피닉스 등 UC NexT 0100 프로젝트의 핵심 기체들. 뉴타입 관련 스토리 이벤트 예상</li>
+        <li><strong>기동전사 건담 선더볼트 BANDIT FLOWER (5~6월):</strong> 풀아머 건담(선더볼트 Ver.) 등 하드코어 UC 전투 기체. 스토리 이벤트로 추가</li>
+        <li><strong>기동전사 건담 CROSS DIMENSION 0079 (5~6월):</strong> SFC 게임 오리지널 기체 참전. 스토리 이벤트</li>
+        <li><strong>기동전사 건담 SEED C.E.73 STARGAZER (5~6월):</strong> 스타게이저 건담, 스트라이크 노와르 등 C.E. 시대 외전 기체. 스토리 이벤트</li>
+      </ul>
+
+      <div class="highlight">
+        <strong>참전 작품 로드맵 요약</strong><br>
+        <table class="tier-table" style="margin-top:8px;">
+          <tr><th>시기</th><th>작품</th><th>형태</th></tr>
+          <tr><td>4/1~</td><td>건담 00 후반 + 건담 W EW</td><td>메인 스테이지</td></tr>
+          <tr><td>4~5월</td><td>건담 NT</td><td>메인 / 이벤트</td></tr>
+          <tr><td>5~6월</td><td>선더볼트 BF / CROSS DIMENSION / SEED STARGAZER</td><td>스토리 이벤트</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 1주년 한정 가챠 ===== -->
+  <section class="section" id="최신-gacha">
+    <div class="section-header">
+      <div class="section-icon gold">◆</div>
+      <div class="section-title">1주년 한정 UR 가챠 (4/1~)</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>1주년 한정 픽업 유닛</div>
+      <ul>
+        <li><strong>윙 건담 제로 (EW) [한정 UR]:</strong> 유저 투표 참전 요청 1위. W Endless Waltz의 상징적 기체. 트윈 버스터 라이플의 압도적 화력이 특징. 파일럿 히이로 유이(EW Ver.)와 함께 픽업</li>
+        <li><strong>더블오라이저 최종결전 사양 [한정 UR]:</strong> 건담 00 세컨드 시즌 최강 기체. 트란잠 라이저 발동 시 압도적 성능. 파일럿 세츠나 F 세이에이와 함께 픽업</li>
+        <li><strong>톨기스 III (EX) [통상 UR]:</strong> 제크스 마키스(프리벤트 윈드) 전용기. 히트 로드+메가캐논 콤보</li>
+      </ul>
+      <p style="margin-top:12px;"><strong>UR 서포터:</strong> 스메라기 리 노리에가 &amp; 프톨레마이오스2가 픽업 서포터로 등장</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>47연속 무료 보급 이벤트</div>
+      <ul>
+        <li>4월 1일부터 <strong>47연속 무료 유닛 보급</strong> 실시 (UR 2기 이상 확정)</li>
+        <li>1주년 패널 미션 완료 시 47연속 보급 티켓 추가 획득 가능</li>
+        <li>카운트다운 로그인 보너스: 8일간 출석으로 47연뽑 티켓 최대 12장 지급</li>
+        <li>특정 기간 제외, UR 유닛 1체 확정 + 리세마라(다시 뽑기) 가능한 10연 가챠도 병행</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>통상 UR 선택 가챠 (무료)</div>
+      <ul>
+        <li>1주년 기념 통상 UR 유닛 1기를 <strong>무료로 확정 획득</strong>하는 특별 보급</li>
+        <li>시난주(EX)까지 포함된 라인업에서 원하는 UR이 나올 때까지 <strong>무한 재도전</strong> 가능</li>
+        <li>무과금 유저에게 핵심 유닛 확보 기회 -- 반드시 활용할 것</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>프리미엄 유닛 조립 Ver.2 (4/16~)</div>
+      <ul>
+        <li>4월 16일 업데이트로 프리미엄 유닛 조립(어셈블) Version 2 출시</li>
+        <li>2026년 1월 16일까지 출시된 <strong>모든 비한정 UR 유닛 + 파일럿</strong>이 조립 범위에 추가</li>
+        <li>원하는 특정 UR을 확정으로 노릴 수 있는 시스템 -- 놓친 유닛 확보에 활용</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <strong>가챠 전략 팁</strong><br>
+      1주년 한정 UR(윙제로 EW, 더블오라이저)은 복각 시기 미정이므로, 다이아를 집중 투자하는 것이 좋습니다. 무료 47연뽑에서 원하는 UR이 나오지 않으면, 통상 UR 선택 가챠로 기존 유닛을 확보하고 다이아는 한정 픽업에 몰아넣는 전략을 추천합니다.
+    </div>
+  </section>
+
+  <!-- ===== 1주년 보상 ===== -->
+  <section class="section" id="최신-reward">
+    <div class="section-header">
+      <div class="section-icon green">●</div>
+      <div class="section-title">1주년 보상 총정리 (역대 최대 규모)</div>
+    </div>
+
+    <div class="highlight">
+      <strong>다이아 획득량 총합 (추정 1만 개 이상)</strong><br>
+      아래 항목들을 모두 챙기면 다이아만 1만 개 이상 + 47연뽑 티켓 다수를 확보할 수 있습니다. 복귀 유저 보상까지 합산하면 더 많습니다.
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot green"></span>카운트다운 로그인 보너스 (3/25~4/30)</div>
+      <ul>
+        <li>8일간 출석 시 다이아 최대 <strong>3,000개</strong> 지급</li>
+        <li>47연속 보급 티켓 최대 <strong>12장</strong> 지급</li>
+        <li>기간: 3월 25일 ~ 4월 30일 (8일 로그인 완료 시)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot green"></span>1주년 패널 미션</div>
+      <ul>
+        <li>미션 완료 시 다이아 <strong>3,000개</strong></li>
+        <li>47연속 보급 티켓 추가 획득</li>
+        <li>기타 강화 재료, PP 등 부가 보상</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot green"></span>1주년 특별 스테이지</div>
+      <ul>
+        <li>1주년 기념 한정 스테이지 클리어 시 다이아 최대 <strong>1,000개</strong></li>
+        <li>초보~중급 난이도까지 다양한 단계 구성 예상</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot green"></span>웹스토어 연동 보너스</div>
+      <ul>
+        <li>웹스토어 연동 시 다이아 <strong>3,000개</strong> 무료 지급</li>
+        <li>아직 연동하지 않은 유저는 반드시 챙길 것</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot green"></span>유닛 도감 미션 (신규 추가)</div>
+      <ul>
+        <li>3/25 업데이트로 유닛 도감 미션 신규 추가</li>
+        <li>보유 유닛에 따라 다이아 추가 보급량 증가</li>
+        <li>기존 유닛 컬렉션이 많은 유저에게 유리</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot green"></span>복귀 유저 특별 보상</div>
+      <ul>
+        <li>다이아 <strong>3,000개</strong> 지급</li>
+        <li>SSR 강화 데이터 지급</li>
+        <li>복귀 기준: 일정 기간 미접속 유저 대상</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <strong>보상 챙기기 체크리스트</strong><br>
+      1. 매일 로그인 (카운트다운 보너스 8일 완료)<br>
+      2. 1주년 패널 미션 전부 완료<br>
+      3. 1주년 특별 스테이지 클리어<br>
+      4. 웹스토어 연동 확인<br>
+      5. 유닛 도감 미션 확인<br>
+      6. 47연뽑 티켓 모아서 한번에 사용 (UR 확정 활용)
+    </div>
+  </section>
+
+  <!-- ===== 신규 콘텐츠 ===== -->
+  <section class="section" id="최신-content">
+    <div class="section-header">
+      <div class="section-icon blue">◎</div>
+      <div class="section-title">신규 콘텐츠 (4월~)</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot blue"></span>챌린지 모드 (신규)</div>
+      <ul>
+        <li>메인 스테이지에 추가되는 <strong>고난이도 콘텐츠</strong></li>
+        <li>편성 부대가 <strong>해당 시리즈 유닛으로 제한</strong> -- 범용 부대 사용 불가</li>
+        <li>첫 대상: <strong>기동전사 건담</strong>, <strong>기동전사 건담 SEED</strong></li>
+        <li>이후 다른 작품도 순차적으로 추가 예정</li>
+        <li>시리즈별로 유닛을 골고루 육성해야 하므로 사전 준비 필요</li>
+      </ul>
+      <div class="warn">
+        <strong>챌린지 모드 준비 팁</strong><br>
+        퍼스트 건담 및 SEED 시리즈 유닛을 미리 육성해두세요. SR 이상 유닛 4~6기 정도를 SP화까지 완료해두면 안정적으로 클리어 가능합니다. 특히 퍼스트 건담 계열은 무과금으로도 확보 가능한 유닛이 많으니 미리 준비하세요.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot blue"></span>이터널 로드 신규 스테이지 (4월)</div>
+      <ul>
+        <li>엔드 콘텐츠 이터널 로드에 <strong>신규 스테이지</strong> 추가</li>
+        <li>새로운 <strong>태그 스테이지</strong> 도입 -- 특정 태그 유닛만 출격 가능한 변칙 스테이지</li>
+        <li>기존 익스트림급 이상의 난이도 예상</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot blue"></span>4월 이벤트 일정</div>
+      <ul>
+        <li><strong>4/1:</strong> 강적습격 -- 스콜피오 등장 (건담 W 시리즈 보스)</li>
+        <li><strong>4/16~:</strong> 대규모 공략전(맵 이벤트) -- 새 동료 합류 이벤트</li>
+        <li>히스토리 스테이지에 건담 외전 복각</li>
+        <li>마스터 리그 시즌 10 진행 중 (3/25 개막)</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== 편의성 개편 ===== -->
+  <section class="section" id="최신-qol">
+    <div class="section-header">
+      <div class="section-icon purple">◈</div>
+      <div class="section-title">편의성 대규모 개편</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot purple"></span>3/25 즉시 적용</div>
+      <ul>
+        <li>유닛 최대 보유 수 확장: <strong>1,200기 → 1,400기</strong></li>
+        <li>유닛 도감 미션 신규 추가 (다이아 보급량 증가)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot purple"></span>4월 후반 이후 순차 적용</div>
+      <ul>
+        <li><strong>홈 화면 디오라마:</strong> 홈 화면을 디오라마 형식으로 변경, 보유 유닛을 자유롭게 배치하여 나만의 격납고를 꾸밀 수 있음</li>
+        <li><strong>강화 소재 레어도 지정:</strong> 강화 재료 선택 시 레어도를 지정하여 불필요한 소재를 빠르게 필터링</li>
+        <li><strong>강적습격 일괄 클리어:</strong> 챌린지 모드 일괄 클리어 기능으로 반복 노동 대폭 경감</li>
+        <li><strong>제네타워 층 스킵:</strong> 과거 도달 층수까지 자동 스킵 -- 매번 처음부터 올라갈 필요 없음</li>
+        <li><strong>출격 잔여 횟수 표시:</strong> 강화 육성 스테이지 일일 출격 횟수 잔여량을 화면에 표시</li>
+        <li><strong>사운드 팩 BGM 설정:</strong> 구매한 사운드 팩의 BGM을 홈 화면에서 재생 가능</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <strong>편의성 개편 핵심 포인트</strong><br>
+      제네타워 층 스킵과 강적습격 일괄 클리어는 반복 플레이 시간을 크게 줄여줍니다. 특히 제네타워를 매주 올라가던 유저들에게는 큰 변화입니다. 유닛 보유 상한 확장(1,400기)도 컬렉터 유저에게 반가운 소식.
+    </div>
+  </section>
+
+
+  </main>
+</div>
+
+<div id="육성" class="tab-panel">
+  <main class="content">
+
+  <div class="section-nav">
+    <a href="javascript:void(0)" onclick="jumpTo('육성-roadmap')" class="nav-gold">로드맵</a>
+    <a href="javascript:void(0)" onclick="jumpTo('육성-sp')" class="nav-gold">SP화</a>
+    <a href="javascript:void(0)" onclick="jumpTo('육성-ssp')" class="nav-red">SSP화</a>
+    <a href="javascript:void(0)" onclick="jumpTo('육성-pilot')" class="nav-blue">파일럿</a>
+    <a href="javascript:void(0)" onclick="jumpTo('육성-ult')" class="nav-purple">ULT</a>
+    <a href="javascript:void(0)" onclick="jumpTo('육성-farm')" class="nav-green">파밍</a>
+    <a href="javascript:void(0)" onclick="jumpTo('육성-resource')" class="nav-gold">자원</a>
+    <a href="javascript:void(0)" onclick="jumpTo('육성-diamond')" class="nav-red">다이아</a>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- 섹션 1: 기체 육성 로드맵 -->
+  <!-- ============================================================ -->
+  <section class="section" id="육성-roadmap">
+    <div class="section-header">
+      <div class="section-icon gold">⚙</div>
+      <div class="section-title">기체 육성 로드맵</div>
+    </div>
+
+    <div class="highlight">
+      <strong>핵심 원칙</strong> — 이 게임은 "개발"이 핵심 시스템. 저랭크 기체를 육성해도 개발 시 레벨이 계승되므로 낭비가 아님. 단, SP칩/SSP칩은 희소 재화이므로 신중히 투자할 것.
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>1단계 — 퍼스트 건담 ~ Z건담 (지쿠악스 올인)</div>
+      <ul>
+        <li><strong>지쿠악스에 자원 집중 투자.</strong> 초반 가장 효율적인 전력 확보 방법</li>
+        <li>G-3 건담은 하드 보상으로 1돌 가능 → 개발 소재로 활용</li>
+        <li>지옹 개발은 급하지 않음 → 나중에 여유 재화로 진행</li>
+        <li>이 단계에서 R/N 기체도 레벨 올려두면 개발 시 계승되므로 손해 아님</li>
+        <li><strong>GP 절약 팁:</strong> 해체 화면에서 좌측 하단의 "알아서 해체" 버튼 활용하면 불필요 기체 정리가 편리</li>
+      </ul>
+      <div class="tip">
+        <strong>초반 캐피탈 수급:</strong> 스테이지 클리어 시 점령지 1개당 1,000 캐피탈 추가 지급. 발사대 제외 모든 점령지를 확보하는 습관을 들이자. 퀘스트 무비 보상으로 15,000 캐피탈도 챙길 것.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>2단계 — SEED 진입 (SR 프리덤 다작)</div>
+      <ul>
+        <li><strong>SR 프리덤 2~3대 제작</strong>이 핵심. 모든 SR 중 최고 공격력 보유, 최종무장 위력 5,000</li>
+        <li><em>ZZ 보스 클리어 전까지 절대 합치지 말 것!</em> 공중맵에서 프리덤 다작이 클리어의 열쇠</li>
+        <li>SR 포비든도 4대 기준 육성 — 방어 역할 충분히 수행</li>
+        <li>SR 더블제타건담도 최종무장 위력 5,000 → SP화 시 UR급 성능 발휘</li>
+        <li>SEED 시리즈 개발도를 높여두면 나중에 ULT 기체 보상에도 유리</li>
+      </ul>
+      <div class="warn">
+        <strong>주의:</strong> 프리덤을 합치면 다작 전략이 무너짐. ZZ 보스 전까지는 개별 유닛으로 운용할 것!
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot blue"></span>3단계 — W 시리즈 (디버프+딜+탱)</div>
+      <ul>
+        <li><strong>윙건담</strong> → 디버프 특화. 다양한 스테이지에서 범용적으로 활약</li>
+        <li><strong>에피온</strong> → 근접 딜러. 보스전에서 화력 집중</li>
+        <li><strong>톨기스</strong> → 탱커 역할. 전열 유지에 필수</li>
+        <li>어려운 맵은 프리덤 조합으로 돌파 가능 → W기체 미완성이어도 괜찮음</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot green"></span>4단계 — ZZ 보스 이후 (프리덤 합성 & 확장)</div>
+      <ul>
+        <li>프리덤 합쳐서 <strong>SR 3돌 승급</strong> → 이 시점부터 본격적인 주력기로 전환</li>
+        <li>이후 00, W EW, NT, 수성의 마녀 등 신규 시리즈로 전력 확장</li>
+        <li>각 시리즈별 핵심 기체 1~2대씩 확보 → 태그 시스템 대응</li>
+        <li>마스터리그 진입 준비: 동일 기체 복수 출전 불가이므로 다양한 시리즈 기체 필요</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot purple"></span>5단계 — 엔드게임 (SP화 · SSP화 · ULT)</div>
+      <ul>
+        <li>SP칩 확보 후 핵심 기체 SP화 진행 (아래 SP화 섹션 참고)</li>
+        <li>SSP화로 기존 SP기체를 한 단계 더 강화</li>
+        <li>개발도 100% 달성한 시리즈부터 ULT 기체 획득 → 상위 개발</li>
+        <li>강적습격·이터널로드·제네타워 등 고난이도 컨텐츠 도전</li>
+      </ul>
+    </div>
+
+    <div class="highlight">
+      <strong>자원 투자 우선순위 요약</strong> — 지쿠악스 → SR 프리덤(다작) → SR ZZ 로봇 → W 시리즈 핵심기 → 하드 보상 활용 → SP화 대상 선별
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 섹션 2: SP화 시스템 상세 -->
+  <!-- ============================================================ -->
+  <section class="section" id="육성-sp">
+    <div class="section-header">
+      <div class="section-icon gold">★</div>
+      <div class="section-title">SP화 시스템 (N~SSR → Lv.100 해방)</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>SP화 기본 메커니즘</div>
+      <ul>
+        <li><strong>SP칩 100개</strong> 소모로 SP화 실행 → 레벨 상한 100까지 해방 + 스탯 보너스</li>
+        <li>대상: N / R / SR / SSR 등급 기체 및 캐릭터 (UR은 이미 Lv.100이므로 대상 아님)</li>
+        <li>SP화 후 스탯 총합: 평균 10~11만대 (UR 풀돌 12~13만대보다 낮지만 <strong>실전 충분</strong>)</li>
+        <li>무장 POW, 부가효과, 사거리, 이동력은 변하지 않음 → <strong>공격형·내구형 기체가 혜택 큼</strong></li>
+        <li>2025.12 패치로 시리즈/태그 한정 SP칩 추가 → 여러 종류의 SP칩을 섞어서 사용 가능</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot blue"></span>SP칩 수급처 총정리</div>
+      <table class="tier-table">
+        <thead><tr><th>수급처</th><th>수량</th><th>주기</th><th>비고</th></tr></thead>
+        <tbody>
+          <tr><td>캐릭터 리퀘스트 (위클리)</td><td>약 20개</td><td>매주</td><td>가장 안정적인 수급원. 약 5주마다 1기 SP화 가능</td></tr>
+          <tr><td>마스터리그 보상</td><td>변동</td><td>시즌별</td><td>PvP 보상으로 SP칩·ULT 전용 개발 재료 지급</td></tr>
+          <tr><td>이벤트 보상</td><td>변동</td><td>이벤트별</td><td>맵 이벤트·기간 한정 미션에서 수시 배포</td></tr>
+          <tr><td>강화 육성 스테이지</td><td>변동</td><td>상시</td><td>Lv.6 추가 이후 보상 증가. 재충전 불가 주의</td></tr>
+          <tr><td>이터널로드 보상</td><td>변동</td><td>상시</td><td>진행 보상으로 소량 획득 가능</td></tr>
+          <tr><td>시리즈/태그 한정 SP칩</td><td>변동</td><td>이벤트별</td><td>2025.12 추가. 범용 SP칩과 혼합 사용 가능</td></tr>
+        </tbody>
+      </table>
+      <div class="tip">
+        <strong>SP칩 절약 팁:</strong> 시리즈/태그 한정 SP칩이 이벤트로 풀릴 때 해당 시리즈 기체 SP화를 진행하면 범용 SP칩을 아낄 수 있다. 범용 SP칩은 최대한 아껴둘 것.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>SP화 선택 기준</div>
+      <div class="highlight">
+        <strong>SP화 최소 기준선</strong> — 아래 조건을 만족하면 어떤 기체든 SP화 후 실전 활약 가능:
+        <ul style="margin-top:0.5em">
+          <li>최종 무장 위력 <strong>4,500 이상</strong></li>
+          <li><strong>지상·우주 양쪽</strong> 출격 가능</li>
+          <li>사거리 <strong>4칸</strong> 이상, 이동력 <strong>5칸</strong> 이상</li>
+        </ul>
+      </div>
+      <ul>
+        <li><strong>공격형:</strong> 공격력 스탯이 높은 기체일수록 SP화 효과 극대화</li>
+        <li><strong>지원/디버프형:</strong> 디버프 강도와 사정거리가 핵심. 디버프 효과는 SP화로 변하지 않으므로 원래 좋은 기체를 선택</li>
+        <li><strong>방어/내구형:</strong> 방어 특수능력 + HP 스탯 증가로 탱킹 성능 크게 향상</li>
+        <li><strong>좋아하는 기체 우선!</strong> 캐릭터 게임인 만큼, 극단적으로 약한 기체가 아니라면 좋아하는 기체 SP화가 정답</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>기체 SP화 추천 우선순위</div>
+      <table class="tier-table">
+        <thead><tr><th>순위</th><th>기체</th><th>등급</th><th>역할</th><th>추천 이유</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="tier-badge tier-ss">S+</span></td>
+            <td>S건담</td>
+            <td>SSR</td>
+            <td>공격</td>
+            <td>기본 능력치가 UR급. 지구연방 태그로 파일럿 선택지 풍부. 일격필살 부대 편성 가능</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge tier-ss">S+</span></td>
+            <td>바이아란 커스텀 2호기</td>
+            <td>SSR</td>
+            <td>공격</td>
+            <td>사거리 5 강력 무장 + 공중 이동. 지구연방 돌파력 에이스</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge tier-ss">S+</span></td>
+            <td>뉴건담</td>
+            <td>SSR</td>
+            <td>공격</td>
+            <td>범용성 최고. 핵심 딜러로 최우선 SP화 대상</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge tier-s">S</span></td>
+            <td>제타건담</td>
+            <td>SSR</td>
+            <td>디버프</td>
+            <td>강력한 디버프 효과. 다양한 스테이지에서 출격 가능한 범용성</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge tier-s">S</span></td>
+            <td>프리덤 건담</td>
+            <td>SR</td>
+            <td>공격</td>
+            <td>SR 중 최고 공격력. 최종무장 5,000. SP화 시 UR과 견줄 만한 화력</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge tier-s">S</span></td>
+            <td>더블제타건담</td>
+            <td>SR</td>
+            <td>공격</td>
+            <td>최종무장 5,000. 프리덤과 함께 SR SP화의 양대 산맥</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge tier-s">S</span></td>
+            <td>아마츠</td>
+            <td>SSR</td>
+            <td>공격</td>
+            <td>이터널로드 대비 핵심기. SEED 태그 필수 전력</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge tier-a">A</span></td>
+            <td>백식</td>
+            <td>SSR</td>
+            <td>지원</td>
+            <td>Z건담 시리즈 지원기. 이터널로드 태그 대응</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge tier-a">A</span></td>
+            <td>건담 제미너스01</td>
+            <td>SSR</td>
+            <td>공격</td>
+            <td>W 시리즈 태그 대응. 안정적인 딜러</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge tier-a">A</span></td>
+            <td>1.5건담</td>
+            <td>SSR</td>
+            <td>공격</td>
+            <td>00 시리즈 대응. 높은 범용성</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge tier-a">A</span></td>
+            <td>건담엑스 / 샤이닝 건담</td>
+            <td>SR</td>
+            <td>공격</td>
+            <td>X·G건담 미션 전용 필수기. 샤이닝은 사거리 빼면 1선급</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge tier-a">A</span></td>
+            <td>덱 핵심 방어기 (포비든 등)</td>
+            <td>SR</td>
+            <td>방어</td>
+            <td>SP화로 HP 대폭 증가. 탱킹 안정성 크게 향상</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="warn">
+        <strong>SSR 사이코 건담 SP화 비추!</strong> 방어형 하이뉴건담이 상위호환. 방어는 SR 포비든으로 충분. SP칩은 매우 귀중한 재화이므로 신중히 사용.
+      </div>
+      <div class="warn">
+        <strong>동일 기체 다수 SP화 비추!</strong> 태그 시스템 때문에 다양한 시리즈 기체가 필요. 마스터리그에서 동일 기체 복수 출전 불가. 하나의 시리즈에 올인하지 말 것.
+      </div>
+      <div class="tip">
+        <strong>윙건담 제로 / 풀아머ZZ:</strong> 이 두 기체는 풀돌만 해도 충분한 성능. SP칩이 부족하면 굳이 SP화하지 않아도 됨. 여유가 생겼을 때 진행해도 늦지 않다.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 섹션 3: SSP화 시스템 -->
+  <!-- ============================================================ -->
+  <section class="section" id="육성-ssp">
+    <div class="section-header">
+      <div class="section-icon red">★★</div>
+      <div class="section-title">SSP화 시스템 (2025.12 신규 추가)</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>SSP화 메커니즘</div>
+      <ul>
+        <li><strong>조건:</strong> SP화 완료 + 최대 레벨(Lv.100) 달성한 유닛에만 적용 가능</li>
+        <li><strong>재료:</strong> SSP칩 (전용 재화) 소모</li>
+        <li>SSP화 적용 시 두 가지 강화 경로 해방:
+          <ul>
+            <li><strong>개조 레벨</strong> — 스테이터스(HP, 공격, 방어 등) 추가 강화</li>
+            <li><strong>커스텀 코어</strong> — 무장 성능(위력, 부가효과) 강화</li>
+          </ul>
+        </li>
+        <li>기존 SP화를 더 끌어올리는 시스템 → <strong>SR/SSR 기체의 가치가 더욱 상승</strong></li>
+        <li>SP화 때 선택을 후회할 필요 없음 — SSP화로 더 강해질 수 있으므로</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>SSP칩 수급처</div>
+      <table class="tier-table">
+        <thead><tr><th>수급처</th><th>비고</th></tr></thead>
+        <tbody>
+          <tr><td>강화 육성 스테이지 Lv.6</td><td>SSP 소재의 핵심 수급처. 기존 Lv.5보다 보상 대폭 증가</td></tr>
+          <tr><td>이벤트 무료 배포</td><td>SSP칩 무료 배포 이벤트 수시 진행. 공지사항 확인 필수</td></tr>
+          <tr><td>마스터리그 보상</td><td>시즌 보상으로 SSP칩 포함</td></tr>
+          <tr><td>이벤트 상점</td><td>이벤트 재화로 교환 가능한 경우 있음</td></tr>
+        </tbody>
+      </table>
+      <div class="warn">
+        <strong>SSP칩은 SP칩보다 더 희소!</strong> 현재 수급량이 매우 제한적이므로 최우선 기체(S건담, 바이아란 2호기, 뉴건담 등)에만 투자할 것. 무료 배포 이벤트를 절대 놓치지 말 것.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot blue"></span>SSP화 추천 우선순위</div>
+      <ul>
+        <li><span class="tier-badge tier-ss">1순위</span> 이미 SP화한 <strong>주력 공격기</strong> (S건담, 바이아란 2호기, 뉴건담, 프리덤 등) — 커스텀 코어로 무장 위력 상승 효과가 가장 크다</li>
+        <li><span class="tier-badge tier-s">2순위</span> 이미 SP화한 <strong>디버프/지원기</strong> (제타건담, 백식 등) — 개조 레벨로 생존력 확보</li>
+        <li><span class="tier-badge tier-a">3순위</span> 이미 SP화한 <strong>방어기</strong> — HP 추가 상승으로 탱킹 안정성 극대화</li>
+      </ul>
+      <div class="tip">
+        <strong>SSP화 = SP화의 진화형.</strong> SP화 때 좋아하는 기체를 골랐다면 SSP화도 같은 기체에 투자하는 것이 가장 효율적. 새로운 기체를 SP화하기보다 기존 주력기를 SSP화하는 것이 전력 상승폭이 더 크다.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 섹션 4: 캐릭터(파일럿) 육성 -->
+  <!-- ============================================================ -->
+  <section class="section" id="육성-pilot">
+    <div class="section-header">
+      <div class="section-icon blue">👤</div>
+      <div class="section-title">캐릭터(파일럿) 육성 & SP화</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>파일럿 육성 기본 원칙</div>
+      <ul>
+        <li>SSR 이상 캐릭터를 먼저 육성, 빈자리를 SR로 보조</li>
+        <li>기체에 비해 <strong>캐릭터 소재 입수가 어려움</strong> → 핵심 딜러/디버퍼 위주 집중 투자</li>
+        <li>UR 뽑기 캐릭터가 있다면 <strong>최우선 육성 대상</strong></li>
+        <li>파일럿 매칭이 기체 성능을 크게 좌우 → 공격기엔 공격 스탯 높은 파일럿, 방어기엔 방어 스탯 높은 파일럿 배정</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>파일럿 SP화 추천 (등급별)</div>
+
+      <div class="tip">
+        <strong>등급 선택 기준</strong><br>
+        · <strong>UR 파일럿 보유 시:</strong> 무조건 UR 우선 사용. SSR보다 어빌리티 효율이 압도적<br>
+        · <strong>SSR 파일럿:</strong> 대부분 콘텐츠의 핵심 전력. SP화 투자 가치 높음<br>
+        · <strong>SR 파일럿:</strong> SSR 미보유 시 대체용. 네임드 SR(하만, 플투 등)은 SP화 시 SSR급<br>
+        · <strong>R 이하:</strong> 실전 투입 가치 없음. SP화 비추
+      </div>
+
+      <table class="tier-table">
+        <thead><tr><th>역할</th><th>UR (최우선)</th><th>SSR (핵심)</th><th>SR (대체)</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>공격형</strong></td>
+            <td><span class="tier-badge tier-ss">UR</span> 세츠나(트리플액션)<br><span class="tier-badge tier-ss">UR</span> 샤아(93)(트리플액션)<br><span class="tier-badge tier-ss">UR</span> 키라(피해량+25%)</td>
+            <td><span class="tier-badge tier-s">SSR</span> 샤아(찬스스텝2회)<br><span class="tier-badge tier-s">SSR</span> 세츠나(이동+1)<br><span class="tier-badge tier-s">SSR</span> 도몬(격투 최상급)</td>
+            <td><span class="tier-badge tier-a">SR</span> 카미유 비단<br><span class="tier-badge tier-a">SR</span> 아무로 레이<br><span class="tier-badge tier-a">SR</span> 쥬도 아시타</td>
+          </tr>
+          <tr>
+            <td><strong>지원형</strong></td>
+            <td><span class="tier-badge tier-ss">UR</span> 아무로(지원공격2회)<br><span class="tier-badge tier-ss">UR</span> 슬레타(사격1위)</td>
+            <td><span class="tier-badge tier-s">SSR</span> 와츠 스테프니<br><span class="tier-badge tier-s">SSR</span> 하만 칸<br><span class="tier-badge tier-s">SSR</span> 티에리아</td>
+            <td><span class="tier-badge tier-a">SR</span> 엠마 신<br><span class="tier-badge tier-a">SR</span> 하만 칸(SR)<br><span class="tier-badge tier-a">SR</span> 플투(SP화시 SSR급)</td>
+          </tr>
+          <tr>
+            <td><strong>내구/방어</strong></td>
+            <td><span class="tier-badge tier-ss">UR</span> 아무로(초대)(회피100%)<br><span class="tier-badge tier-ss">UR</span> 미카즈키(HP50%회복)</td>
+            <td><span class="tier-badge tier-s">SSR</span> 아울 리더<br><span class="tier-badge tier-s">SSR</span> 트로와 바튼<br><span class="tier-badge tier-s">SSR</span> 코우 우라키</td>
+            <td><span class="tier-badge tier-a">SR</span> 로베르토<br><span class="tier-badge tier-a">SR</span> 노인(W탱커)<br><span class="tier-badge tier-a">SR</span> 조르주(HP회복)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="tip">
+        <strong>SR 파일럿도 강하다!</strong> 하만 칸, 플투(SR) 등 네임드 SR은 스탯·어빌리티가 우대되어 SSR 대체 가능. SP화 시 순수 스탯 800 이상 달성하는 SR 파일럿도 다수 존재.
+      </div>
+      <div class="highlight">
+        <strong>파일럿 SP칩도 희소 재화!</strong> 기체 SP칩과 별도 재화. 수급이 기체보다 더 어려우므로, 확실한 주력 파일럿에만 투자. "일단 아끼고 나중에 쓴다"가 정답.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot blue"></span>시리즈별 파일럿 상세 추천 (등급 표시)</div>
+
+      <details>
+        <summary>우주세기 (1st / Z / ZZ / 역샤 / UC)</summary>
+        <div class="details-body">
+          <table class="tier-table">
+            <thead><tr><th>파일럿</th><th>등급</th><th>주스텟</th><th>역할</th><th>최적 기체 & 비고</th></tr></thead>
+            <tbody>
+              <tr><td>샤아 아즈나블</td><td><span class="tier-badge tier-ss">UR</span></td><td>격투 800+</td><td>공격</td><td>사자비. 트리플 액션. 마스터리그 매시즌 채용</td></tr>
+              <tr><td>아무로 레이</td><td><span class="tier-badge tier-ss">UR</span></td><td>각성 808</td><td>지원</td><td>뉴건담/Hi-v. 지원공격 2회. 각성+반응 +20%</td></tr>
+              <tr><td>아무로 레이 (초대)</td><td><span class="tier-badge tier-s">SSR</span></td><td>회피 특화</td><td>내구</td><td>건담/G-3. 회피 100% 스킬. 피해 경감</td></tr>
+              <tr><td>카미유 비단</td><td><span class="tier-badge tier-s">SSR</span></td><td>격투/각성</td><td>공격</td><td>Z건담. 뉴타입 어빌. Z·ZZ 양쪽 태그</td></tr>
+              <tr><td>하만 칸</td><td><span class="tier-badge tier-s">SSR</span></td><td>지원 특화</td><td>지원</td><td>큐베레이. SP화 추천. ZZ/네오지온 범용</td></tr>
+              <tr><td>버나지 링크스</td><td><span class="tier-badge tier-s">SSR</span></td><td>각성 높음</td><td>공격</td><td>유니콘. 적 방어 감소 + 지원공격 3회</td></tr>
+              <tr><td>코우 우라키</td><td><span class="tier-badge tier-s">SSR</span></td><td>수비 최고</td><td>내구</td><td>GP03. 서포트 방어 어빌 2개</td></tr>
+              <tr><td>카미유 비단</td><td><span class="tier-badge tier-a">SR</span></td><td>격투 밸런스</td><td>공격</td><td>SSR 없을 때 대체. SP화 시 쓸만</td></tr>
+              <tr><td>하만 칸</td><td><span class="tier-badge tier-a">SR</span></td><td>지원</td><td>지원</td><td>네임드 SR. SP화 시 SSR급 성능</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+
+      <details>
+        <summary>SEED / SEED DESTINY</summary>
+        <div class="details-body">
+          <table class="tier-table">
+            <thead><tr><th>파일럿</th><th>등급</th><th>주스텟</th><th>역할</th><th>최적 기체 & 비고</th></tr></thead>
+            <tbody>
+              <tr><td>키라 야마토</td><td><span class="tier-badge tier-ss">UR</span></td><td>사격 785</td><td>공격</td><td>스프리덤. 적 ATK -25%. 각성+반응 +25%</td></tr>
+              <tr><td>키라 야마토</td><td><span class="tier-badge tier-s">SSR</span></td><td>사격 밸런스</td><td>공격</td><td>프리덤. UR 없을 때 핵심 파일럿</td></tr>
+              <tr><td>아스란 자라</td><td><span class="tier-badge tier-s">SSR</span></td><td>격투 높음</td><td>공격</td><td>저스티스/인저. 격투형 에이스</td></tr>
+              <tr><td>신 아스카</td><td><span class="tier-badge tier-s">SSR</span></td><td>격투 특화</td><td>공격</td><td>데스티니. 순수 격투형 딜러</td></tr>
+              <tr><td>라크스 클라인</td><td><span class="tier-badge tier-ss">UR(배포)</span></td><td>지원 특화</td><td>지원</td><td>제네타워 14층 보상. 무료 UR!</td></tr>
+              <tr><td>키라 야마토</td><td><span class="tier-badge tier-a">SR</span></td><td>사격</td><td>공격</td><td>SR 프리덤에 태우는 기본 조합</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+
+      <details>
+        <summary>00 / W / G건담 / 수마녀 / 기타</summary>
+        <div class="details-body">
+          <table class="tier-table">
+            <thead><tr><th>파일럿</th><th>등급</th><th>주스텟</th><th>역할</th><th>최적 기체 & 비고</th></tr></thead>
+            <tbody>
+              <tr><td>세츠나 F. 세이에이</td><td><span class="tier-badge tier-ss">UR</span></td><td>격투 최상</td><td>공격</td><td>엑시아/더블오. 트란잠 DMG+30%. 범용 최강</td></tr>
+              <tr><td>세츠나 F. 세이에이</td><td><span class="tier-badge tier-s">SSR</span></td><td>격투 높음</td><td>공격</td><td>엑시아. 이동+1. UR 없을 때 핵심</td></tr>
+              <tr><td>히이로 유이</td><td><span class="tier-badge tier-s">SSR</span></td><td>사격/격투</td><td>공격</td><td>윙건담 제로(EW). 1주년 EW 추가</td></tr>
+              <tr><td>도몬 캇슈</td><td><span class="tier-badge tier-s">SSR</span></td><td>격투 최상</td><td>공격</td><td>갓건담/샤이닝. 격투 스탯 전체 1위</td></tr>
+              <tr><td>슬레타 머큐리</td><td><span class="tier-badge tier-ss">UR</span></td><td>사격 774</td><td>지원</td><td>에어리얼. 사격 1위. 지원이면서 딜 높음</td></tr>
+              <tr><td>미카즈키 아우구스</td><td><span class="tier-badge tier-s">SSR</span></td><td>격투+수비</td><td>내구</td><td>바르바토스. 크리 100% + HP 50% 회복</td></tr>
+              <tr><td>가로드 란</td><td><span class="tier-badge tier-s">SSR</span></td><td>사격 높음</td><td>공격</td><td>건담X/DX. X 이터널로드 필수</td></tr>
+              <tr><td>알렐루야</td><td><span class="tier-badge tier-a">SR</span></td><td>격투</td><td>공격</td><td>큐리오스. SP화 시 00 이터널로드 활용</td></tr>
+              <tr><td>도몬 캇슈</td><td><span class="tier-badge tier-a">SR</span></td><td>격투</td><td>공격</td><td>SSR 없을 때 샤이닝 탑승용</td></tr>
+              <tr><td>히이로 유이</td><td><span class="tier-badge tier-a">SR</span></td><td>사격</td><td>공격</td><td>SR 윙건담 탑승. W 이터널로드 대비</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <div class="warn">
+      <strong>파일럿-기체 매칭 핵심 원칙</strong><br>
+      · 사격 무기 위주 기체 → 사격 스탯 높은 파일럿 필수 (키라, 슬레타, 가로드 등)<br>
+      · 격투 무기 위주 기체 → 격투 스탯 높은 파일럿 필수 (세츠나, 도몬, 샤아 등)<br>
+      · UR 파일럿이 있으면 SSR보다 UR 우선 사용 (어빌리티 효율 차이가 큼)<br>
+      · 전용기 태그 매칭 시 추가 보너스 발동 — 반드시 같은 시리즈 파일럿+기체 조합 우선
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 섹션 5: ULT 기체 -->
+  <!-- ============================================================ -->
+  <section class="section" id="육성-ult">
+    <div class="section-header">
+      <div class="section-icon purple">◆</div>
+      <div class="section-title">얼티메이트(ULT) 기체 가이드</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot purple"></span>ULT 기체 기본 정보</div>
+      <ul>
+        <li>각 시나리오 <strong>개발도 100% 달성</strong> 시 보상으로 지급</li>
+        <li>초기 SSR로 지급 → 1번 개발하면 UR → 같은 방식으로 <strong>최대 2번 개발 가능</strong> (SSR→UR→UR+)</li>
+        <li><strong>한계돌파·SP화 불가.</strong> 대신 개발 계통도에서 상위 등급 기체의 소재로 사용</li>
+        <li>EX무장 없음. 하지만 SP화에 필요한 전용 재화 불필요</li>
+        <li>개발 시 <strong>레벨 계승</strong> → 하위 ULT를 레벨 올려놔도 상위 개발 시 레벨 유지</li>
+        <li>무장 업그레이드 후 상위 개발 시 <strong>재화 전액 반환</strong></li>
+        <li>어빌리티와 무장 부가효과가 등급 업그레이드 시 함께 강화</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>ULT 기체 개발 필요 재료</div>
+      <ul>
+        <li><strong>해당 시리즈의 개발 재료</strong> — 시리즈별 스토리 진행으로 획득</li>
+        <li><strong>연구 기술서</strong> — 최종 단계 SSR 유닛 개발에 필요</li>
+        <li><strong>얼티밋 전용 개발 재료</strong> — 이터널로드 클리어 보상 또는 마스터리그 보상으로 획득</li>
+        <li>아직 <strong>스토리 미완결 시리즈</strong>는 개발도 100% 달성 불가 → ULT 획득도 불가</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>ULT 기체 투자 가치 판단</div>
+      <table class="tier-table">
+        <thead><tr><th>추천도</th><th>ULT 기체</th><th>평가</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="tier-badge tier-ss">최추천</span></td>
+            <td>제타건담 3호기 P2</td>
+            <td>ULT 중 가장 높은 평가. UR+ 개발 시 강력한 성능. 우선 투자 대상</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge tier-a">보통</span></td>
+            <td>기타 ULT 기체</td>
+            <td>SSP화 도입 이후 일반 SP/SSP 기체의 성능이 올라서 ULT 우위가 상대적으로 감소. 개발도 채우기의 부산물로 자연스럽게 획득하는 것이 효율적</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="highlight">
+        <strong>ULT vs SP/SSP, 어느 쪽이 강한가?</strong> SSP화 도입 이후, 잘 키운 SSP 기체가 ULT UR+ 기체와 비슷하거나 오히려 앞서는 경우도 생김. ULT에 올인하기보다는 SP/SSP 기체를 안정적으로 키우는 것이 자원 효율면에서 유리. 단, 제타건담 3호기 P2는 예외적으로 투자 가치 높음.
+      </div>
+      <div class="tip">
+        <strong>ULT 기체 육성 팁:</strong> ULT 기체는 레벨을 올려놔도 상위 개발 시 계승되므로, 일단 받으면 바로 레벨업 시작. 무장 강화 재화도 상위 개발 시 전액 반환되므로 부담 없이 강화해서 사용하면 된다.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 섹션 6: 강화 육성 스테이지 -->
+  <!-- ============================================================ -->
+  <section class="section" id="육성-farm">
+    <div class="section-header">
+      <div class="section-icon green">⚔</div>
+      <div class="section-title">강화 육성 스테이지 파밍 가이드</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot green"></span>강화 육성 스테이지 개요</div>
+      <ul>
+        <li>기체·캐릭터 강화 소재, SP칩, SSP칩 등을 획득하는 <strong>핵심 파밍 컨텐츠</strong></li>
+        <li>재충전 <strong>불가</strong> — 한번 소모하면 자연 회복 대기 필요. 횟수를 아껴서 사용할 것</li>
+        <li>Lv.1~6까지 존재. <strong>Lv.6은 2025.12 패치로 추가</strong>된 최고 난이도</li>
+        <li>높은 레벨일수록 드랍 보상 품질과 수량 증가</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>레벨별 파밍 전략</div>
+      <table class="tier-table">
+        <thead><tr><th>레벨</th><th>추천 시기</th><th>비고</th></tr></thead>
+        <tbody>
+          <tr><td>Lv.1~3</td><td>초반 ~ SEED 진입</td><td>기본 강화 소재 수급. 초반에는 여기서 기체 레벨업 소재 확보</td></tr>
+          <tr><td>Lv.4~5</td><td>W시리즈 ~ 엔드게임 초입</td><td>SP칩 소량 드랍 시작. 중급 강화 소재 효율적 수급</td></tr>
+          <tr><td><strong>Lv.6</strong></td><td>엔드게임</td><td><strong>SSP 소재 핵심 수급처.</strong> 기존 Lv.5 대비 보상 대폭 증가. SP화 완료된 주력 부대 필요</td></tr>
+        </tbody>
+      </table>
+      <div class="warn">
+        <strong>Lv.6 도전 시 주의:</strong> SP화/SSP화 완료된 기체가 여러 대 필요한 높은 난이도. 무리하게 도전하면 횟수만 낭비. 주력 부대가 충분히 강해진 후에 도전할 것.
+      </div>
+      <div class="tip">
+        <strong>파밍 효율화 팁:</strong> 강화 육성 스테이지 횟수가 제한되어 있으므로, 가능한 한 클리어 가능한 최고 레벨에 도전하는 것이 효율적. 클리어가 불안정하면 한 단계 낮춰서 안정적으로 돌리는 것이 낫다.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 섹션 7: 자원 관리 -->
+  <!-- ============================================================ -->
+  <section class="section" id="육성-resource">
+    <div class="section-header">
+      <div class="section-icon gold">💰</div>
+      <div class="section-title">자원 관리 & 효율 팁</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>아껴야 할 재화 (절대 낭비 금지)</div>
+      <table class="tier-table">
+        <thead><tr><th>재화</th><th>중요도</th><th>관리 방침</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>범용 SP칩</strong></td>
+            <td><span class="tier-badge tier-ss">최상</span></td>
+            <td>시리즈/태그 한정 SP칩으로 대체 가능할 때는 범용칩 아끼기. 확실한 주력기에만 투자</td>
+          </tr>
+          <tr>
+            <td><strong>SSP칩</strong></td>
+            <td><span class="tier-badge tier-ss">최상</span></td>
+            <td>현재 수급량 극히 제한적. S+등급 기체에만 사용. 무료 배포 이벤트 절대 놓치지 말 것</td>
+          </tr>
+          <tr>
+            <td><strong>파일럿 SP칩</strong></td>
+            <td><span class="tier-badge tier-ss">최상</span></td>
+            <td>기체 SP칩보다 수급 어려움. 확실한 주력 파일럿에만 투자</td>
+          </tr>
+          <tr>
+            <td><strong>얼티밋 전용 개발 재료</strong></td>
+            <td><span class="tier-badge tier-s">상</span></td>
+            <td>이터널로드/마스터리그 보상으로만 획득. 제타건담 3호기 P2 등 최우선 ULT에 투자</td>
+          </tr>
+          <tr>
+            <td><strong>연구 기술서</strong></td>
+            <td><span class="tier-badge tier-s">상</span></td>
+            <td>최종 단계 SSR 유닛 개발에 필수. 개발 계획 세운 후 사용</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot green"></span>써도 되는 재화 (적극 사용)</div>
+      <ul>
+        <li><strong>캐피탈:</strong> 기체 개발·강화에 대량 소모되지만, 스테이지 점령·퀘스트 보상으로 꾸준히 수급됨. 아끼기보다는 적극 투자</li>
+        <li><strong>GP:</strong> 옵션파츠 구매 등에 사용. 캐피탈 1,000 사용 시 GP 20 획득 가능. 해체로도 수급</li>
+        <li><strong>일반 강화 소재:</strong> 강화 육성 스테이지에서 꾸준히 파밍 가능. 주력기 강화에 아끼지 말 것</li>
+        <li><strong>저랭크 기체 경험치:</strong> 개발 시 레벨 계승되므로 R/N 기체에 경험치 투자해도 손해 아님</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot blue"></span>효율적인 자원 운용 체크리스트</div>
+      <ul>
+        <li>매주 캐릭터 리퀘스트 위클리 완료 → SP칩 20개 확보</li>
+        <li>이벤트 공지 확인 → SSP칩·한정 SP칩 무료 배포 놓치지 않기</li>
+        <li>마스터리그 시즌 보상 챙기기 → SP칩, ULT 재료 확보</li>
+        <li>강화 육성 스테이지 횟수는 클리어 가능한 최고 레벨에 투자</li>
+        <li>불필요 기체는 "알아서 해체"로 정리 → GP 수급</li>
+        <li>스테이지 클리어 시 점령지 최대한 확보 → 캐피탈 추가 수급</li>
+        <li>개발 계통도 미리 확인 → 불필요한 기체에 희소 재화 투자 방지</li>
+      </ul>
+    </div>
+
+    <div class="highlight">
+      <strong>무과금 플레이어 핵심 전략:</strong> SP칩은 약 5주에 1기 SP화 가능한 페이스. 조급해하지 말고 확실한 기체에만 투자. 시리즈/태그 한정 SP칩 이벤트를 활용하면 범용 칩을 아낄 수 있다. SSP칩은 당분간 최최우선 기체에만 사용하고 나머지는 저축.
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 섹션 8: 다이아 관리 & 뽑기 전략 -->
+  <!-- ============================================================ -->
+  <section class="section" id="육성-diamond">
+    <div class="section-header">
+      <div class="section-icon red">💎</div>
+      <div class="section-title">다이아 관리 & 뽑기 전략</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>뽑기(가챠) 시스템 기본</div>
+      <table class="tier-table">
+        <thead><tr><th>항목</th><th>유닛 보급</th><th>서포터(전함) 보급</th></tr></thead>
+        <tbody>
+          <tr><td><strong>10연뽑 비용</strong></td><td>다이아 1,500개</td><td>다이아 1,500개</td></tr>
+          <tr><td><strong>1뽑 비용</strong></td><td>다이아 150개</td><td>다이아 150개</td></tr>
+          <tr><td><strong>UR 확률</strong></td><td>3%</td><td>1% (SSR 서포터도 1%)</td></tr>
+          <tr><td><strong>천장 (가챠포인트)</strong></td><td>200뽑 (200pt)</td><td>300뽑 (300pt)</td></tr>
+          <tr><td><strong>천장 필요 다이아</strong></td><td><strong>30,000개</strong></td><td><strong>45,000개</strong></td></tr>
+        </tbody>
+      </table>
+
+      <div class="warn">
+        <strong>천장 시스템 주의</strong><br>
+        · 가챠포인트는 <strong>픽업 배너별로 별도 관리</strong> — 다른 픽업으로 이관 안 됨<br>
+        · 픽업 종료 시 남은 포인트는 <strong>레어 메달로 환원</strong> (교환소용)<br>
+        · 천장을 못 칠 것 같으면 <strong>해당 픽업은 스킵</strong>하는 것이 정석<br>
+        · 서포터 천장 300뽑(45,000다이아)은 무과금에게 매우 부담 → 서포터는 리세마라에서 확보 추천
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>월간 다이아 수급량 (무과금 추정)</div>
+
+      <table class="tier-table">
+        <thead><tr><th>수급처</th><th>주기</th><th>예상 다이아</th></tr></thead>
+        <tbody>
+          <tr><td><strong>일일 미션</strong></td><td>매일</td><td>~50개/일 (월 ~1,500개)</td></tr>
+          <tr><td><strong>주간 미션 + 캐릭터 리퀘스트</strong></td><td>매주</td><td>~300~500개/주 (월 ~1,500개)</td></tr>
+          <tr><td><strong>이터널 로드 클리어 보상</strong></td><td>진행시</td><td>스테이지당 50~200개</td></tr>
+          <tr><td><strong>이벤트 (맵이벤트/강적습격 등)</strong></td><td>수시</td><td>월 ~2,000~4,000개 (이벤트 규모에 따라 차이)</td></tr>
+          <tr><td><strong>마스터리그 시즌 보상</strong></td><td>시즌 종료</td><td>랭크에 따라 500~2,000개</td></tr>
+          <tr><td><strong>스토리 진행 (신규 스테이지)</strong></td><td>업데이트시</td><td>작품 추가 시 1,000~3,000개</td></tr>
+          <tr><td><strong>로그인 보너스</strong></td><td>매일</td><td>월 ~500개 (특별 로그인 제외)</td></tr>
+          <tr><td><strong>제네타워 클리어</strong></td><td>개방시</td><td>층당 50~300개</td></tr>
+        </tbody>
+      </table>
+
+      <div class="highlight">
+        <strong>월간 추정 합계: 약 6,000~10,000개</strong> (이벤트 없는 평시 ~6,000개 / 대형 이벤트 시 ~10,000개)<br>
+        · 10연뽑 환산: 월 약 4~7회<br>
+        · <strong>유닛 천장(30,000개) 도달까지: 약 3~5개월</strong> 소요<br>
+        · 서포터 천장(45,000개) 도달까지: 약 5~7개월 소요<br>
+        · 대형 업데이트/기념 이벤트 때 대량 지급으로 단축 가능
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot blue"></span>다이아 운용 전략 (과금 수준별)</div>
+
+      <details open>
+        <summary>무과금 — 인내의 왕</summary>
+        <div class="details-body">
+          <ul>
+            <li><strong>원칙:</strong> 천장을 칠 수 있을 때만 뽑기에 진입. 30,000개 이상 모이기 전에는 절대 뽑지 않음</li>
+            <li><strong>한정 픽업만 뽑기:</strong> 통상 UR은 나중에 프리미엄 유닛 조립으로 확보 가능 → 한정 UR에만 투자</li>
+            <li><strong>명함(1기) 따고 즉시 후퇴:</strong> 돌파(한계돌파)를 위해 추가로 뽑지 않음. 명함 확보가 목표</li>
+            <li><strong>서포터 뽑기 금지:</strong> 천장 300뽑은 무과금에게 비현실적. 서포터는 리세마라/무료 뽑기에서 확보</li>
+            <li><strong>47연뽑 같은 무료 이벤트 100% 활용</strong></li>
+          </ul>
+          <div class="tip">
+            <strong>무과금 다이아 루틴:</strong> 일일 미션 완료 → 주간 미션 완료 → 이벤트 보상 수거 → 다이아 저축 → 한정 픽업 때 올인
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>소과금 — 월정액 패키지 활용</summary>
+        <div class="details-body">
+          <ul>
+            <li><strong>웹스토어 할인팩:</strong> 다이아 효율이 가장 높은 패키지 우선 구매</li>
+            <li><strong>유닛 한정 천장(200뽑/30,000개)은 도전</strong> — 소과금이면 충분히 현실적</li>
+            <li><strong>서포터 한정은 여유 있을 때만:</strong> 300뽑 천장은 부담이 크므로 중반 이상 포기 시 스킵</li>
+            <li><strong>한정 UR > 돌파 > 통상 UR 순으로 투자</strong></li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>중~핵과금 — 효율 극대화</summary>
+        <div class="details-body">
+          <ul>
+            <li><strong>유닛 + 서포터 동시 천장 가능</strong> (200+300 = 75,000개)</li>
+            <li><strong>돌파 노리기:</strong> UR 유닛 풀돌(4돌)이 목표 → 5기 필요 = 최대 1,000뽑</li>
+            <li><strong>프리미엄 유닛 조립:</strong> 특정 UR 확정 획득 가능 → 놓친 통상 UR 보충에 활용</li>
+            <li><strong>웹스토어 할인 시기 집중 구매</strong></li>
+          </ul>
+        </div>
+      </details>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot green"></span>뽑기 판단 플로우차트</div>
+      <div class="flow-step">
+        <div class="flow-line"><div class="flow-dot" style="background:var(--accent-red)"></div><div class="flow-connector"></div></div>
+        <div class="flow-content"><strong>1. 한정 픽업인가?</strong>아니면 → 스킵. 통상 UR은 프리미엄 조립/복각으로 확보 가능</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-line"><div class="flow-dot" style="background:var(--accent-gold)"></div><div class="flow-connector"></div></div>
+        <div class="flow-content"><strong>2. 천장까지 다이아가 충분한가?</strong>유닛 30,000개 / 서포터 45,000개 이상 보유 여부 확인. 부족하면 → 스킵</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-line"><div class="flow-dot" style="background:var(--accent-blue)"></div><div class="flow-connector"></div></div>
+        <div class="flow-content"><strong>3. 내 편성에 필요한 유닛인가?</strong>보유 서포터 태그와 매칭되는지, 이터널로드/맵이벤트에 활용 가능한지 확인. 단순히 강한 유닛이라도 태그가 안 맞으면 → 스킵 고려</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-line"><div class="flow-dot" style="background:var(--accent-green)"></div><div class="flow-connector" style="background:transparent"></div></div>
+        <div class="flow-content"><strong>4. 뽑기 → 명함 확보 → 즉시 후퇴</strong>명함(1기) 따면 바로 중단. 돌파는 무과금에게 사치. 남은 다이아는 다음 한정을 위해 저축</div>
+      </div>
+    </div>
+
+    <div class="warn">
+      <strong>뽑기 함정 주의</strong><br>
+      · "100뽑 안에 나올 것 같은데" → 나올 확률은 UR 3% 기준 100뽑 시 약 95%이나, 5%는 안 나옴. 천장 없이 중단하면 다이아만 날림<br>
+      · "서포터도 같이 뽑자" → 서포터 확률 1% + 천장 300뽑. 무과금은 서포터 뽑기 진입 자체를 피할 것<br>
+      · "통상 UR이 좋아보이는데" → 통상은 프리미엄 조립/복각에서 언젠가 확보 가능. 한정에 다이아 집중<br>
+      · "이번 픽업 놓치면 큰일" → 대부분의 한정 UR은 반주년/1주년 등에 복각됨. 조급해하지 말 것
+    </div>
+  </section>
+
+
+  </main>
+</div>
+
+<div id="시리즈별" class="tab-panel">
+<main class="content">
+
+  <div class="section-nav">
+    <a href="javascript:void(0)" onclick="jumpTo('시리즈-uc')" class="nav-red">우주세기</a>
+    <a href="javascript:void(0)" onclick="jumpTo('시리즈-seed')" class="nav-gold">SEED</a>
+    <a href="javascript:void(0)" onclick="jumpTo('시리즈-alt')" class="nav-blue">비우주세기</a>
+    <a href="javascript:void(0)" onclick="jumpTo('시리즈-cross')" class="nav-purple">시너지</a>
+    <a href="javascript:void(0)" onclick="jumpTo('시리즈-priority')" class="nav-green">SP순위</a>
+  </div>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon green">✦</div>
+      <div class="section-title">시리즈별 SR · SSR · UR 육성 추천</div>
+    </div>
+
+    <div class="tip">
+      <strong>💡 공통 원칙</strong><br>
+      · UR 뽑기 기체가 있다면 무조건 최우선 육성. 아래는 개발(무과금)로 얻을 수 있는 기체 위주 정리<br>
+      · SP화 기준: 위력 4500+, 사거리 4칸 이상, 이동력 5칸, 지상+우주 출격 가능 여부 확인<br>
+      · 지원형 기체는 SSR 이상에서 디버프 효율이 좋으므로 SR은 공격·내구 위주로 추천<br>
+      · 파일럿-기체 시너지: 스킬/어빌리티 능력치 보너스가 %로 적용되므로, 출전 작품·타입·태그 매칭이 매우 중요<br>
+      · SP화 우선순위는 <strong>프리덤 > ZZ건담 > 에피온 > 샤이닝건담 > 건담엑스</strong> 순이 무난
+    </div>
+
+    <!-- ============================== -->
+    <!-- 건담 (1st) -->
+    <!-- ============================== -->
+    <details open id="시리즈-uc">
+      <summary>기동전사 건담 (1st)</summary>
+      <div class="details-body">
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-gold)"></span>핵심 기체</div>
+          <ul>
+            <li><strong>SSR 지쿠악스 (배포)</strong> — 스토리 불도저. 초반부터 올인 육성 대상 1순위. 이터널로드 1st 미션에서 필수. 위력 4800, 사거리 4, 이동력 5</li>
+            <li><strong>SSR 뉴건담</strong> — SP화 1순위급. 풀돌 필수. 사이코뮤 태그 핵심이며 역샤에도 출전 가능. 위력 5200(핀판넬), 사거리 5, 이동력 5</li>
+            <li><strong>SSR G-3 건담</strong> — 개발 로직에서 확보, 하드 보상으로 1돌 가능. 코어파이터 분리 시스템 보유</li>
+            <li><strong>SR 건담</strong> — 요나 파일럿 탑승 시 탱커 1티어 조합. 방어 스킬이 시너지</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-blue)"></span>추천 파일럿 조합</div>
+          <ul>
+            <li><strong>아무로 레이</strong> → 뉴건담: 뉴타입 어빌리티 + 사이코뮤 태그 풀매칭. 명중·회피 대폭 상승</li>
+            <li><strong>요나 바슈타</strong> → SR 건담: 방어 스킬 시너지, 탱커 운용에 최적</li>
+            <li><strong>샤아 아즈나블</strong> → 지옹/사자비: EN 소비 20% 감소 + 대미지 20% 상승 + 사거리+1. 네오지온 태그 기체 탑승 시 피해 15% 감소</li>
+          </ul>
+        </div>
+        <div class="highlight">
+          <strong>SP화 우선순위:</strong> 뉴건담 ≫ 지쿠악스(이미 SSR이므로 돌파 우선) ≫ G-3 건담. 지옹 개발은 나중에 천천히.
+        </div>
+      </div>
+    </details>
+
+    <!-- ============================== -->
+    <!-- Z건담 -->
+    <!-- ============================== -->
+    <details>
+      <summary>기동전사 Z건담</summary>
+      <div class="details-body">
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-gold)"></span>핵심 기체</div>
+          <ul>
+            <li><strong>SSR 바이아란 2호기</strong> — SP화 1순위. 이터널로드 익스퍼트에서 자주 채용되는 핵심 기체. 위력 4600, 사거리 4, 이동력 6(변형 시). 방어 디버프 보유</li>
+            <li><strong>SSR 백식</strong> — 이터널로드 대비 SP화 2순위급. 위력 4500, 사거리 4, 이동력 5. 메가바주카런처 위력 5000(장거리)</li>
+            <li><strong>ULT 제타건담 3호기 P2</strong> — ULT 기체 중 최추천. Z·ZZ 양쪽 이터널로드에서 출전 가능하므로 범용성 뛰어남</li>
+            <li><strong>SSR 제타건담</strong> — 가챠 SSR. 다양한 지형 적성과 변형 기능. Z·ZZ 양쪽 이터널로드 출전 가능. EX 버전은 방어 디버프 35% 적용</li>
+            <li><strong>SR 메타스</strong> — 변형으로 이동력 높음, 지원용 땜빵. 초반 Z시리즈 미션 때 유용</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-blue)"></span>추천 파일럿 조합</div>
+          <ul>
+            <li><strong>카미유 비단</strong> → 제타건담: 뉴타입 어빌리티 + Z 시리즈 풀매칭. 바이오센서 태그 활성화</li>
+            <li><strong>제리드 메사</strong> → 바이아란 2호기: 티탄즈 태그 매칭, 공격력 보너스</li>
+            <li><strong>콰트로 바지나</strong> → 백식: 출전작 매칭 + 뉴타입 보너스, EN 소비 감소 효과</li>
+          </ul>
+        </div>
+        <div class="tip">
+          <strong>💡 시너지 포인트</strong> — 바이아란 2호기의 방어 디버프 + 백식의 장거리 메가바주카런처 조합이 이터널로드 익스퍼트에서 강력. 바이아란이 디버프 걸고 백식이 원거리 사격하는 패턴.
+        </div>
+      </div>
+    </details>
+
+    <!-- ============================== -->
+    <!-- ZZ -->
+    <!-- ============================== -->
+    <details>
+      <summary>기동전사 건담 ZZ</summary>
+      <div class="details-body">
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-gold)"></span>핵심 기체</div>
+          <ul>
+            <li><strong>SR ZZ건담(더블제타)</strong> — 위력 6000 거대빔사벨(격투) + 위력 6000 하이메가캐논(사격). 사거리 4, 이동력 5. 근·원거리 양쪽 고위력 — SP화 시 UR급 화력. 우주세기 팬이면 프리덤 다음으로 SP화 추천</li>
+            <li><strong>SSR 풀아머 ZZ건담</strong> — 높은 내구력 + 화력 겸비. 사거리 5, 이동력 4. SSR 중 ZZ 시리즈 최강급. EX 기체는 맵병기 위력 5800 보유</li>
+            <li><strong>SSR 퀸만사</strong> — 내구형으로 방패 역할. 대형 기체 특성. 사이코뮤 태그 활용 가능</li>
+            <li><strong>SR 겔구그(키마이라 대)</strong> — 중거리 지원형. 비용 대비 성능 우수</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-blue)"></span>추천 파일럿 조합</div>
+          <ul>
+            <li><strong>쥬도 아시타</strong> → ZZ건담/풀아머ZZ: 뉴타입 + ZZ 시리즈 풀매칭. 하이메가캐논 대미지 극대화</li>
+            <li><strong>프루 투</strong> → 퀸만사: 사이코뮤 태그 매칭 + 뉴타입 보너스. 내구형 운용에 적합</li>
+          </ul>
+        </div>
+        <div class="highlight">
+          <strong>SP화 우선순위:</strong> ZZ건담(6000+6000 양방 화력이 핵심) ≫ 풀아머ZZ(SSR 돌파 우선) ≫ 퀸만사(방어용). ZZ시리즈는 프리덤에 비해 출전 범위가 좁지만, Z시리즈 이터널로드에도 일부 출전 가능하므로 생각보다 활용도 있음.
+        </div>
+      </div>
+    </details>
+
+    <!-- ============================== -->
+    <!-- 역습의 샤아 -->
+    <!-- ============================== -->
+    <details>
+      <summary>역습의 샤아</summary>
+      <div class="details-body">
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-gold)"></span>핵심 기체</div>
+          <ul>
+            <li><strong>SSR 뉴건담</strong> — SP화 최우선급. 핀판넬 위력 5200, 사거리 5, 이동력 5. 사이코뮤 태그 핵심. 1st 건담과 역샤 양쪽 출전 가능</li>
+            <li><strong>SSR 하이뉴건담</strong> — 방어형. SSR 사이코건담의 상위호환. 방어 탱커 1선. 빔배리어 보유, 위력 5400(핀판넬), 사거리 5, 이동력 5</li>
+            <li><strong>SSR 사자비</strong> — 리세마라 추천 UR 중 하나. 위력 5000(메가입자포), 사거리 4, 이동력 5. 지형 적성이 우주 편중이라 범용성 면에서 엑시아·프리덤보다 후순위</li>
+            <li><strong>SR 리가즈</strong> — 변형 가능, 초반 역샤 미션 때 유용한 중거리 사격형</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-blue)"></span>추천 파일럿 조합</div>
+          <ul>
+            <li><strong>아무로 레이</strong> → 뉴건담/하이뉴건담: 뉴타입 풀매칭 + 사이코뮤 극대화. 공격·방어 양면 시너지</li>
+            <li><strong>샤아 아즈나블</strong> → 사자비: EN 소비 20%↓, 대미지 20%↑, 사거리+1. 네오지온 태그 피해 15%↓</li>
+          </ul>
+        </div>
+        <div class="tip">
+          <strong>💡 시너지 포인트</strong> — 뉴건담(공격) + 하이뉴건담(방어)를 같은 부대에 편성하면 사이코뮤 태그 시너지가 극대화. 둘 다 역샤 + 1st 출전이 가능하므로 이터널로드 범용성도 우수.
+        </div>
+      </div>
+    </details>
+
+    <!-- ============================== -->
+    <!-- UC -->
+    <!-- ============================== -->
+    <details>
+      <summary>기동전사 건담 UC</summary>
+      <div class="details-body">
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-gold)"></span>핵심 기체</div>
+          <ul>
+            <li><strong>UR 유니콘 건담(디스트로이 모드/각성)</strong> — 긴 사정거리 + 지원기인데 고대미지. 위력 5800(빔매그넘), 사거리 6, 이동력 5. 버나지 탑승 시 지원공격/반격 3회 가능. 하프 애니버서리 추천 유닛</li>
+            <li><strong>SSR 크샤트리야</strong> — 내구형으로 우수. 펀넬 보유, 사이코뮤 태그. 위력 4800, 사거리 5, 이동력 5</li>
+            <li><strong>SSR 시난주</strong> — 고속 공격형. 위력 5000, 사거리 4, 이동력 6. 네오지온 태그 활용 가능</li>
+            <li><strong>UR 유니콘 건담 3호기 페넥스(NT)</strong> — NT 추가(2026.4~5월 예정) 시 최강 지원기 후보</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-blue)"></span>추천 파일럿 조합</div>
+          <ul>
+            <li><strong>버나지 링크스</strong> → 유니콘 건담: 뉴타입 각성 태그 풀매칭. 지원공격/반격 3회 해금. 최고 시너지</li>
+            <li><strong>마리다 크루스</strong> → 크샤트리야: 사이코뮤 + 강화인간 태그 매칭</li>
+            <li><strong>풀 프론탈</strong> → 시난주: 네오지온 태그 매칭, 사거리+1 보너스</li>
+          </ul>
+        </div>
+        <div class="highlight">
+          <strong>SP화 우선순위:</strong> 유니콘은 UR이므로 돌파 우선. SSR 중에서는 크샤트리야 > 시난주. UC 시리즈는 역샤 계열 기체와 태그가 겹치므로 부대 편성 시 조합 효율이 높음.
+        </div>
+      </div>
+    </details>
+
+    <!-- ============================== -->
+    <!-- G건담 -->
+    <!-- ============================== -->
+    <details id="시리즈-alt">
+      <summary>기동무투전 G건담</summary>
+      <div class="details-body">
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-gold)"></span>핵심 기체</div>
+          <ul>
+            <li><strong>SR 샤이닝 건담</strong> — 슈퍼모드 시 위력 5200(샤이닝 핑거), 사거리 2, 이동력 6. 사거리 빼면 1선 SR급. 이터널로드 G건담 미션(하드 중 최고난도) 대비 SP화 강추</li>
+            <li><strong>SSR 갓건담</strong> — 반주년에 UR 추가. 모빌 트레이스 시스템 태그 핵심. 위력 5600(갓핑거), 사거리 3, 이동력 6. 격투 최강급</li>
+            <li><strong>SR 에피온</strong> — (W시리즈이지만 G건담 태그 겸용) 위력 5400(빔소드), 사거리 3, 이동력 6, 공중적성 보유. 이터널로드 익스 2·5에서 활약. 풀돌 필수, SP화 강력 추천</li>
+            <li><strong>SR 노벨건담</strong> — 버서커 모드 시 공격력 급상승. G건담 미션 보조 딜러로 활용</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-blue)"></span>추천 파일럿 조합</div>
+          <ul>
+            <li><strong>도몬 캇슈</strong> → 샤이닝건담/갓건담: 모빌 트레이스 풀매칭. 격투 대미지 극대화. G건담 미션 필수</li>
+            <li><strong>밀리아르도 피스크래프트</strong> → 에피온: W시리즈 태그 매칭 + 격투 보너스. 명중률 높음</li>
+          </ul>
+        </div>
+        <div class="warn">
+          <strong>⚠ G건담 미션 주의</strong> — G건담 이터널로드 하드는 전 시리즈 중 최고난도급. 샤이닝 + 갓건담 + 에피온 세트로 격투 화력을 확보해야 클리어 가능. 사거리가 짧으므로 이동력이 높은 기체 위주로 편성할 것.
+        </div>
+        <div class="tip">
+          <strong>💡 시너지 포인트</strong> — 에피온과 샤이닝은 역할이 비슷(죽창). 둘 중 하나만 선택한다면 에피온이 공중적성 보유로 범용성에서 약간 앞서나, G건담 미션에서는 샤이닝이 출전 작품 매칭으로 더 유리. 두 기체 모두 SP화 해두는 것을 추천.
+        </div>
+      </div>
+    </details>
+
+    <!-- ============================== -->
+    <!-- W -->
+    <!-- ============================== -->
+    <details>
+      <summary>신기동전기 건담 W / EW</summary>
+      <div class="details-body">
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-gold)"></span>핵심 기체</div>
+          <ul>
+            <li><strong>SR 윙건담</strong> — 디버프 역할, W 시리즈 진행 시 우선 육성. 위력 4200(버스터라이플), 사거리 5, 이동력 5. 변형(버드모드) 시 이동력 7</li>
+            <li><strong>SR 에피온</strong> — 딜러, 위력 5400 죽창. G건담과 겸용. 사거리 3, 이동력 6</li>
+            <li><strong>SR 톨기스</strong> — 탱커 역할. 위력 4000, 사거리 3, 이동력 6. 높은 장갑치</li>
+            <li><strong>1주년 한정 UR 윙건담 제로(EW)</strong> — W EW의 상징. 4/1부터 가챠. 트윈버스터라이플 위력 6200, 사거리 6, 맵병기 보유. 현 시점 W시리즈 최강</li>
+            <li><strong>SSR 톨기스 III</strong> — 1주년 추가. 메가캐논 사격형. 위력 5000, 사거리 5, 이동력 6</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-blue)"></span>추천 파일럿 조합</div>
+          <ul>
+            <li><strong>히이로 유이</strong> → 윙건담/윙건담 제로: W 시리즈 풀매칭. 제로시스템 태그 활성화로 명중·회피 보너스</li>
+            <li><strong>밀리아르도 피스크래프트(제크스)</strong> → 에피온/톨기스 III: 격투·사격 양쪽 보너스</li>
+            <li><strong>트로와 바톤</strong> → 헤비암즈: W 시리즈 사격형 매칭</li>
+          </ul>
+        </div>
+        <div class="warn">
+          <strong>⚠ W시리즈 주의</strong> — 1주년 EW 추가 전까지 기체풀과 파일럿이 가장 부족했던 시리즈. 1주년 이후 윙제로(EW), 톨기스 III, 디스킬, 알트론 등이 추가되면서 크게 개선됨. 다만 초보자는 W 전용 부대를 억지로 짜지 말고 Z건담 유닛으로 우회하는 것도 현실적.
+        </div>
+        <div class="highlight">
+          <strong>SP화 우선순위:</strong> 에피온(G건담 겸용) ≫ 윙건담(디버프) ≫ 톨기스(탱커). 윙건담 제로(EW)가 있다면 윙건담 SP화는 후순위로 밀어도 됨.
+        </div>
+      </div>
+    </details>
+
+    <!-- ============================== -->
+    <!-- X -->
+    <!-- ============================== -->
+    <details>
+      <summary>기동신세기 건담 X</summary>
+      <div class="details-body">
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-gold)"></span>핵심 기체</div>
+          <ul>
+            <li><strong>SR 건담엑스</strong> — 새틀라이트캐논 위력 5600, 사거리 6(직선), 이동력 5. 이터널로드 건담X 미션(하드 최고난도급) 대비 SP화 고려. 맵병기 특성으로 보스전 강력</li>
+            <li><strong>SSR 건담 DX</strong> — 사격형 주력. 트윈새틀라이트캐논 위력 5800, 사거리 6, 이동력 5. 건담엑스의 정식 후계기</li>
+            <li><strong>SR 에어마스터</strong> — 공중전 특화. 변형 시 이동력 7. X 시리즈 보조 딜러</li>
+            <li><strong>SR 레오파르드</strong> — 내구형. 다수 무장 보유. X 시리즈 탱커 역할</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-blue)"></span>추천 파일럿 조합</div>
+          <ul>
+            <li><strong>가로드 란</strong> → 건담엑스/건담DX: X 시리즈 풀매칭. 새틀라이트캐논 대미지 극대화</li>
+            <li><strong>위츠 수</strong> → 에어마스터: X 시리즈 태그 매칭, 공중전 보너스</li>
+          </ul>
+        </div>
+        <div class="highlight">
+          <strong>SP화 우선순위:</strong> 건담엑스(새틀라이트캐논 위력이 핵심) ≫ 에어마스터(보조). 건담X 후반부 스토리가 2027.1~2월에 추가 예정이므로 기체풀 확장 대기. DX가 있다면 건담엑스 SP화는 후순위.
+        </div>
+      </div>
+    </details>
+
+    <!-- ============================== -->
+    <!-- SEED / DESTINY -->
+    <!-- ============================== -->
+    <details open id="시리즈-seed">
+      <summary>기동전사 건담 SEED / DESTINY</summary>
+      <div class="details-body">
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-red)"></span>최우선 육성 기체</div>
+          <ul>
+            <li><strong>SR 프리덤 건담</strong> — <em>무조건 SP화 1순위.</em> 하이매트 풀버스트 위력 5000(맵병기), 사거리 5, 이동력 6. SEED+데스티니 양쪽 출전 가능. 이터널로드·모든 PVE에서 범용 최강. SP화 시 공격력 13000+ 달성 가능. 뇌 비우고 SP화 해둘 것</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-gold)"></span>기타 핵심 기체</div>
+          <ul>
+            <li><strong>SR 포비든 건담</strong> — 방어 핵심기. 위력 4200(레일건), 사거리 4, 이동력 5. 빔 편향 장갑으로 생존력 최상. 4대까지 다작 후 합치기 활용</li>
+            <li><strong>SSR 아마츠</strong> — 이터널로드 SEED 미션 SP화 2순위. 미라주 콜로이드 보유. 위력 4800, 사거리 3, 이동력 6</li>
+            <li><strong>SSR 스트라이크 프리덤 건담 (EX)</strong> — 론칭 한정 UR. 드라군 시스템 위력 6000+, 사거리 6. 최상위 공격 유닛. 1주년 복각</li>
+            <li><strong>SSR 저스티스 건담</strong> — 돌파력 서포터 보유 시 SP화 고려. 위력 4600, 사거리 4, 이동력 6</li>
+            <li><strong>SSR 스트라이크 프리덤 건담 (개발산)</strong> — SEED 데스티니 후반 추가. 가챠 없이 확보 가능한 스프 대안</li>
+            <li><strong>SR 드라군 스트라이크 건담</strong> — SSP화 후 사거리 5, 위력 6000+ 달성. 공격력 13000 돌파 가능한 스탯 몬스터. 드라군 시스템 태그 보유</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-blue)"></span>추천 파일럿 조합</div>
+          <ul>
+            <li><strong>키라 야마토</strong> → 프리덤/스트라이크 프리덤: SEED 태그 풀매칭. 시드 각성 시 명중·회피·크리티컬 대폭 상승</li>
+            <li><strong>아스란 자라</strong> → 저스티스 건담: SEED 태그 매칭 + 격투 보너스</li>
+            <li><strong>무우 라 프라가</strong> → 스트라이크 건담/드라군 스트라이크: 드라군 시스템 태그 시너지</li>
+            <li><strong>신 아스카</strong> → 임펄스 건담/데스티니 건담: SEED DESTINY 출전 매칭</li>
+          </ul>
+        </div>
+        <div class="tip">
+          <strong>💡 SEED 시리즈 핵심 전략</strong><br>
+          · SR 프리덤은 이 게임 전체에서 가장 중요한 SR. 초반에 3~4대 다작 → ZZ 보스 후 합치기<br>
+          · 범용성으로 따지면 ZZ건담보다 프리덤이 앞섬 (SEED+데스티니 양쪽 출전 가능)<br>
+          · 드라군 스트라이크는 프리덤 다음으로 SP화 가치가 높은 숨은 강자<br>
+          · 프리덤(맵병기) + 포비든(탱커) + 아마츠(근접 딜러)로 SEED 미션 완전 공략 가능
+        </div>
+      </div>
+    </details>
+
+    <!-- ============================== -->
+    <!-- 00 -->
+    <!-- ============================== -->
+    <details>
+      <summary>기동전사 건담 00</summary>
+      <div class="details-body">
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-gold)"></span>핵심 기체</div>
+          <ul>
+            <li><strong>UR 엑시아</strong> — 리세마라 추천 TOP. 전 서버 GOAT 평가. GN소드 위력 5600, 사거리 3, 이동력 7. 일격필살 태그 핵심. 트랜잠 시 1턴 공격력 폭증</li>
+            <li><strong>SR 큐리오스</strong> — SP화 시 마스터리그·이터널로드 00에서 채용. 변형 시 이동력 8. 일격필살 덱용. 위력 4400, 사거리 3, 이동력 6(변형 시 8)</li>
+            <li><strong>1주년 UR 더블오라이저 최종결전</strong> — 4/1 추가. 00 후반 핵심. 트랜잠 라이저소드 위력 6400, 사거리 5. 00 시리즈 최강 기체</li>
+            <li><strong>SR 듀나메스</strong> — 장거리 저격형. 위력 4600(GN스나이퍼라이플), 사거리 7. 원거리 지원에 최적</li>
+            <li><strong>SSR 케루딤 건담</strong> — 듀나메스의 후계기. 위력 5200, 사거리 7, 이동력 5. 1주년 이후 개발 가능</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-blue)"></span>추천 파일럿 조합</div>
+          <ul>
+            <li><strong>세츠나 F. 세이에이</strong> → 엑시아/더블오라이저: MP+6, 이동력+1, 대미지 20%↑. 솔레스탈 빙 태그 기체 탑승 시 피해 15%↓. 최고 시너지</li>
+            <li><strong>알레루야 합티즘</strong> → 큐리오스: 솔레스탈 빙 태그 매칭 + 변형 활용 보너스</li>
+            <li><strong>록온 스트라토스</strong> → 듀나메스/케루딤: 사격 특화 파일럿. 저격 명중률 극대화</li>
+            <li><strong>티에리아 아데</strong> → 세라비 건담: 솔레스탈 빙 태그 + 방어 보너스</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-green)"></span>1주년 추가 개발 가능 기체</div>
+          <ul>
+            <li>아리오스 건담, 케루딤 건담, 세라비 건담 — 솔레스탈 빙 2기 세트</li>
+            <li>어헤드, 스사노오, 리본즈 건담 — 이노베이터 / A-LAWS 진영</li>
+          </ul>
+        </div>
+        <div class="tip">
+          <strong>💡 시너지 포인트</strong> — 엑시아(근접 딜러) + 듀나메스(원거리 저격) + 큐리오스(기동 기습) 조합이 솔레스탈 빙 태그 풀매칭. 00시리즈는 1주년 후반 스토리 추가로 기체풀이 대폭 확장되었으므로 지금부터 파일럿 확보해두면 유리.
+        </div>
+      </div>
+    </details>
+
+    <!-- ============================== -->
+    <!-- 수성의 마녀 -->
+    <!-- ============================== -->
+    <details>
+      <summary>수성의 마녀</summary>
+      <div class="details-body">
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-gold)"></span>핵심 기체</div>
+          <ul>
+            <li><strong>UR 에어리얼</strong> — 리세마라 상위권. 후반 들어 프리덤보다 평가 상승. 위력 5400(빔라이플 강화), 사거리 5, 이동력 5. GUND-BIT 시스템으로 방어+공격 겸비</li>
+            <li><strong>UR 에어리얼 리빌드 (EX)</strong> — 최상위 올라운더. 사거리 5, EX스킬로 방어 디버프 35% 적용. 빔 무기 피해 30% 경감 패시브. 무제한 행동턴 획득 잠재력 보유. 현 시점 티어표 최상위(T0)</li>
+            <li><strong>SSR 건담 캘리번</strong> — 수마녀 후반 추가. 최신 티어표 상위. 위력 5200, 사거리 4, 이동력 6</li>
+            <li><strong>SSR 다릴발데</strong> — 격투형 고기동 기체. 그엘 태그 매칭</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-blue)"></span>추천 파일럿 조합</div>
+          <ul>
+            <li><strong>슬레타 머큐리</strong> → 에어리얼/에어리얼 리빌드: GUND-BIT 풀매칭. 학원 결투 태그 시너지</li>
+            <li><strong>그엘 제터크</strong> → 다릴발데: 격투 태그 매칭, 근접 보너스</li>
+          </ul>
+        </div>
+        <div class="highlight">
+          <strong>에어리얼 리빌드 EX 포인트:</strong> 티어표 T0 자리를 차지하는 이유는 올라운드 스탯 + 방어 디버프 + 빔 대미지 감소 + 무한 행동 가능성까지 갖춘 만능형이기 때문. 뽑았다면 무조건 최우선 육성.
+        </div>
+      </div>
+    </details>
+
+    <!-- ============================== -->
+    <!-- 철혈의 오펀스 -->
+    <!-- ============================== -->
+    <details>
+      <summary>기동전사 건담 철혈의 오펀스</summary>
+      <div class="details-body">
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-gold)"></span>핵심 기체</div>
+          <ul>
+            <li><strong>UR 바르바토스 루프스 렉스 (EX)</strong> — 크리티컬 100% 보장이라는 유일무이한 특성. 미카즈키 탑승 시 모든 공격 크리티컬 확정. 초고 크리티컬 대미지로 T0 공격형 포지션. 위력 6000+(메이스), 사거리 2, 이동력 7</li>
+            <li><strong>SSR 바르바토스</strong> — 개발 가능한 기본형. 격투 위주. 위력 4800, 사거리 2, 이동력 6. 철혈 미션 진행용</li>
+            <li><strong>SSR 바르바토스 루프스</strong> — 중간 진화형. 위력 5200, 사거리 2, 이동력 6</li>
+            <li><strong>SSR 구시온 리베이크</strong> — 사격형 지원기. 철혈 시리즈에서 희귀한 원거리 유닛</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-blue)"></span>추천 파일럿 조합</div>
+          <ul>
+            <li><strong>미카즈키 오거스</strong> → 바르바토스 시리즈: 아라야시키 시스템 태그 풀매칭. 크리티컬 100% 달성의 핵심. 반드시 루프스 렉스에 탑승</li>
+            <li><strong>아키히로 알트랜드</strong> → 구시온 리베이크: 철화단 태그 매칭</li>
+          </ul>
+        </div>
+        <div class="tip">
+          <strong>💡 철혈 시리즈 특징</strong> — 나노라미네이트 아머로 빔 무기 저항이 높은 적이 등장. 실탄·격투 무기 위주로 편성해야 함. 바르바토스 루프스 렉스(EX)는 격투형 최강이지만 사거리 2가 약점 → 이동력 7을 활용한 기습 운용 필수.
+        </div>
+        <div class="highlight">
+          <strong>SP화 우선순위:</strong> SSR 바르바토스 루프스(격투 주력) > 구시온 리베이크(지원). UR 루프스 렉스가 있다면 SSR 바르바토스는 돌파 재료로 사용.
+        </div>
+      </div>
+    </details>
+
+    <!-- ============================== -->
+    <!-- AGE -->
+    <!-- ============================== -->
+    <details>
+      <summary>기동전사 건담 AGE</summary>
+      <div class="details-body">
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-gold)"></span>핵심 기체</div>
+          <ul>
+            <li><strong>SSR 건담 AGE-2 더블불릿</strong> — 변형 가능(스트라이더 모드). 사격+격투 양면 운용. 위력 5000, 사거리 4, 이동력 6(변형 시 7). AGE 시리즈 주력</li>
+            <li><strong>SR 건담 AGE-1 노멀</strong> — AGE 시스템 태그 기본. 웨어 체인지로 타이터스(격투)/스패로우(기동) 전환 가능. 위력 4200, 사거리 3, 이동력 5</li>
+            <li><strong>SSR 건담 AGE-1 타이터스</strong> — 격투 특화형. 위력 5000(빔라리아트), 사거리 1, 이동력 6. 근접전 강자</li>
+            <li><strong>SSR 건담 AGE-FX</strong> — 3세대 플리트편 최종기. Cファンネル 위력 5400, 사거리 5, 이동력 5. AGE 시리즈 최강급</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-blue)"></span>추천 파일럿 조합</div>
+          <ul>
+            <li><strong>플리트 아스노(소년)</strong> → AGE-1: AGE 시스템 풀매칭. 1세대 미션 필수</li>
+            <li><strong>아세무 아스노</strong> → AGE-2 더블불릿: X라운더 태그 + 변형 운용 보너스</li>
+            <li><strong>키오 아스노</strong> → AGE-FX: 3세대 풀매칭. Cファンネル 대미지 극대화</li>
+          </ul>
+        </div>
+        <div class="tip">
+          <strong>💡 AGE 시리즈 특징</strong> — 2026.2~3월 추가(플리트·아세무 시대까지). 3세대(키오편)는 후속 업데이트 예정. AGE 시스템(웨어 체인지)을 활용한 유연한 전술이 특징. 신규 시리즈 추가 직후 이벤트 버프가 강하므로 관련 기체를 미리 육성해두면 유리.
+        </div>
+      </div>
+    </details>
+
+    <!-- ============================== -->
+    <!-- 08소대 -->
+    <!-- ============================== -->
+    <details>
+      <summary>기동전사 건담 제08MS소대</summary>
+      <div class="details-body">
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-gold)"></span>핵심 기체</div>
+          <ul>
+            <li><strong>SR 육전형 건담(08소대)</strong> — 지상전 특화. 위력 4400(180mm 캐논), 사거리 4, 이동력 5. 지상 적성 S급. 지상 이터널로드에서 활약 기대</li>
+            <li><strong>SSR 건담 Ez8</strong> — 육전형 건담의 개수형. 지상전 최강급 SR→SSR. 위력 4800, 사거리 4, 이동력 5</li>
+            <li><strong>SSR 압사라스 II</strong> — 메가입자포 보유 대형기. 위력 5600(메가입자포), 사거리 6, 이동력 3. 이동력 낮지만 화력 극강</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-blue)"></span>추천 파일럿 조합</div>
+          <ul>
+            <li><strong>시로 아마다</strong> → 육전형 건담/Ez8: 08소대 태그 풀매칭. 지상전 대미지 보너스</li>
+            <li><strong>아이나 사하린</strong> → 압사라스 II: 지온 계열 태그 매칭</li>
+          </ul>
+        </div>
+        <div class="highlight">
+          <strong>08소대 특징:</strong> 2026.3월 스토리 이벤트로 추가. 지상전 특화 시리즈로, 우주 미션에서는 활용도가 떨어짐. 지상 이터널로드나 지상 맵 이벤트에서 강력한 시너지. 압사라스 II는 이동력 3이 치명적이므로 이동력 보조 서포터 필수.
+        </div>
+      </div>
+    </details>
+
+    <!-- ============================== -->
+    <!-- 0083 스타더스트 -->
+    <!-- ============================== -->
+    <details>
+      <summary>기동전사 건담 0083 스타더스트 메모리</summary>
+      <div class="details-body">
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-gold)"></span>핵심 기체</div>
+          <ul>
+            <li><strong>SSR 건담 시작 1호기 풀버니언</strong> — 고기동형. 위력 5000, 사거리 4, 이동력 6. 우주전 적성 우수</li>
+            <li><strong>SSR 건담 시작 2호기 (핵)</strong> — 아토믹 바주카 보유. 맵병기 위력 6000, 사거리 5. 단발 최강 화력이지만 1회 사용 제한</li>
+            <li><strong>SR 짐 커스텀</strong> — 비용 대비 성능 우수한 양산기. 0083 미션 채우기용</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-blue)"></span>추천 파일럿 조합</div>
+          <ul>
+            <li><strong>코우 우라키</strong> → 건담 시작 1호기: 0083 태그 풀매칭. 사격 보너스</li>
+            <li><strong>아나벨 가토</strong> → 건담 시작 2호기: 지온 태그 + 격투 보너스. 솔로몬의 악몽 어빌리티</li>
+          </ul>
+        </div>
+        <div class="tip">
+          <strong>💡 0083 특징</strong> — 2026.1월 히스토리 스테이지 추가. 1st 건담과 Z건담 사이 시대로, 양쪽 시리즈 기체와 태그가 일부 호환. 시작 2호기의 핵 바주카는 로맨스이지만 실전에서 1회 제한이 아쉬움.
+        </div>
+      </div>
+    </details>
+
+    <!-- ============================== -->
+    <!-- 하사웨이 -->
+    <!-- ============================== -->
+    <details>
+      <summary>섬광의 하사웨이</summary>
+      <div class="details-body">
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-gold)"></span>핵심 기체</div>
+          <ul>
+            <li><strong>SSR 크시 건담</strong> — 미노프스키 플라이트 보유. 위력 5400, 사거리 5, 이동력 6. 펀넬 미사일로 맵병기 성능</li>
+            <li><strong>SSR 펜네로프</strong> — 지원형. 펀넬 미사일 보유, 위력 5000, 사거리 5, 이동력 5</li>
+            <li><strong>SSR 아류제우스</strong> — 1주년 패널 미션으로 풀돌 가능(배포). 탈출 기능 보유. 위력 4600, 사거리 4, 이동력 5. 무과금 유저 필수 확보</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-blue)"></span>추천 파일럿 조합</div>
+          <ul>
+            <li><strong>하사웨이 노아</strong> → 크시 건담: 하사웨이 시리즈 풀매칭. 마프티 태그 활성화</li>
+            <li><strong>레인 에임</strong> → 펜네로프: 하사웨이 시리즈 태그 매칭. 지원 스킬 보너스</li>
+          </ul>
+        </div>
+        <div class="highlight">
+          <strong>1주년 배포 기체:</strong> 1주년 기념 캠페인으로 SSR 레인 에임, 하사웨이 노아 파일럿 배포. 패널 미션으로 SSR 아류제우스 풀돌 가능 → 무과금 유저에게 큰 혜택. 아류제우스의 탈출 기능은 보스전에서 생존력을 크게 올려줌.
+        </div>
+      </div>
+    </details>
+
+    <!-- ============================== -->
+    <!-- 선더볼트 -->
+    <!-- ============================== -->
+    <details>
+      <summary>기동전사 건담 선더볼트</summary>
+      <div class="details-body">
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-gold)"></span>핵심 기체</div>
+          <ul>
+            <li><strong>UR 사이코 자쿠 (EX)</strong> — 우주·지상 양쪽 고공격 지원형. 위력 5800+, 사거리 5. EX무장으로 적 특수무기 피해 35% 증가 디버프. 서포트 티어 최상위급</li>
+            <li><strong>SSR 풀아머 건담(선더볼트)</strong> — 중장갑 사격형. 다연장 로켓 보유. 위력 5200, 사거리 5, 이동력 4</li>
+            <li><strong>SSR 아틀라스 건담</strong> — 수중전 특화 + 지상 적성 우수. 선더볼트 2기 기체</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-blue)"></span>추천 파일럿 조합</div>
+          <ul>
+            <li><strong>다릴 로렌츠</strong> → 사이코 자쿠: 선더볼트 태그 풀매칭. 저격 스킬과 시너지</li>
+            <li><strong>이오 플레밍</strong> → 풀아머 건담/아틀라스: 선더볼트 태그 매칭. 사격 보너스</li>
+          </ul>
+        </div>
+        <div class="tip">
+          <strong>💡 사이코 자쿠(EX) 포인트</strong> — 적에게 특수무기 피해 35% 증가 디버프를 거는 것이 핵심. 바르바토스 루프스 렉스 등 고화력 딜러와 조합하면 대미지가 폭발적으로 증가. 지원형이지만 공격력도 높아서 자체 화력도 우수.
+        </div>
+      </div>
+    </details>
+
+    <!-- ============================== -->
+    <!-- NT -->
+    <!-- ============================== -->
+    <details>
+      <summary>기동전사 건담 NT (내러티브)</summary>
+      <div class="details-body">
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-gold)"></span>예정 기체 (2026.4~5월 추가)</div>
+          <ul>
+            <li><strong>내러티브 건담</strong> — A장비/B장비/C장비 환장 시스템 예상. UC 계열 태그 호환</li>
+            <li><strong>유니콘 건담 3호기 페넥스</strong> — NT의 핵심기. 사이코프레임 풀가동. UC 시리즈 최강 지원기 후보</li>
+            <li><strong>시난주 스타인</strong> — 시난주의 원형기. 고성능 올라운더 예상</li>
+          </ul>
+        </div>
+        <div class="warn">
+          <strong>⚠ NT 추가 대비</strong> — 아직 미출시이므로 스탯은 미확정. UC 계열 파일럿(요나 바슈타, 미셸 루오 등)을 미리 육성해두면 추가 즉시 활용 가능. 사이코뮤 태그 서포터도 확보해 둘 것.
+        </div>
+      </div>
+    </details>
+
+    <!-- ============================== -->
+    <!-- 크로스 시리즈 시너지 -->
+    <!-- ============================== -->
+    <details id="시리즈-cross">
+      <summary>💫 크로스 시리즈 시너지 가이드</summary>
+      <div class="details-body">
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-purple)"></span>뉴타입 / 사이코뮤 덱</div>
+          <ul>
+            <li><strong>핵심 기체:</strong> 뉴건담 + 하이뉴건담 + 유니콘 건담 + 크샤트리야</li>
+            <li><strong>핵심 파일럿:</strong> 아무로 레이, 버나지 링크스, 마리다 크루스</li>
+            <li><strong>장점:</strong> 사이코뮤 태그 서포터 풀매칭 → 대미지 보너스 극대화. 1st~UC까지 광범위 출전 가능</li>
+            <li><strong>약점:</strong> 우주세기 편중. SEED·W·00 이터널로드에는 출전 불가</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-purple)"></span>일격필살 / 격투 덱</div>
+          <ul>
+            <li><strong>핵심 기체:</strong> 엑시아 + 에피온 + 바르바토스 루프스 렉스 + 샤이닝건담</li>
+            <li><strong>핵심 파일럿:</strong> 세츠나, 미카즈키, 도몬</li>
+            <li><strong>장점:</strong> 격투 최강 조합. 크리티컬 확정 + 높은 이동력으로 기습 운용</li>
+            <li><strong>약점:</strong> 사거리 부족. 장거리 맵병기 보스에 약함</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-purple)"></span>맵병기 / 범용 덱</div>
+          <ul>
+            <li><strong>핵심 기체:</strong> 프리덤 + 윙건담 제로(EW) + 건담엑스 + 더블오라이저</li>
+            <li><strong>핵심 파일럿:</strong> 키라, 히이로, 가로드, 세츠나</li>
+            <li><strong>장점:</strong> 맵병기로 다수 적 동시 처리. PVE 효율 최상. 다양한 시리즈 출전 가능</li>
+            <li><strong>약점:</strong> 태그 통일이 어려움 → 서포터 시너지 분산</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent-purple)"></span>디버프 특화 덱</div>
+          <ul>
+            <li><strong>핵심 기체:</strong> 에어리얼 리빌드(EX) + 사이코 자쿠(EX) + 제타건담(EX) + 포스 임펄스(EX)</li>
+            <li><strong>전략:</strong> 방어 디버프 35% + 특수무기 피해 증가 35%를 동시에 적용 → 딜러의 실질 대미지 2배 이상 증가</li>
+            <li><strong>장점:</strong> 보스전 최강 조합. 제네타워 고층·이터널로드 익스퍼트에서 필수급</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <!-- ============================== -->
+    <!-- 공통 주의사항 -->
+    <!-- ============================== -->
+    <div class="warn">
+      <strong>⚠ 공통 주의사항</strong><br>
+      · 같은 기체 여러 대 SP화는 비추 (마스터리그 동일기체 출전 불가 + 태그 제한)<br>
+      · 보유 서포터 태그에 맞는 기체 SP화가 가장 효율적<br>
+      · SR 지원형 기체는 디버프 효율이 낮으므로 SSR 이상 추천<br>
+      · R등급 이하는 실전에서 거의 안 쓰임 — 애정캐가 아니면 SP화 비추<br>
+      · 파일럿-기체 시너지(출전작·타입·태그 매칭)에 따른 % 보너스가 매우 크므로, 반드시 매칭을 확인하고 편성할 것<br>
+      · EX 기체는 일반 UR보다 강력한 경우가 많음 — 뽑았다면 무조건 최우선 육성
+    </div>
+
+    <div class="tip" id="시리즈-priority">
+      <strong>💡 SP화 전체 우선순위 요약 (SR 기준)</strong><br>
+      <strong>1순위:</strong> 프리덤 건담 (범용 최강, SEED+데스티니 양쪽)<br>
+      <strong>2순위:</strong> ZZ건담 (6000+6000 양방 화력)<br>
+      <strong>3순위:</strong> 에피온 (격투 5400, G건담+W 겸용)<br>
+      <strong>4순위:</strong> 샤이닝 건담 (G건담 하드 미션 대비)<br>
+      <strong>5순위:</strong> 건담엑스 (X 하드 미션 대비, 새틀라이트캐논)<br>
+      <strong>6순위:</strong> 드라군 스트라이크 (SSP화 후 숨은 강자)<br>
+      <strong>7순위:</strong> 큐리오스 (00 이터널로드 + 일격필살 덱)<br>
+      <strong>8순위:</strong> 윙건담 (W 시리즈 디버프용, 윙제로 없을 때)
+    </div>
+  </section>
+</main>
+</div>
+
+<div id="편성" class="tab-panel">
+  <main class="content">
+
+  <div class="section-nav">
+    <a href="javascript:void(0)" onclick="jumpTo('편성-basic')" class="nav-blue">기본</a>
+    <a href="javascript:void(0)" onclick="jumpTo('편성-support')" class="nav-gold">서포터</a>
+    <a href="javascript:void(0)" onclick="jumpTo('편성-tag')" class="nav-green">태그</a>
+    <a href="javascript:void(0)" onclick="jumpTo('편성-role')" class="nav-red">역할별</a>
+    <a href="javascript:void(0)" onclick="jumpTo('편성-contents')" class="nav-purple">콘텐츠별</a>
+    <a href="javascript:void(0)" onclick="jumpTo('편성-tank')" class="nav-red">고기방패</a>
+    <a href="javascript:void(0)" onclick="jumpTo('편성-tips')" class="nav-gold">실전팁</a>
+  </div>
+
+  <!-- ───────────────── 편성 기본 ───────────────── -->
+  <section class="section" id="편성-basic">
+    <div class="section-header">
+      <div class="section-icon blue">⬡</div>
+      <div class="section-title">편성 기본 구조</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot blue"></span>부대 구성 규칙</div>
+      <ul>
+        <li>소대당 최대 <strong>5기</strong>, 총 <strong>2개 소대</strong> 편성 가능 (스테이지에 따라 1소대만 출격)</li>
+        <li>대형 기체도 2x2 기구 아이콘이 있는 경우만 2칸 차지, 나머지는 1칸</li>
+        <li>콘텐츠마다 부대를 자주 바꿔야 하므로 <strong>부대 저장 기능</strong> 적극 활용 (최대 10개 저장)</li>
+        <li>기체 보유 상한은 1주년 업데이트로 <strong>1,200기 → 1,400기</strong>로 확장</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot blue"></span>부대 종류: 시리즈 부대 vs 프리 부대</div>
+      <ul>
+        <li><strong>시리즈 부대:</strong> 현재 플레이 중인 건담 시리즈에 등장하는 유닛과 캐릭터만 편성 가능. 스토리 스테이지 공략 시 사용</li>
+        <li><strong>프리 부대:</strong> 어떤 시리즈의 유닛과 캐릭터든 자유롭게 편성 가능. 이터널 로드, 맵 이벤트, 마스터 리그 등에서 사용</li>
+      </ul>
+      <div class="tip">
+        <strong>시리즈 부대의 함정</strong> — 스토리 진행 시 해당 시리즈 유닛만 쓸 수 있으므로, 특정 시리즈에만 올인하면 다른 시리즈 스토리에서 막힌다. 각 시리즈별로 최소 공격형 1기 + 내구형 1기는 확보해 둘 것.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot blue"></span>파일럿-기체 시너지</div>
+      <ul>
+        <li>스킬·어빌리티에 의한 능력치 증가가 <strong>퍼센트(%)</strong>로 적용되므로, 기본 스탯이 높은 UR/SSR 조합에서 차이가 극대화됨</li>
+        <li>같은 시리즈 파일럿 + 기체 조합 시 <strong>시리즈 보너스</strong> 발동 → 추가 능력치 상승</li>
+        <li>파일럿 어빌리티 효율은 등급이 올라갈수록 대폭 상승 → UR/SSR 파일럿 확보가 핵심</li>
+        <li>기체 타입(공격/방어/지원)과 파일럿 스탯 방향이 일치해야 효율 극대화</li>
+      </ul>
+      <div class="highlight">
+        <strong>예시:</strong> UR 키라 야마토 + 스트라이크 프리덤(EX) = SEED 시리즈 보너스 + 공격형 시너지 최적. UR 아무로 레이 + 뉴건담(EX) = 퍼스트건담/역습의 샤아 이중 태그 활용 가능.
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────── 서포터 ───────────────── -->
+  <section class="section" id="편성-support">
+    <div class="section-header">
+      <div class="section-icon gold">★</div>
+      <div class="section-title">서포터 시스템</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>서포터 = 편성 핵심</div>
+      <p>서포터는 부대 전체 능력치를 올려주고, 특정 태그 기체에 추가 버프를 제공한다. SSR 이상 서포터 효과가 압도적이므로 <strong>보유 서포터 기준으로 부대를 구성</strong>하는 것이 정석이다.</p>
+      <ul>
+        <li>각 소대에 <strong>서포터 1기</strong>씩 배치 가능</li>
+        <li>서포터의 <strong>리더 스킬</strong>이 특정 태그를 대상으로 능력치 상승 버프 제공</li>
+        <li>리더 스킬 대상 태그에 해당하는 유닛을 최대한 많이 편성해야 효율 극대화</li>
+        <li>서포터 범위 스킬(회복, 버프 등)은 전투 중 독립적으로 사용 가능</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>서포터 티어표 (2026년 3월 기준)</div>
+
+      <table class="tier-table" style="margin-top:16px">
+        <thead><tr><th>등급</th><th>서포터</th><th>특징</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="tier-badge tier-ss">SS</span></td>
+            <td>레인 · 티파 · 마리나 · 라크스 & 이터널</td>
+            <td>태그 버프 범위 넓고 포함 유닛 다수. 리세마라 최우선 대상</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge tier-s">S</span></td>
+            <td>스메라기 리 노리에가 & 프톨레마이오스2</td>
+            <td>1주년 신규. 더블오 계열 + 솔레스탈비잉 태그 강화</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge tier-s">S</span></td>
+            <td>탈리아 글라디스 & 미네르바</td>
+            <td>SEED DESTINY 후반 추가. SEED 데스티니 태그 폭넓게 커버</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge tier-a">A</span></td>
+            <td>기타 SSR 서포터</td>
+            <td>특정 시리즈 특화. 해당 시리즈 이터널 로드에서 활약</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge tier-b">배포</span></td>
+            <td>캐리베이스</td>
+            <td>무료 획득. 태그 범위 넓지만 능력치 상승 폭 낮음</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="tip">
+        <strong>서포터 티어 기준</strong> — 버프 대상 유닛 수가 가장 중요하다. 신규 유닛 추가 시 티어 변동 가능. 서포터는 천장이 없고 확률 1%이므로 <strong>리세마라 때 반드시 확보</strong>할 것. 라크스 & 이터널은 스트라이크 프리덤 복각과 함께 재등장한 바 있으므로 복각 시 노려볼 만하다.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>리더 스킬과 편성 전략</div>
+      <ul>
+        <li>서포터의 리더 스킬은 <strong>1차 태그</strong>(작품 태그)와 <strong>2차 태그</strong>(특성 태그) 조합으로 효과 범위가 결정됨</li>
+        <li>예: 라크스 서포터 → 'SEED' + 'SEED DESTINY' 양쪽 시리즈 유닛에게 버프 적용</li>
+        <li>예: 레인 서포터 → 'G 건담' 시리즈 + '격투' 특성 태그 유닛에게 강력한 공격 버프</li>
+        <li>리더 스킬 대상 태그가 겹치는 유닛을 5기 모두 맞추면 <strong>풀 시너지</strong> 달성</li>
+      </ul>
+      <div class="warn">
+        <strong>주의</strong> — 리더 스킬 대상 태그에 해당하지 않는 유닛은 서포터 버프를 받지 못한다. 강력한 유닛이라도 태그가 맞지 않으면 편성 효율이 크게 떨어지므로, 항상 서포터 대상 태그부터 확인할 것.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>서포터 상세 공략 (SR/SSR/UR)</div>
+
+      <p style="margin-bottom:16px;">서포터는 천장이 없고 확률 1%이므로 확보 자체가 어렵다. 등급별 특징과 활용법을 이해하고 전략적으로 운용해야 한다.</p>
+
+      <table class="tier-table">
+        <thead><tr><th>등급</th><th>서포터</th><th>대상 태그</th><th>버프 효과</th><th>활용처</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="tier-badge tier-ss">UR</span></td>
+            <td><strong>라크스 & 이터널</strong></td>
+            <td>SEED + SEED DESTINY</td>
+            <td>공격/방어 대폭 상승. 버프 대상 유닛 수 최다</td>
+            <td>범용 최강. 리세마라 1순위</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge tier-ss">UR</span></td>
+            <td><strong>레인 미카무라</strong></td>
+            <td>G건담 + 격투</td>
+            <td>격투형 공격 대폭 상승</td>
+            <td>격투 덱 필수. G건담 이터널로드</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge tier-ss">UR</span></td>
+            <td><strong>티파 아딜</strong></td>
+            <td>건담X + 뉴타입</td>
+            <td>뉴타입 태그 범용 버프</td>
+            <td>우주세기+X 크로스 편성</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge tier-ss">UR</span></td>
+            <td><strong>마리나 이스마일</strong></td>
+            <td>00 + 솔레스탈비잉</td>
+            <td>00계열 전체 버프</td>
+            <td>00 시리즈 이터널로드 필수</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge tier-s">UR (1주년)</span></td>
+            <td><strong>스메라기 & 프톨레마이오스2</strong></td>
+            <td>00 + 솔레스탈비잉</td>
+            <td>00 후반 유닛 강화</td>
+            <td>1주년 00 후반 콘텐츠 최적</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge tier-s">SSR</span></td>
+            <td><strong>탈리아 & 미네르바</strong></td>
+            <td>SEED DESTINY</td>
+            <td>데스티니 태그 폭넓게 커버</td>
+            <td>SEED 데스티니 특화</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge tier-a">SSR</span></td>
+            <td><strong>시리즈 특화 SSR 서포터</strong></td>
+            <td>각 시리즈 한정</td>
+            <td>해당 시리즈 중간 수준 버프</td>
+            <td>해당 시리즈 이터널로드/맵이벤트</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge tier-b">SR (배포)</span></td>
+            <td><strong>캐리베이스</strong></td>
+            <td>범용 (넓은 범위)</td>
+            <td>능력치 상승 폭 낮음</td>
+            <td>무료. 서포터 없을 때 임시용</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="highlight">
+        <strong>서포터 확보 전략</strong><br>
+        · <strong>리세마라:</strong> 라크스 & 이터널 또는 레인 중 1기 확보가 최우선 목표<br>
+        · <strong>복각 가챠:</strong> 라크스는 스트라이크 프리덤 복각 때 함께 등장한 적 있음 → 복각 시 노리기<br>
+        · <strong>1주년 47연뽑:</strong> UR 서포터 포함 가능 → 무료 뽑기에서 서포터가 나오면 대박<br>
+        · <strong>통상 UR 선택 가챠:</strong> 서포터는 대상에 포함되지 않을 수 있으니 확인 필요<br>
+        · <strong>SR 캐리베이스:</strong> 어떤 서포터도 없을 때 사용. 무과금 유저 임시 선택지
+      </div>
+
+      <div class="tip">
+        <strong>서포터별 추천 편성</strong><br>
+        · <strong>라크스:</strong> 프리덤 + 저스티스 + 스프리덤 + 데스티니 + 인저 (SEED 풀시너지)<br>
+        · <strong>레인:</strong> 갓건담 + 샤이닝 + 에피온 + 마스터건담 (격투 풀시너지)<br>
+        · <strong>티파:</strong> 건담X + DX + 뉴건담 + 유니콘 (뉴타입 크로스 시너지)<br>
+        · <strong>마리나:</strong> 엑시아 + 더블오 + 큐리오스 + 큐안타 (00 풀시너지)<br>
+        · <strong>스메라기:</strong> 더블오라이저 + 아리오스 + 켈딤 + 세라비 (1주년 00후반 최적)
+      </div>
+
+      <div class="warn">
+        <strong>서포터 주의사항</strong><br>
+        · 서포터는 천장(확정 획득) 시스템이 없음 — 확률 1%에 의존<br>
+        · UR 서포터 1기 > SSR 서포터 여러 기 (효과 차이가 압도적)<br>
+        · 태그 불일치 서포터라도 기본 스탯 버프는 적용됨 → 아예 안 쓰는 것보다는 나음<br>
+        · 소대당 서포터 1기 제한 → 2소대 운용 시 서포터 2기 필요
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────── 태그 시스템 ───────────────── -->
+  <section class="section" id="편성-tag">
+    <div class="section-header">
+      <div class="section-icon green">◆</div>
+      <div class="section-title">태그 시스템</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot green"></span>태그의 종류</div>
+      <ul>
+        <li><strong>작품 태그:</strong> 기동전사 건담, Z건담, 역습의 샤아, UC, SEED, SEED DESTINY, 00, W, W EW, NT 등 건담 시리즈별 분류</li>
+        <li><strong>세력 태그:</strong> 지구연방, 지온, 티탄즈, 에우고, 네오 지온, 오브, 자프트, 솔레스탈비잉 등</li>
+        <li><strong>특성 태그:</strong> 일격필살, 돌파력, 견고, 사이코뮤, 뉴타입, 코디네이터, 이노베이터 등</li>
+      </ul>
+      <p style="margin-top:12px">한 유닛은 여러 태그를 동시에 보유한다. 태그에 따라 이터널 로드 출격 제한, 파일럿 패시브 스킬 적용 여부, 서포터 버프 적용 여부가 결정되므로 <strong>편성 시 최우선 고려 사항</strong>이다.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot green"></span>태그 활용 예시</div>
+      <table class="tier-table" style="margin-top:8px">
+        <thead><tr><th>태그 조합</th><th>대표 유닛</th><th>활용처</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>SEED + 코디네이터</td>
+            <td>스트라이크 프리덤, 프리덤, 저스티스</td>
+            <td>라크스 서포터와 최고 시너지. 범용 공략</td>
+          </tr>
+          <tr>
+            <td>UC + 뉴타입 + 네오 지온</td>
+            <td>유니콘(디스트로이), 밴시 노른, 시난주</td>
+            <td>UC 이터널 로드, 제네타워 고층</td>
+          </tr>
+          <tr>
+            <td>00 + 솔레스탈비잉 + 이노베이터</td>
+            <td>더블오라이저, 큐안타, 케르딤</td>
+            <td>스메라기 서포터와 시너지. 1주년 신규 콘텐츠</td>
+          </tr>
+          <tr>
+            <td>W EW + 일격필살</td>
+            <td>윙 건담 제로(EW), 톨기스 III</td>
+            <td>1주년 신규 픽업. 높은 화력 집중 편성</td>
+          </tr>
+          <tr>
+            <td>역습의 샤아 + 사이코뮤</td>
+            <td>뉴건담, 사자비, Hi-뉴건담</td>
+            <td>고난도 보스전 특화 편성</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="tip">
+        <strong>태그 겹침 활용</strong> — SR 프리덤은 'SEED' + 'SEED DESTINY' 양쪽 출전 가능하여 초보자에게 필수 유닛이다. 이처럼 여러 태그를 가진 유닛은 다양한 콘텐츠에 유연하게 대응 가능하므로 우선 육성 대상이다.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot green"></span>1주년 이후 태그 확장</div>
+      <ul>
+        <li>1주년 로드맵으로 <strong>6개 작품 참전</strong> 발표: 더블오 후반(시즌2), 엔드리스 왈츠, 기동전사 건담 NT 등</li>
+        <li>신규 참전작 추가 시 해당 태그 유닛이 대량 추가되므로, 기존 서포터 티어가 변동될 수 있음</li>
+        <li>4월 픽업: UR 윙 건담 제로(EW)(EX), UR 더블오라이저(최종결전 사양)(EX), UR 톨기스 III(EX)</li>
+        <li>4월 1일부터 최대 <strong>47연속 무료 보급</strong> 이벤트 → UR 유닛 2기 이상 100% 확보 가능</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ───────────────── 역할별 편성 ───────────────── -->
+  <section class="section" id="편성-role">
+    <div class="section-header">
+      <div class="section-icon red">⚔</div>
+      <div class="section-title">역할별 편성 가이드</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>유닛 역할 3종류</div>
+      <table class="tier-table" style="margin-top:8px">
+        <thead><tr><th>역할</th><th>특징</th><th>대표 유닛</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>공격형 (DPS)</strong></td>
+            <td>높은 공격력과 화력 집중. 보스 딜링 핵심</td>
+            <td>스트라이크 프리덤, 유니콘, 윙 제로(EW)</td>
+          </tr>
+          <tr>
+            <td><strong>방어형 (탱크)</strong></td>
+            <td>높은 HP/장갑. 지원방어로 아군 보호</td>
+            <td>디 오, 사자비, GP03 덴드로비움</td>
+          </tr>
+          <tr>
+            <td><strong>지원형 (서포트)</strong></td>
+            <td>디버프, 사거리 확장, 버프 제공</td>
+            <td>메타스, 큐베레이, 케르딤</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>추천 역할 비율</div>
+      <ul>
+        <li><strong>표준 편성 (5기):</strong> 공격 2기 + 방어 1기 + 지원 2기</li>
+        <li><strong>화력 집중 편성:</strong> 공격 3기 + 방어 1기 + 지원 1기 (속전속결 목적)</li>
+        <li><strong>내구 편성:</strong> 공격 1기 + 방어 3기 + 지원 1기 (고난도 생존전)</li>
+      </ul>
+      <div class="highlight">
+        <strong>핵심 원칙</strong> — 공격형 유닛 2기가 지원형 유닛 2기의 버프를 받으면서 딜을 뽑고, 방어형 유닛 1기가 지원방어로 아군을 보호하는 구조가 가장 효율적이다.
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────── 콘텐츠별 편성 ───────────────── -->
+  <section class="section" id="편성-contents">
+    <div class="section-header">
+      <div class="section-icon purple">◈</div>
+      <div class="section-title">콘텐츠별 추천 편성</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot purple"></span>스토리 스테이지</div>
+      <ul>
+        <li>해당 시리즈 유닛만 사용 가능 (시리즈 부대)</li>
+        <li>각 시리즈별 <strong>공격형 에이스 1기 + 내구형 3~4기</strong>로 구성하면 안정적</li>
+        <li>에이스 기체로 반격 딜링, 나머지는 방패 역할</li>
+        <li>SR 이상 기체 1기만 집중 육성해도 대부분의 스토리 클리어 가능</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot purple"></span>이터널 로드</div>
+      <ul>
+        <li><strong>태그 제한</strong>이 핵심 — 출격 가능 태그를 사전에 확인하고 유닛 육성 계획 수립</li>
+        <li>맵병기 기체 적극 활용하여 잡몹 일소</li>
+        <li>후반부로 갈수록 난이도 급상승 → 내구형 방패 + 에이스 딜러 조합 필수</li>
+        <li>스테이지마다 유리한 지형이 다르므로 지형적성 확인 필수</li>
+        <li>EX 난이도는 풀 UR 편성 + 서포터 시너지 필수</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot purple"></span>마스터 리그 (PvP)</div>
+      <ul>
+        <li>프리 부대 사용 → 최강 유닛으로 편성</li>
+        <li>시즌마다 특정 태그에 보너스 부여 → 해당 태그 유닛으로 편성하면 유리</li>
+        <li>선공권 확보가 중요하므로 <strong>기동력(스피드) 높은 유닛</strong> 우선 배치</li>
+        <li>상대 편성 확인 후 약점 속성 유닛으로 카운터 편성</li>
+        <li>시즌 10 (2026년 3월~) 진행 중</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot purple"></span>맵 이벤트</div>
+      <ul>
+        <li>기간 한정 이벤트로 보상이 풍부 → 최우선 공략 대상</li>
+        <li>출격 제한 태그를 사전에 확인하고 해당 유닛 사전 육성</li>
+        <li>난이도별로 요구 전투력 차이가 크므로, 하드 이상은 UR 편성 필수</li>
+        <li>보스 스테이지에서는 지원방어 라인 끊기 전략 활용</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot purple"></span>제네레이션 타워</div>
+      <ul>
+        <li>층별 제한 조건이 다르므로 다양한 시리즈 유닛 폭넓게 육성 필요</li>
+        <li>보스층에서는 화력 집중 편성보다 <strong>생존 + 꾸준한 딜링</strong> 편성이 유리</li>
+        <li>UR 라크스 보상 획득을 위해 반드시 공략해야 하는 콘텐츠</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ───────────────── 고기방패 전략 ───────────────── -->
+  <section class="section" id="편성-tank">
+    <div class="section-header">
+      <div class="section-icon red">⬡</div>
+      <div class="section-title">고기방패(내구타입) 전략</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>고기방패 전략이란?</div>
+      <p>모든 시리즈 유닛을 골고루 육성하기 어려운 초~중반 유저를 위한 효율적 편성법이다.</p>
+      <ul>
+        <li><strong>핵심 원리:</strong> 강력한 SSR/UR 공격기체 1~2기를 집중 육성하여 반격으로 적을 소탕</li>
+        <li>나머지 3~4 슬롯은 <strong>내구(방어) 타입 기체</strong>로 채워서 1회용 방패로 활용</li>
+        <li>기체는 개발(생산)로 양산 가능 → 기체 확보보다 <strong>시리즈별 내구 타입 캐릭터 확보</strong>가 관건</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>고기방패 편성 구체적 방법</div>
+      <ol class="priority-list">
+        <li><strong>에이스 유닛 선정:</strong> 보유 중인 가장 강력한 UR/SSR 공격형 기체 + 파일럿 조합을 최대한 육성한다</li>
+        <li><strong>방패 유닛 제작:</strong> 해당 시리즈의 SR/R급 내구형 기체를 개발로 양산한다. HP와 장갑이 높은 기체 우선</li>
+        <li><strong>방패 캐릭터 배치:</strong> 어빌리티가 방어·HP 관련인 캐릭터를 방패 유닛에 태운다. 어빌리티 레벨은 낮아도 무방</li>
+        <li><strong>진형 배치:</strong> 에이스를 후방에 배치하고 방패 유닛을 전방에 배치. 적의 공격을 방패가 흡수하면 에이스가 반격으로 처리</li>
+        <li><strong>지원방어 활용:</strong> 방패 유닛이 에이스 대신 지원방어를 받아주면 에이스의 생존율이 크게 상승</li>
+      </ol>
+      <div class="warn">
+        <strong>주의사항</strong> — 방패 유닛이 전멸하면 에이스에게 공격이 집중되므로, 에이스 유닛의 회피 또는 방어 어빌리티도 어느 정도 확보해 둘 것. 또한 방패 유닛도 최소한의 공격력이 있어야 반격으로 소량이나마 딜을 넣을 수 있다.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>시리즈별 추천 방패 기체</div>
+      <table class="tier-table" style="margin-top:8px">
+        <thead><tr><th>시리즈</th><th>추천 내구 기체</th><th>비고</th></tr></thead>
+        <tbody>
+          <tr><td>퍼스트 건담</td><td>건탱크, 건캐논</td><td>개발 쉽고 장갑 높음</td></tr>
+          <tr><td>Z건담</td><td>릭 디아스, 메타스</td><td>에우고 태그 겸용</td></tr>
+          <tr><td>역습의 샤아</td><td>제간, 리 가즈</td><td>연방 태그 범용</td></tr>
+          <tr><td>SEED</td><td>버스터 건담, 듀엘 건담</td><td>SEED + SEED DESTINY 겸용 가능</td></tr>
+          <tr><td>00</td><td>티에렌, GN-X</td><td>00 태그 범용</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ───────────────── 편성 팁 ───────────────── -->
+  <section class="section" id="편성-tips">
+    <div class="section-header">
+      <div class="section-icon gold">★</div>
+      <div class="section-title">편성 실전 팁</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>편성 체크리스트</div>
+      <ul>
+        <li>서포터 리더 스킬 대상 태그에 5기 모두 포함되는지 확인</li>
+        <li>지형적성(지상/우주/공중) 확인 — 해당 스테이지의 지형에 맞지 않는 유닛은 능력치 감소</li>
+        <li>공격 사거리 분포 확인 — 근접형만 5기 편성하면 원거리 적 대응 불가</li>
+        <li>맵병기 보유 유닛 최소 1기 포함 (범위 소탕용)</li>
+        <li>지원방어 가능 유닛 최소 1기 포함 (에이스 보호용)</li>
+        <li>적의 속성/약점을 미리 파악하고 유리한 속성 유닛 편성</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>흔한 편성 실수</div>
+      <ul>
+        <li>서포터 태그 무시하고 강한 유닛만 모으기 → 버프 없이 약해짐</li>
+        <li>한 시리즈에만 올인 → 다른 시리즈 스토리/이터널 로드에서 진행 불가</li>
+        <li>공격형 유닛만 5기 편성 → 지원방어 없이 쉽게 격파당함</li>
+        <li>지형적성 무시 → 우주 스테이지에 지상 전용 기체 출격시키면 능력치 대폭 하락</li>
+        <li>부대 저장 기능 미사용 → 콘텐츠 전환 때마다 일일이 재편성</li>
+      </ul>
+    </div>
+  </section>
+
+
+  </main>
+</div>
+
+<div id="전투" class="tab-panel">
+  <main class="content">
+
+  <div class="section-nav">
+    <a href="javascript:void(0)" onclick="jumpTo('전투-support')" class="nav-red">지원</a>
+    <a href="javascript:void(0)" onclick="jumpTo('전투-tension')" class="nav-gold">텐션</a>
+    <a href="javascript:void(0)" onclick="jumpTo('전투-weapon')" class="nav-blue">무기</a>
+    <a href="javascript:void(0)" onclick="jumpTo('전투-terrain')" class="nav-green">지형</a>
+    <a href="javascript:void(0)" onclick="jumpTo('전투-turn')" class="nav-purple">턴순서</a>
+    <a href="javascript:void(0)" onclick="jumpTo('전투-auto')" class="nav-blue">오토</a>
+    <a href="javascript:void(0)" onclick="jumpTo('전투-tips')" class="nav-red">실전팁</a>
+  </div>
+
+  <!-- ───────────────── 지원공격/지원방어 ───────────────── -->
+  <section class="section" id="전투-support">
+    <div class="section-header">
+      <div class="section-icon red">⚔</div>
+      <div class="section-title">지원공격 / 지원방어</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>지원방어 상세</div>
+      <ul>
+        <li>인접한 아군이 공격당할 때 <strong>지원방어</strong>를 선언하면, 대상이 받을 피해를 대신 받는다</li>
+        <li>적의 <strong>지원공격까지 전부</strong> 받아줌 → 에이스 유닛 보호의 핵심</li>
+        <li>실드 보유 기체가 지원방어 시 피해량 <strong>대폭 경감</strong></li>
+        <li>기본적으로 <strong>적 턴에만</strong> 사용 가능 (일부 스킬로 아군 턴에도 가능)</li>
+        <li>지원방어 횟수는 턴당 제한 있음 — 고난도에서는 횟수 관리가 중요</li>
+      </ul>
+      <div class="warn">
+        <strong>차단 조건</strong> — 방어 대상과 방어자 사이에 적이 있으면 지원방어 불가. 적이 라인을 끊는 배치를 하면 아군을 보호할 수 없으므로, 진형 배치 시 항상 아군 사이에 적이 끼어들지 못하도록 주의할 것.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>지원공격 상세</div>
+      <ul>
+        <li>인접한 아군이 공격할 때 <strong>지원공격</strong>을 선언하면, 추가 공격을 가한다</li>
+        <li>경감 없이 <strong>원래 공격력 그대로</strong> 적용 → 실질 화력 대폭 상승</li>
+        <li><strong>아군 턴·적 턴(반격 시) 모두</strong> 사용 가능</li>
+        <li>보스전에서 지원공격을 몰아넣으면 한 턴에 집중 딜링 가능</li>
+        <li>지원공격 횟수도 턴당 제한 있음 — 가장 높은 딜이 나오는 타이밍에 사용</li>
+      </ul>
+      <div class="highlight">
+        <strong>보스전 핵심 전략</strong> — 후반 보스들은 지원방어를 3회까지 사용하는 친위대를 대동한다. 적 사이에 끼어들어 지원방어 라인을 끊은 후 지원공격을 집중하는 것이 공략 포인트다. 보스의 친위대를 먼저 제거하거나, 진형 사이에 아군을 밀어 넣어 라인을 차단하라.
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────── 텐션 시스템 ───────────────── -->
+  <section class="section" id="전투-tension">
+    <div class="section-header">
+      <div class="section-icon gold">★</div>
+      <div class="section-title">텐션(Tension) 시스템</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>텐션 기본 메커니즘</div>
+      <p>텐션은 파일럿의 전투 의지를 수치화한 것으로, MP를 소모하는 무기(맵병기 제외)의 <strong>데미지에 직접 영향</strong>을 준다. 텐션이 높을수록 데미지가 증가하고, 낮을수록 감소한다.</p>
+      <ul>
+        <li><strong>텐션 상승:</strong> 적을 격파했을 때, 적에게 MP 소모 무기로 공격 성공 시 (소모 MP보다 적은 MP를 획득하지 않는 경우)</li>
+        <li><strong>텐션 하락:</strong> MP 소모가 획득보다 클 때, 맵병기(MP 소모) 사용 시, 공격 빗나감, 피격 시</li>
+        <li>텐션 단계: 최저 → 낮음 → 보통 → 높음 → 최고 (5단계)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>텐션 활용 전략</div>
+      <ul>
+        <li><strong>텐션 올리기:</strong> 약한 적부터 처리하여 격파 보너스로 텐션을 올린 뒤 보스에게 집중</li>
+        <li><strong>적 텐션 깎기:</strong> 사거리 밖에서 원거리 공격으로 적 보스의 텐션을 낮춰 놓으면 받는 피해가 줄어듦</li>
+        <li><strong>맵병기 텐션 관리:</strong> 맵병기는 MP를 대량 소모하여 텐션이 하락하므로, 잡몹 소탕 후 텐션 회복 시간을 고려할 것</li>
+        <li><strong>회피형 유닛 활용:</strong> 적 공격을 회피하면 텐션이 떨어지지 않으므로, 회피 스탯이 높은 유닛은 텐션 유지에 유리</li>
+      </ul>
+      <div class="tip">
+        <strong>고급 팁</strong> — 보스 직전 웨이브에서 의도적으로 약한 적을 남겨두고 텐션을 최고까지 올린 뒤, 보스전에 진입하면 첫 턴부터 최대 화력을 뽑을 수 있다.
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────── 무기 타입 ───────────────── -->
+  <section class="section" id="전투-weapon">
+    <div class="section-header">
+      <div class="section-icon blue">◆</div>
+      <div class="section-title">무기 타입</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot blue"></span>격투 / 사격 / 맵병기</div>
+      <table class="tier-table" style="margin-top:8px">
+        <thead><tr><th>무기 타입</th><th>특징</th><th>활용법</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>격투 (근접)</strong></td>
+            <td>인접 1칸 사거리. 높은 단일 데미지. 반격 시 강력</td>
+            <td>전방 배치하여 적 접근 시 반격으로 처리. 내구형 에이스에 적합</td>
+          </tr>
+          <tr>
+            <td><strong>사격 (원거리)</strong></td>
+            <td>2~5칸 사거리. 안정적 딜링. 다양한 속성</td>
+            <td>후방 배치하여 안전하게 딜링. 사거리 증가 스킬 시 딜도 상승</td>
+          </tr>
+          <tr>
+            <td><strong>맵병기</strong></td>
+            <td>범위 내 다수 적 동시 타격. MP 대량 소모</td>
+            <td>잡몹 밀집 지역에서 사용. 텐션 하락 감수해야 함</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot blue"></span>무기 타입별 전투 요령</div>
+      <ul>
+        <li><strong>격투 유닛:</strong> 적과 최대한 가까이 배치. 지원방어 가능 위치에 두면 탱킹 + 반격 딜링 동시 수행</li>
+        <li><strong>사격 유닛:</strong> 3~5칸 거리 유지. 사거리 증가 스킬 사용 시 사거리 비례로 데미지도 상승하는 경우가 있어 매우 강력</li>
+        <li><strong>맵병기 유닛:</strong> 적이 밀집한 초반에 사용하여 한 번에 소탕. 보스전에서는 보스의 방어력 감소 없이도 HP를 꾸준히 깎을 수 있음 (크리티컬 불가이지만 안정적)</li>
+      </ul>
+      <div class="tip">
+        <strong>사격+격투 겸용 유닛</strong> — 일부 UR 기체(스트라이크 프리덤 등)는 격투·사격 양쪽 무기를 보유한다. 상황에 따라 근접/원거리를 선택할 수 있어 편성 유연성이 높다.
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────── 지형 시스템 ───────────────── -->
+  <section class="section" id="전투-terrain">
+    <div class="section-header">
+      <div class="section-icon green">⬡</div>
+      <div class="section-title">지형 적성 시스템</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot green"></span>지형 종류와 적성</div>
+      <p>스테이지마다 지상/우주/공중(수상) 등의 지형이 설정되며, 유닛별로 각 지형에 대한 <strong>적성 등급</strong>(S/A/B/C/D)이 있다. 적성이 낮은 지형에서는 능력치가 하락한다.</p>
+      <table class="tier-table" style="margin-top:8px">
+        <thead><tr><th>지형</th><th>설명</th><th>유리한 유닛</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>지상</strong></td>
+            <td>가장 흔한 지형. 대부분의 유닛이 보통 이상 적성</td>
+            <td>육전형 건담, 이즈루하 진영 등 지상전 특화 기체</td>
+          </tr>
+          <tr>
+            <td><strong>우주</strong></td>
+            <td>역습의 샤아, UC, 0083 등 우주전 스테이지. 지상 전용 기체는 큰 페널티</td>
+            <td>뉴건담, 사자비, GP03 등 우주 적성 S~A 기체</td>
+          </tr>
+          <tr>
+            <td><strong>공중/수상</strong></td>
+            <td>일부 특수 스테이지. 비행 가능 또는 수륙양용 기체가 유리</td>
+            <td>Z건담(변형 가능), 수중형 MS 등</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot green"></span>지형 적성 활용</div>
+      <ul>
+        <li>출격 전 스테이지 지형을 반드시 확인 — 지형 아이콘이 표시됨</li>
+        <li>적성 S~A 유닛을 우선 편성하고, B 이하 유닛은 가급적 피할 것</li>
+        <li>같은 기체라도 개량/변형으로 지형 적성이 변하는 경우가 있음</li>
+        <li>일부 파일럿 어빌리티가 특정 지형에서 추가 능력치 보너스 제공</li>
+        <li>지형에 의한 이동 제한도 존재 — 지상 전용 기체는 우주 맵에서 이동력 감소</li>
+      </ul>
+      <div class="warn">
+        <strong>실수 방지</strong> — 우주 스테이지에 지상 적성만 높은 기체를 출격시키면 공격력·방어력·명중률·회피율 모두 크게 하락한다. 특히 이터널 로드 고난도에서 이 실수를 하면 클리어 불가능해질 수 있다.
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────── 턴 순서 ───────────────── -->
+  <section class="section" id="전투-turn">
+    <div class="section-header">
+      <div class="section-icon purple">◈</div>
+      <div class="section-title">턴 순서와 행동 시스템</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot purple"></span>턴 진행 구조</div>
+      <ul>
+        <li>전투는 <strong>아군 페이즈 → 적군 페이즈</strong> 교대 턴제로 진행</li>
+        <li>아군 페이즈에서 모든 아군 유닛이 순서대로 이동 + 행동</li>
+        <li>유닛의 <strong>기동력(스피드)</strong> 스탯이 행동 순서에 영향을 줌</li>
+        <li>각 유닛은 턴당 <strong>이동 1회 + 행동 1회</strong> 수행 가능</li>
+        <li>행동: 공격 / 대기 / 스킬 사용 / 변형 등</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot purple"></span>행동 순서 전략</div>
+      <ul>
+        <li><strong>지원형 먼저 행동:</strong> 버프 스킬을 먼저 사용한 뒤 공격형이 공격하면 버프 적용 상태로 딜링 가능</li>
+        <li><strong>맵병기 먼저 사용:</strong> 잡몹을 맵병기로 소탕한 뒤 남은 유닛이 보스에게 집중</li>
+        <li><strong>탱커 위치 선점:</strong> 방어형 유닛을 먼저 이동시켜 에이스 앞에 배치하면, 적 턴에서 지원방어 가능</li>
+        <li><strong>반격 타이밍 고려:</strong> 적 턴에 반격이 일어나므로, 반격 화력이 높은 유닛은 적과 인접하게 배치</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ───────────────── 오토 vs 수동 ───────────────── -->
+  <section class="section" id="전투-auto">
+    <div class="section-header">
+      <div class="section-icon blue">◆</div>
+      <div class="section-title">오토 배틀 vs 수동 조작</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot blue"></span>언제 오토를 쓰고, 언제 수동으로 할 것인가</div>
+      <table class="tier-table" style="margin-top:8px">
+        <thead><tr><th>상황</th><th>추천</th><th>이유</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>난이도 낮은 스토리</td>
+            <td><span class="tier-badge tier-b">오토</span></td>
+            <td>전투력 차이가 크면 오토로 충분. 시간 절약</td>
+          </tr>
+          <tr>
+            <td>일일 퀘스트/반복 파밍</td>
+            <td><span class="tier-badge tier-b">오토</span></td>
+            <td>효율보다 반복 속도가 중요</td>
+          </tr>
+          <tr>
+            <td>이터널 로드 일반</td>
+            <td><span class="tier-badge tier-a">상황별</span></td>
+            <td>쉬운 구간은 오토, 어려운 구간은 수동 전환</td>
+          </tr>
+          <tr>
+            <td>이터널 로드 EX</td>
+            <td><span class="tier-badge tier-ss">수동 필수</span></td>
+            <td>AI가 최적 배치를 못 함. 지원방어 라인 관리 필수</td>
+          </tr>
+          <tr>
+            <td>보스전/고난도 스테이지</td>
+            <td><span class="tier-badge tier-ss">수동 필수</span></td>
+            <td>지원공격 타이밍, 지원방어 라인 끊기 등 판단 필요</td>
+          </tr>
+          <tr>
+            <td>마스터 리그 (PvP)</td>
+            <td><span class="tier-badge tier-ss">수동 필수</span></td>
+            <td>상대 편성에 맞춘 전략적 판단이 승부를 결정</td>
+          </tr>
+          <tr>
+            <td>제네레이션 타워 고층</td>
+            <td><span class="tier-badge tier-ss">수동 필수</span></td>
+            <td>한 기체라도 잃으면 다음 층 공략이 어려워짐</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tip">
+        <strong>오토 AI의 한계</strong> — 오토 AI는 지원방어 라인 관리, 맵병기 최적 타이밍, 텐션 관리 등을 하지 못한다. 클리어가 어려운 스테이지에서는 반드시 수동으로 전환해 볼 것. 수동 조작만으로 체감 난이도가 크게 낮아지는 경우가 많다.
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────── 실전 팁 모음 ───────────────── -->
+  <section class="section" id="전투-tips">
+    <div class="section-header">
+      <div class="section-icon red">⚔</div>
+      <div class="section-title">실전 팁 모음</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>범용 전투 팁</div>
+      <ul>
+        <li>적이 방어 태세일 때는 지원공격을 아껴두고, 방어가 풀릴 때 몰아서 사용</li>
+        <li>텐션 깎기로 보스급 적의 피해를 줄이며 안전하게 처리</li>
+        <li>사거리 증가 스킬 사용 시 사거리 비례 딜도 상승 → 원거리 유닛의 핵심 버프</li>
+        <li>스웨이(회피 이동)로 피해를 억제하면서 진형 유지</li>
+        <li>맵병기 기체 적극 활용 — 특히 이터널 로드에서 잡몹 소탕에 필수</li>
+        <li>ZOC(교전구역)는 엄격하지 않지만, 지원방어 라인만은 항상 적 배치를 확인</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>콘텐츠별 전투 팁</div>
+
+      <details>
+        <summary>스토리 스테이지</summary>
+        <div class="details-body">
+          <ul>
+            <li>에이스 1기 집중 육성 후 반격 딜링으로 진행하면 대부분 클리어 가능</li>
+            <li>경험치 분배를 위해 약한 유닛에게 마무리 공격을 넘겨주면 효율적 육성</li>
+            <li>보스 스테이지에서는 잡몹 정리 후 보스에게 전원 집중</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>이터널 로드</summary>
+        <div class="details-body">
+          <ul>
+            <li>출격 태그 제한을 미리 확인 — 태그가 맞지 않으면 출격 자체가 불가</li>
+            <li>초반 스테이지에서 텐션을 최고로 올려놓고 후반 보스전에 진입</li>
+            <li>맵병기로 잡몹 일소 → MP 관리하면서 보스에 집중</li>
+            <li>EX 난이도는 지원방어 라인 끊기 + 텐션 관리가 필수</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>마스터 리그 (PvP)</summary>
+        <div class="details-body">
+          <ul>
+            <li>선공권 확보를 위해 기동력 높은 유닛 우선 배치</li>
+            <li>상대 서포터 태그를 확인하고, 상대 편성의 약점 속성으로 카운터</li>
+            <li>지원방어 유닛을 먼저 제거하여 상대 에이스를 노출시키는 전략</li>
+            <li>시즌 보너스 태그를 적극 활용하면 동일 전투력에서도 유리</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>제네레이션 타워</summary>
+        <div class="details-body">
+          <ul>
+            <li>층별 제한 조건이 다르므로 폭넓은 시리즈 유닛 육성 필요</li>
+            <li>유닛 손실을 최소화하는 것이 핵심 — 무리한 공격보다 안전한 진행</li>
+            <li>보스층에서는 생존 위주 편성 + 꾸준한 딜링이 화력 집중보다 유리</li>
+            <li>각 층 클리어 보상을 확인하고 효율적인 공략 순서 결정</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>맵 이벤트</summary>
+        <div class="details-body">
+          <ul>
+            <li>기간 한정이므로 이벤트 기간 내 최대한 보상 수거</li>
+            <li>이벤트 특공 유닛이 있으면 보너스 → 해당 유닛 편성 우선</li>
+            <li>고난도 스테이지는 수동 조작으로 클리어 후, 쉬운 스테이지만 오토 반복</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>고급 전략</div>
+      <ul>
+        <li><strong>라인 끊기:</strong> 보스와 친위대 사이에 아군을 진입시켜 지원방어 연결을 차단. 보스를 고립시키면 화력 집중이 쉬워진다</li>
+        <li><strong>유인 전술:</strong> 내구형 유닛을 전방에 내보내 적을 유인한 뒤, 후방 사격 유닛으로 집중 사격</li>
+        <li><strong>맵병기 선제 사용:</strong> 맵병기는 방어력 감소 전에도 안정적으로 HP를 깎을 수 있어, 보스전 초반에 HP를 깎아놓는 용도로 효과적</li>
+        <li><strong>텐션 릴레이:</strong> 약한 적을 여러 유닛이 번갈아 격파하며 팀 전체의 텐션을 올린 뒤, 보스에게 최고 텐션 상태로 집중</li>
+        <li><strong>스웨이 진형:</strong> 적 공격을 스웨이로 피하면서 아군 진형을 유지하면, 다음 턴에 반격 + 지원공격 콤보를 넣을 수 있다</li>
+      </ul>
+    </div>
+  </section>
+
+
+  </main>
+</div>
+
+<div id="이터널로드" class="tab-panel">
+  <main class="content">
+
+  <div class="section-nav">
+    <a href="javascript:void(0)" onclick="jumpTo('er-overview')" class="nav-green">개요</a>
+    <a href="javascript:void(0)" onclick="jumpTo('er-normal')" class="nav-blue">노멀</a>
+    <a href="javascript:void(0)" onclick="jumpTo('er-hard')" class="nav-gold">하드</a>
+    <a href="javascript:void(0)" onclick="jumpTo('er-expert')" class="nav-red">익스퍼트</a>
+    <a href="javascript:void(0)" onclick="jumpTo('er-mistake')" class="nav-red">실패방지</a>
+    <a href="javascript:void(0)" onclick="jumpTo('er-comp')" class="nav-gold">범용편성</a>
+    <a href="javascript:void(0)" onclick="jumpTo('er-setup')" class="nav-blue">세팅</a>
+    <a href="javascript:void(0)" onclick="jumpTo('er-roadmap')" class="nav-gold">육성맵</a>
+  </div>
+
+  <!-- ===== 기본 개요 ===== -->
+  <section class="section" id="er-overview">
+    <div class="section-header">
+      <div class="section-icon green">&#9672;</div>
+      <div class="section-title">이터널 로드 개요</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot green"></span>콘텐츠 설명</div>
+      <ul>
+        <li>시리즈별 또는 태그별 제한이 걸리는 고난도 엔드 콘텐츠</li>
+        <li>난이도 3단계: <strong>노멀 &rarr; 하드 &rarr; 익스퍼트</strong></li>
+        <li>세이브/로드 불가 &mdash; 진입 전 철저한 계획 필수</li>
+        <li>1주년 업데이트 이후: 유닛/캐릭터 태그별 전용 로드 추가, 매일 새 태그 스테이지가 5일간 순차 오픈</li>
+        <li>스테이지마다 보스급 적에게 <strong>지원 방어 3회</strong> 친위대가 붙는 패턴이 자주 등장 &rarr; 보스 직접 공격보다 친위대 먼저 처치하거나 맵병기로 한꺼번에 정리</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>난이도별 보상</div>
+      <table class="tier-table">
+        <thead>
+          <tr><th>난이도</th><th>주요 보상</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>노멀</td><td>다이아, 유닛 강화 데이터, 기본 옵션 파츠</td></tr>
+          <tr><td>하드</td><td>다이아(증가), 무장 강화 파츠 SR~SSR, SP화 칩</td></tr>
+          <tr><td>익스퍼트</td><td>다이아(대량), 무장 강화 파츠 UR, SP화 칩, 얼티밋 유닛 개발 재료</td></tr>
+        </tbody>
+      </table>
+      <div class="highlight">
+        <strong>핵심:</strong> 익스퍼트 올클리어 시 획득하는 얼티밋 유닛 개발 재료는 최종 전력 강화의 핵심. 가능한 한 모든 익스퍼트를 노리자.
+      </div>
+    </div>
+
+    <div class="tip">
+      <strong>핵심 원칙</strong> &mdash; 맵병기 최대 활용 + 방어기체 동반. 강력 딜러 1~2기 집중 육성 + 나머지 내구 고기방패 구성도 유효. 버프 가더(공/방) 점거를 항상 우선시할 것.
+    </div>
+  </section>
+
+  <!-- ===== 노멀 ===== -->
+  <section class="section" id="er-normal">
+    <div class="section-header">
+      <div class="section-icon blue">N</div>
+      <div class="section-title">노멀 (1~5)</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot blue"></span>노멀 공략 요약</div>
+      <ul>
+        <li>1순위 육성 캐릭만 있으면 대부분 무난히 클리어 가능</li>
+        <li>기본 구성: <strong>딜러 1 + 디버프/방어캐 1 + 방어캐 3</strong></li>
+        <li>방캐릭은 죽어도 되는 저등급 캐릭으로 채워도 OK</li>
+        <li>오토 플레이로도 충분히 클리어 가능한 구간</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot blue"></span>스테이지별 간단 팁</div>
+      <ul>
+        <li><strong>노멀 1~3:</strong> 시리즈 제한 없이 자유 편성. 주력 UR 딜러 1기만 있으면 충분</li>
+        <li><strong>노멀 4:</strong> 시리즈 제한 시작. 해당 시리즈 SR 이상 기체 5기 확보 권장</li>
+        <li><strong>노멀 5:</strong> 적 HP 상승. 맵병기 보유 기체 배치 시 효율적 클리어</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <strong>추천 편성</strong> &mdash; 노멀은 시리즈 제한이 느슨하므로, 보유한 최강 UR/SSR 딜러를 중심으로 편성. 서포터는 공격력 버프 위주로 선택.
+    </div>
+  </section>
+
+  <!-- ===== 하드 ===== -->
+  <section class="section" id="er-hard">
+    <div class="section-header">
+      <div class="section-icon gold">H</div>
+      <div class="section-title">하드</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>하드 공략 요약</div>
+      <ul>
+        <li>시리즈별 캐릭터를 맞춰야 클리어 가능 &mdash; 폭넓은 시리즈 육성 필요</li>
+        <li><strong>SEED</strong>가 가장 쉬운 편 (기체풀 풍부, 강력 UR 다수)</li>
+        <li><strong>G건담/건담X</strong> 미션이 하드 중 가장 어려움 &rarr; 샤이닝 건담/건담X SP화 강력 추천</li>
+        <li>맵병기 기체 + 방어기체 동반 필수</li>
+        <li>보스의 지원 방어 3회 패턴이 본격적으로 등장 &rarr; 친위대 우선 처치 또는 맵병기 일소</li>
+      </ul>
+    </div>
+
+    <details>
+      <summary>하드 &mdash; 시리즈별 난이도 & 추천 유닛</summary>
+      <div class="details-body">
+        <table class="tier-table">
+          <thead>
+            <tr><th>시리즈</th><th>난이도</th><th>추천 핵심 유닛</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>SEED</td><td><span class="tier-badge tier-b">쉬움</span></td><td>프리덤, 저스티스, 스트라이크 프리덤, 데스티니</td></tr>
+            <tr><td>우주세기 (UC)</td><td><span class="tier-badge tier-a">보통</span></td><td>뉴건담, ZZ건담, 유니콘건담, Hi-v건담</td></tr>
+            <tr><td>00</td><td><span class="tier-badge tier-a">보통</span></td><td>더블오 라이저, 엑시아, 큐안타</td></tr>
+            <tr><td>W</td><td><span class="tier-badge tier-s">어려움</span></td><td>윙건담 제로 커스텀, 에피온</td></tr>
+            <tr><td>G건담</td><td><span class="tier-badge tier-ss">매우 어려움</span></td><td>갓건담, 샤이닝건담(SP화 권장)</td></tr>
+            <tr><td>건담X</td><td><span class="tier-badge tier-ss">매우 어려움</span></td><td>건담X(SP화 권장), DX건담</td></tr>
+          </tbody>
+        </table>
+        <div class="warn">
+          <strong>주의:</strong> G건담/건담X는 기체풀이 좁아 하드에서도 육성 부담이 큼. SP화/SSP화 투자를 미리 계획하자.
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>하드 &mdash; 신규 추가 스테이지 (1주년 이후)</summary>
+      <div class="details-body">
+        <ul>
+          <li>1주년 업데이트로 <strong>태그 제한 하드</strong> 스테이지 추가 (주인공 태그, 라이벌 태그 등)</li>
+          <li>시리즈 제한이 아닌 유닛/캐릭터 태그 제한 &rarr; 크로스 시리즈 편성 가능</li>
+          <li>태그 제한 하드의 경우 해당 태그 보유 기체를 최소 5기 이상 확보해야 안정 클리어</li>
+          <li>디시 마갤에 최저 스펙 공략이 올라와 있으니 참고</li>
+        </ul>
+      </div>
+    </details>
+
+    <div class="tip">
+      <strong>하드 실패 원인 Top 3:</strong> (1) 시리즈 기체 육성 부족, (2) 맵병기 미배치, (3) 보스 친위대(지원방어) 무시하고 보스만 공격
+    </div>
+  </section>
+
+  <!-- ===== 익스퍼트 ===== -->
+  <section class="section" id="er-expert">
+    <div class="section-header">
+      <div class="section-icon red">EX</div>
+      <div class="section-title">익스퍼트 (Expert)</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>익스퍼트 공통 특징</div>
+      <ul>
+        <li>보스 총 HP 약 <strong>110만</strong> 수준, 방어력도 대폭 강화</li>
+        <li>턴 제한 <strong>3턴</strong> &mdash; 턴당 고정 데미지가 매우 높아야 함</li>
+        <li>적 지원 방어 3회 + 고화력 반격 패턴 상시</li>
+        <li>SSP화 도입 이후 저등급 기체 전력이 상승하여 클리어 난도가 다소 완화</li>
+        <li>디시 마갤에 <strong>노중복/노SP/노UR파일럿</strong> 저스펙 공략 존재 &rarr; 참고 가치 높음</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <strong>실패 방지:</strong> 익스퍼트는 1번 실패하면 AP가 날아감. 반드시 가이드를 숙지하고 진입할 것. 진형 배치와 우선 처치 순서가 승패를 결정한다.
+    </div>
+
+    <!-- EX 1 -->
+    <details>
+      <summary>익스퍼트 1 &mdash; 우주세기 (U.C.) 시리즈</summary>
+      <div class="details-body">
+        <div class="highlight">
+          <strong>핵심 보스:</strong> 사이코 건담 + 퀸만사 &mdash; 사이코 건담 우선 처치
+        </div>
+        <ul>
+          <li><strong>국룰 전략:</strong> 1턴 진형 세팅 &rarr; 반격으로 버티기 &rarr; 2턴 집중 화력으로 사이코건담 격파</li>
+          <li>사이코건담은 <strong>사거리 5 공격 없음</strong> &rarr; 지원공격 진형(1팀 3번/5번 슬롯에 지원기 배치) + 스웨이로 1턴 처치 가능</li>
+          <li>사이코건담이 지원 방어를 하므로, 퀸만사보다 사이코건담을 먼저 처치하는 것이 효율적</li>
+          <li>사이코건담 격파 후 남은 턴에 퀸만사 집중 공격</li>
+        </ul>
+        <div class="tip">
+          <strong>추천 유닛:</strong> 뉴건담, Hi-v건담, ZZ건담, 유니콘건담. 맵병기 보유 기체로 잡몹 일소 후 보스 집중.
+        </div>
+      </div>
+    </details>
+
+    <!-- EX 2 -->
+    <details>
+      <summary>익스퍼트 2 &mdash; 얼터너티브 시리즈</summary>
+      <div class="details-body">
+        <div class="highlight">
+          <strong>핵심 보스:</strong> 알바토레 + 데빌건담 + 파투리아 &mdash; 알바토레 우선 처치
+        </div>
+        <ul>
+          <li>EX1보다 체감 난이도 낮은 편</li>
+          <li><strong>알바토레의 지원 공격이 극히 성가심</strong> &rarr; 반드시 1턴에 처치하여 아군 피해 최소화</li>
+          <li>알바토레 격파 후: 1부대 데빌건담, 2부대 파투리아 순서로 분담 처리</li>
+          <li>데빌건담은 HP 재생 능력 보유 &rarr; 한 턴에 집중 화력으로 격파 필요</li>
+        </ul>
+        <div class="tip">
+          <strong>추천 유닛:</strong> 더블오 라이저, 갓건담, 윙건담 제로(커스텀). 고화력 단일 타격 유닛 우선.
+        </div>
+      </div>
+    </details>
+
+    <!-- EX 3 -->
+    <details>
+      <summary>익스퍼트 3 &mdash; SEED 시리즈</summary>
+      <div class="details-body">
+        <div class="highlight">
+          <strong>핵심:</strong> SEED 기체풀이 풍부하여 익스퍼트 중 가장 접근성이 높음
+        </div>
+        <ul>
+          <li>스트라이크 프리덤, 데스티니, 인피니트 저스티스 등 고화력 UR 기체 다수 활용 가능</li>
+          <li>배포 기체 + 개발 기체만으로도 클리어 가능 (디시 마갤 무과금 공략 참고)</li>
+          <li>맵병기로 잡몹 정리 &rarr; 보스에 3인 지원공격 집중</li>
+          <li>SEED 시리즈 SP/SSP화 유닛이 많아 전력 확보 용이</li>
+        </ul>
+        <div class="tip">
+          <strong>추천 유닛:</strong> 스트라이크 프리덤, 데스티니, 인피니트 저스티스, 프리덤. 서포터는 라크스(공버프) 추천.
+        </div>
+      </div>
+    </details>
+
+    <!-- EX 4 -->
+    <details>
+      <summary>익스퍼트 4 &mdash; 주인공(Protagonist) 태그 한정</summary>
+      <div class="details-body">
+        <ul>
+          <li><strong>주인공 태그</strong> 보유 유닛만 출격 가능 &rarr; 크로스 시리즈 편성 가능하지만 유닛 선택지 제한</li>
+          <li>주인공 태그 보유 고화력 유닛: 아무로(뉴건담), 키라(스프리덤), 세츠나(더블오 라이저), 히이로(윙제로) 등</li>
+          <li>맵병기 보유 주인공기가 적으므로 잡몹 처리에 시간 소모 주의</li>
+          <li>지원공격 시너지가 좋은 주인공기 조합을 미리 테스트할 것</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- EX 5 -->
+    <details>
+      <summary>익스퍼트 5 &mdash; 라이벌(Rival) 태그 한정</summary>
+      <div class="details-body">
+        <ul>
+          <li><strong>라이벌 태그</strong> 보유 유닛만 출격 가능</li>
+          <li>라이벌 태그 유닛: 샤아(사자비), 크루제(프로비던스), 그라함(브레이브), 제크스(에피온) 등</li>
+          <li>라이벌 기체는 고화력/저내구가 많으므로 방어 유닛 편성이 특히 중요</li>
+          <li>사자비의 맵병기 활용이 핵심 &mdash; 잡몹 정리 후 보스 집중</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- EX 6 -->
+    <details>
+      <summary>익스퍼트 6 &mdash; 역습의 샤아 (Char's Counterattack)</summary>
+      <div class="details-body">
+        <ul>
+          <li>역습의 샤아 작품 기체만 사용 가능 &rarr; 기체풀 매우 제한적</li>
+          <li><strong>필수 유닛:</strong> 뉴건담, 사자비, Hi-v건담, 나이팅게일</li>
+          <li>기체 수가 적으므로 보유 기체의 SP화/SSP화 필수</li>
+          <li>뉴건담의 핀 판넬 맵병기가 잡몹 처리의 생명선</li>
+        </ul>
+        <div class="warn">
+          <strong>주의:</strong> 역샤 기체풀이 좁아 가장 준비가 오래 걸리는 익스퍼트 중 하나. 장기 육성 계획 필요.
+        </div>
+      </div>
+    </details>
+
+    <!-- EX 7 -->
+    <details>
+      <summary>익스퍼트 7 &mdash; 기동전사 건담 (1st Gundam)</summary>
+      <div class="details-body">
+        <ul>
+          <li>1st 건담 시리즈 기체만 사용 가능</li>
+          <li>핵심 유닛: 건담, 겔구그, 자쿠II, 짐 계열</li>
+          <li>저등급 기체가 많아 SSP화의 혜택을 가장 많이 받는 스테이지</li>
+          <li>건담의 빔 라이플 + 잡몹 정리 후 보스 집중 패턴</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- EX 8 -->
+    <details>
+      <summary>익스퍼트 8 &mdash; 기동전사 Z건담</summary>
+      <div class="details-body">
+        <ul>
+          <li>Z건담 시리즈 기체만 사용 가능</li>
+          <li>핵심 유닛: Z건담, 메타스, 백식, 디아스</li>
+          <li>Z건담의 변형(웨이브 라이더) 활용 맵병기가 효과적</li>
+          <li>백식을 방어/디버프 역할로 활용, Z건담 집중 딜링</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- EX 9 -->
+    <details>
+      <summary>익스퍼트 9 &mdash; 특수 유닛 한정</summary>
+      <div class="details-body">
+        <ul>
+          <li>특정 조건의 특수 유닛만 출격 가능 &rarr; 조건 확인 필수</li>
+          <li>개발 기체 + 배포 기체 위주로 편성해야 하는 경우 많음</li>
+          <li>SP 추천 유닛 공략이 커뮤니티에 다수 공유됨 (Vortex Gaming 참고)</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- EX 10-11 -->
+    <details>
+      <summary>익스퍼트 10~11 &mdash; 태그 복합 제한</summary>
+      <div class="details-body">
+        <ul>
+          <li>복수 태그 조건이 걸리는 고난도 스테이지</li>
+          <li>보스 HP가 익스퍼트 1~9 대비 추가 상승</li>
+          <li>공격/방어 버프 가더 점거가 이전보다 더 중요 &mdash; 메인 DPS는 반드시 공격 버프 영역에 배치</li>
+          <li>내구 유닛은 방어 버프 영역에 배치하여 생존력 극대화</li>
+          <li>NPC/지원기 생존이 클리어 전제 조건인 경우 있으므로 보호에 주의</li>
+        </ul>
+        <div class="tip">
+          <strong>전략:</strong> 고위협 타겟(맵병기 적, 고공격 엘리트)을 최우선 처치. 화력 분산 금지 &mdash; 한 적을 확실히 처치하고 다음으로 이동.
+        </div>
+      </div>
+    </details>
+
+    <!-- EX 12-15 -->
+    <details>
+      <summary>익스퍼트 12~15 &mdash; 최신 추가 스테이지 (1주년~)</summary>
+      <div class="details-body">
+        <ul>
+          <li>1주년 전후로 추가된 최고 난도 스테이지</li>
+          <li><strong>EX 13:</strong> 건담 유닛 생산 & 생존 조건 &mdash; 지정된 건담 기체를 개발/생산하면서 동시에 아군 전멸 방지 필요</li>
+          <li><strong>EX 15:</strong> 건설(Construction) 유닛 한정 + 무사망 조건 &mdash; 한 기도 격파당하지 않으면서 클리어 (최고 난도)</li>
+          <li>고정 데미지/턴당 요구 DPS가 극도로 높으므로, 풀돌 UR + SP/SSP화 유닛이 거의 필수</li>
+        </ul>
+        <div class="warn">
+          <strong>EX 15 주의:</strong> 무사망 조건은 방어 유닛의 내구가 반드시 적 최대 공격을 견뎌야 함. 방어 버프 가더 점거 + 서포터 방어 버프 중첩 필수.
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ===== 공통 실패 원인 ===== -->
+  <section class="section" id="er-mistake">
+    <div class="section-header">
+      <div class="section-icon red">!</div>
+      <div class="section-title">자주 하는 실수 & 실패 방지</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>실패 원인 Top 5</div>
+      <ol class="priority-list">
+        <li><strong>보스 친위대(지원방어) 무시</strong> &mdash; 보스에 직접 공격이 지원방어에 막혀 딜 손실. 친위대 우선 처치 또는 맵병기 활용</li>
+        <li><strong>버프 가더 미점거</strong> &mdash; 공격 버프 가더를 점거하지 않으면 보스 HP를 턴 내 깎지 못함</li>
+        <li><strong>화력 분산</strong> &mdash; 여러 적을 동시 공격하면 아무도 못 죽임. 한 적 집중 &rarr; 격파 &rarr; 다음 적</li>
+        <li><strong>시리즈/태그 기체 육성 부족</strong> &mdash; 하드/익스퍼트는 제한 조건 기체가 부족하면 입장 자체가 어려움</li>
+        <li><strong>방어 유닛 미배치</strong> &mdash; 딜러만 가득 넣으면 적의 집중 공격에 1턴에 궤멸. 최소 2기 이상 탱커/방어 유닛 필수</li>
+      </ol>
+    </div>
+
+    <div class="tip">
+      <strong>실전 팁:</strong> 첫 턴에 무리해서 보스를 공격하지 말고, 진형 세팅 + 가더 점거 + 반격 버티기로 시작. 2턴째부터 집중 화력 투입이 안정적.
+    </div>
+  </section>
+
+  <!-- ===== 추천 범용 편성 ===== -->
+  <section class="section" id="er-comp">
+    <div class="section-header">
+      <div class="section-icon gold">&#9733;</div>
+      <div class="section-title">범용 추천 편성 가이드</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>기본 템플릿</div>
+      <table class="tier-table">
+        <thead>
+          <tr><th>슬롯</th><th>역할</th><th>설명</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1번</td><td>메인 딜러</td><td>최고 화력 UR 기체, 공격 버프 가더 위에 배치</td></tr>
+          <tr><td>2번</td><td>서브 딜러/맵병기</td><td>맵병기로 잡몹 정리 + 보스 추가 딜</td></tr>
+          <tr><td>3번</td><td>지원 공격기</td><td>메인 딜러의 지원 공격 범위에 배치</td></tr>
+          <tr><td>4번</td><td>탱커/방어기</td><td>방어 버프 가더 위에 배치, 적 공격 흡수</td></tr>
+          <tr><td>5번</td><td>서포터/디버프</td><td>공격/방어 버프 또는 적 디버프 역할</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="highlight">
+      <strong>2부대 운용 시:</strong> 1부대가 메인 보스 처리, 2부대가 서브 보스/잡몹 처리로 역할 분담. 두 부대 모두 탱커 최소 1기 포함.
+    </div>
+  </section>
+
+  <!-- ===== 난이도별 세팅 가이드 ===== -->
+  <section class="section" id="er-setup">
+    <div class="section-header">
+      <div class="section-icon blue">◎</div>
+      <div class="section-title">난이도별 파일럿·기체 세팅 가이드</div>
+    </div>
+
+    <div class="tip">
+      <strong>편성 기본 원칙</strong> — 유닛 5기 + 파일럿 5명 + 서포터(함선) 1기. 공격형 2 + 지원형 2 + 방어형 1이 기본 진형. 파일럿은 유닛과 같은 역할(공격→공격)로 매칭해야 시너지 극대화.
+    </div>
+
+    <!-- 노멀 세팅 -->
+    <div class="card">
+      <div class="card-title"><span class="dot blue"></span>노멀 — SR 기체로 충분 (레벨 40~50)</div>
+
+      <details open>
+        <summary>노멀 — 시리즈별 추천 유닛+파일럿</summary>
+        <div class="details-body">
+          <table class="tier-table">
+            <thead><tr><th>시리즈</th><th>공격 유닛 → 파일럿</th><th>방어 유닛 → 파일럿</th><th>기타</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>1st건담</strong></td>
+                <td>SR 건담 → 아무로(SR)<br>SSR 지쿠악스 → 시마(배포)</td>
+                <td>SR 건탱크 → 하야토<br>SR 건캐논 → 카이</td>
+                <td>지쿠악스 올인이 정석</td>
+              </tr>
+              <tr>
+                <td><strong>Z건담</strong></td>
+                <td>SR 메타스 → 파(SR)<br>SSR 바이아란2호기 → 제리드</td>
+                <td>SR 릭디아스 → 아폴리(SR)<br>SR 네모 → 엠마(SR)</td>
+                <td>바이아란 보유 시 최우선</td>
+              </tr>
+              <tr>
+                <td><strong>SEED</strong></td>
+                <td>SR 프리덤 → 키라(SR)<br>SR 포비든 → 샤니(SR)</td>
+                <td>SR 버스터 → 디아카(SR)<br>SR 듀엘 → 이자크(SR)</td>
+                <td>프리덤 2~3대 다작 전략</td>
+              </tr>
+              <tr>
+                <td><strong>ZZ</strong></td>
+                <td>SR ZZ건담 → 쥬도(SR)<br>SR 제타 → 루(SR)</td>
+                <td>SSR 퀸만사 → 하만(SR)<br>SR 겔구그 계열 → 방어파일럿</td>
+                <td>ZZ 맵병기 활용</td>
+              </tr>
+              <tr>
+                <td><strong>W</strong></td>
+                <td>SR 윙건담 → 히이로(SR)<br>SR 에피온 → 제크스(SR)</td>
+                <td>SR 톨기스 → 노인(SR)</td>
+                <td>기체풀 부족 주의</td>
+              </tr>
+              <tr>
+                <td><strong>역샤</strong></td>
+                <td>SSR 뉴건담 → 아무로(SSR)<br>SSR 사자비 → 샤아(SSR)</td>
+                <td>SSR 하이뉴 → 아무로<br>SR 제간 → 방어파일럿</td>
+                <td>SSR 확보가 핵심</td>
+              </tr>
+              <tr>
+                <td><strong>00</strong></td>
+                <td>UR 엑시아 → 세츠나<br>SR 큐리오스 → 알렐루야(SR)</td>
+                <td>SR 티에렌 → 방어파일럿<br>SR GN-X → 방어파일럿</td>
+                <td>엑시아 있으면 압도</td>
+              </tr>
+              <tr>
+                <td><strong>G건담</strong></td>
+                <td>SR 샤이닝 → 도몬(SR)<br>SSR 갓건담 → 도몬(SSR)</td>
+                <td>SR 볼트건담 → 조르주(SR)</td>
+                <td>기체풀 극소. SP화 필수</td>
+              </tr>
+              <tr>
+                <td><strong>건담X</strong></td>
+                <td>SR 건담X → 가로드(SR)<br>SSR 건담DX → 가로드(SSR)</td>
+                <td>SR 에어마스터 → 위츠(SR)</td>
+                <td>기체풀 극소. SP화 필수</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- 하드 세팅 -->
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>하드 — SSR 2~3기 + SP화 SR 필수</div>
+      <p style="margin-bottom:12px;"><strong>최소 요구:</strong> 기체 레벨 60~80, SP화 SR 1기 이상, SSR 2~3기</p>
+      <table class="tier-table">
+        <thead><tr><th>시리즈</th><th>난이도</th><th>필수 유닛</th><th>핵심 전략</th></tr></thead>
+        <tbody>
+          <tr><td>1st 건담</td><td><span class="tier-badge tier-b">쉬움</span></td><td>자쿠 계열 방어기 + 건담 공격기</td><td>가장 접근성 높음</td></tr>
+          <tr><td>Z건담</td><td><span class="tier-badge tier-a">보통</span></td><td>백식 + 제타건담</td><td>ULT 제타3호기 P2 추천</td></tr>
+          <tr><td>SEED</td><td><span class="tier-badge tier-a">보통</span></td><td>SP 프리덤 + 미티어 맵병기</td><td>UR 없으면 SP SR로 대체</td></tr>
+          <tr><td>ZZ</td><td><span class="tier-badge tier-a">보통</span></td><td>풀아머 ZZ + 퀸만사(방어)</td><td>I-필드 활용</td></tr>
+          <tr><td>W</td><td><span class="tier-badge tier-s">어려움</span></td><td>에피온 + 윙제로</td><td>두 기체 조합으로 "날먹"</td></tr>
+          <tr><td>역샤</td><td><span class="tier-badge tier-s">어려움</span></td><td>하이뉴 + 사자비</td><td>최저스펙 공략 별도 존재</td></tr>
+          <tr><td>G건담</td><td><span class="tier-badge tier-ss">최고</span></td><td>샤이닝 SP화 필수</td><td>사용 가능 UR/SSR 극소</td></tr>
+          <tr><td>건담X</td><td><span class="tier-badge tier-ss">최고</span></td><td>건담X SP화 필수</td><td>사용 가능 UR/SSR 극소</td></tr>
+        </tbody>
+      </table>
+      <div class="warn">
+        <strong>하드 진행 순서 추천:</strong> 1st건담(쉬움) → Z건담 → SEED → ZZ → W → 역샤 → X/G건담(어려움)
+      </div>
+
+      <details>
+        <summary>하드 — 시리즈별 풀 편성 예시 (유닛+파일럿)</summary>
+        <div class="details-body">
+          <p style="margin-bottom:12px;"><strong>1st 건담 (하드)</strong> — 가장 쉬움</p>
+          <table class="tier-table">
+            <thead><tr><th>유닛</th><th>파일럿</th><th>역할</th></tr></thead>
+            <tbody>
+              <tr><td>SSR 지쿠악스(배포)</td><td>시마(배포)</td><td>메인 딜러</td></tr>
+              <tr><td>SSR G-3건담</td><td>아무로(SR/SSR)</td><td>서브 딜러</td></tr>
+              <tr><td>SR 건담(요나 탑승)</td><td>요나(SR)</td><td>탱커 1티어</td></tr>
+              <tr><td>SR 건탱크</td><td>하야토(SR)</td><td>방어</td></tr>
+              <tr><td>SR 건캐논</td><td>카이(SR)</td><td>원거리 지원</td></tr>
+            </tbody>
+          </table>
+
+          <p style="margin-top:20px;margin-bottom:12px;"><strong>Z건담 (하드)</strong></p>
+          <table class="tier-table">
+            <thead><tr><th>유닛</th><th>파일럿</th><th>역할</th></tr></thead>
+            <tbody>
+              <tr><td>SSR 바이아란 2호기(SP)</td><td>제리드(SSR)</td><td>메인 딜러+디버프</td></tr>
+              <tr><td>SSR 백식(SP)</td><td>샤아/크와트로(SSR)</td><td>서브 딜러</td></tr>
+              <tr><td>ULT 제타3호기 P2</td><td>카미유(SSR)</td><td>서브 딜러</td></tr>
+              <tr><td>SR 릭디아스</td><td>아폴리(SR)</td><td>탱커</td></tr>
+              <tr><td>SR 메타스</td><td>파(SR)</td><td>지원 (변형이동)</td></tr>
+            </tbody>
+          </table>
+
+          <p style="margin-top:20px;margin-bottom:12px;"><strong>SEED (하드)</strong> — 기체풀 가장 풍부</p>
+          <table class="tier-table">
+            <thead><tr><th>유닛</th><th>파일럿</th><th>역할</th></tr></thead>
+            <tbody>
+              <tr><td>SR 프리덤(SP)</td><td>키라 야마토(SR/SSR)</td><td>메인 딜러+맵병기</td></tr>
+              <tr><td>SSR 아마츠(SP)</td><td>론도 미나(SSR)</td><td>서브 딜러</td></tr>
+              <tr><td>SSR 저스티스</td><td>아스란(SSR)</td><td>서브 딜러</td></tr>
+              <tr><td>SR 포비든(SP)</td><td>샤니(SR)</td><td>방어 핵심</td></tr>
+              <tr><td>SR 버스터/듀엘</td><td>디아카/이자크(SR)</td><td>보조</td></tr>
+            </tbody>
+          </table>
+
+          <p style="margin-top:20px;margin-bottom:12px;"><strong>W (하드)</strong> — 에피온+윙제로 날먹</p>
+          <table class="tier-table">
+            <thead><tr><th>유닛</th><th>파일럿</th><th>역할</th></tr></thead>
+            <tbody>
+              <tr><td>SR 에피온(SP)</td><td>제크스(SR)</td><td>격투 딜러 (위력5400)</td></tr>
+              <tr><td>SR 윙건담(SP)</td><td>히이로(SR)</td><td>디버프+사격</td></tr>
+              <tr><td>SR 톨기스</td><td>노인(SR)</td><td>탱커</td></tr>
+              <tr><td>1주년 UR 윙제로(EW)</td><td>히이로(EW)</td><td>메인 딜러 (보유 시)</td></tr>
+              <tr><td>SR 건담데스사이즈</td><td>듀오(SR)</td><td>보조</td></tr>
+            </tbody>
+          </table>
+
+          <p style="margin-top:20px;margin-bottom:12px;"><strong>역샤 (하드)</strong></p>
+          <table class="tier-table">
+            <thead><tr><th>유닛</th><th>파일럿</th><th>역할</th></tr></thead>
+            <tbody>
+              <tr><td>SSR 뉴건담(SP)</td><td>아무로(SSR)</td><td>메인 딜러</td></tr>
+              <tr><td>SSR 하이뉴건담</td><td>아무로(대체)</td><td>방어 탱커</td></tr>
+              <tr><td>SSR 사자비</td><td>샤아(SSR)</td><td>서브 딜러</td></tr>
+              <tr><td>SR 제간</td><td>방어형 파일럿</td><td>방어</td></tr>
+              <tr><td>SR 리가즈</td><td>지원형 파일럿</td><td>지원</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- 익스퍼트 세팅 -->
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>익스퍼트 — 레벨 80~100 + SP화 다수 필수</div>
+      <p style="margin-bottom:12px;"><strong>최소 요구:</strong> 기체 레벨 80~100, SP화 기체 여러 기, 전투 메커니즘 숙지 필수</p>
+
+      <details>
+        <summary>EX1 우주세기 — 국룰 편성</summary>
+        <div class="details-body">
+          <table class="tier-table">
+            <thead><tr><th>슬롯</th><th>유닛</th><th>파일럿</th><th>역할</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>캬스발 전용 건담 / 풀아머 ZZ</td><td>샤아 / 쥬도</td><td>메인 딜러</td></tr>
+              <tr><td>2</td><td>건담시작 1호기 / 풀바니언</td><td>공격형 파일럿</td><td>서브 딜러</td></tr>
+              <tr><td>3</td><td>뉴건담 / Hi-v건담</td><td>아무로</td><td>지원공격</td></tr>
+              <tr><td>4</td><td>퀸만사 / 사이코건담</td><td>방어형 파일럿</td><td>I-필드 탱커</td></tr>
+              <tr><td>5</td><td>제타건담 / 바이아란</td><td>카미유 / 하만</td><td>디버프/지원</td></tr>
+            </tbody>
+          </table>
+          <p style="margin-top:8px;">전략: 사이코건담 우선 처치 → 1턴 진형세팅+반격 → 2턴 집중화력</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>EX2 비우주세기 — 알바토레 1턴킬</summary>
+        <div class="details-body">
+          <table class="tier-table">
+            <thead><tr><th>유닛</th><th>파일럿</th><th>역할</th></tr></thead>
+            <tbody>
+              <tr><td>엑시아 / 더블오라이저</td><td>세츠나</td><td>메인 딜러 (알바토레 1턴킬)</td></tr>
+              <tr><td>에피온 / 윙제로</td><td>히이로 / 제크스</td><td>서브 딜러</td></tr>
+              <tr><td>1.5건담 / 제미너스01</td><td>공격형</td><td>추가 화력</td></tr>
+              <tr><td>톨기스 / 방어기</td><td>방어형</td><td>탱커</td></tr>
+              <tr><td>갓건담 / 샤이닝</td><td>도몬</td><td>격투 딜러</td></tr>
+            </tbody>
+          </table>
+          <p style="margin-top:8px;">전략: 알바토레 지원공격이 극히 성가심 → 반드시 1턴에 처치. 이후 데빌건담→파투리아 순</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>EX3 SEED — 가장 접근성 높은 익스퍼트</summary>
+        <div class="details-body">
+          <table class="tier-table">
+            <thead><tr><th>유닛</th><th>파일럿</th><th>역할</th></tr></thead>
+            <tbody>
+              <tr><td>스트라이크 프리덤 / 프리덤(SP)</td><td>키라</td><td>메인 딜러</td></tr>
+              <tr><td>데스티니 / 인저</td><td>신 / 아스란</td><td>서브 딜러</td></tr>
+              <tr><td>미티어 유닛</td><td>-</td><td>맵병기 소탕</td></tr>
+              <tr><td>포비든(SP) / 버스터</td><td>방어형</td><td>탱커</td></tr>
+              <tr><td>저스티스 / 아마츠</td><td>지원형</td><td>디버프</td></tr>
+            </tbody>
+          </table>
+          <p style="margin-top:8px;">전략: 양 사이드 미티어 맵병기로 개막 → 배포/개발 기체만으로도 클리어 가능</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>EX4~6 태그 제한 / 역샤</summary>
+        <div class="details-body">
+          <ul>
+            <li><strong>EX4 주인공 태그:</strong> 아무로(뉴건담), 키라(스프리덤), 세츠나(더블오), 히이로(윙제로) 등 주인공기 집합</li>
+            <li><strong>EX5 라이벌 태그:</strong> 샤아(사자비), 크루제, 그라함, 제크스(에피온). 나이팅게일 활용 핵심</li>
+            <li><strong>EX6 역샤:</strong> 사자비+하이뉴 없이 5기로 클리어하는 저가성비 공략도 존재</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>EX7~11 후반 고난이도</summary>
+        <div class="details-body">
+          <ul>
+            <li><strong>EX7:</strong> 다중 증원 웨이브 + 맵 포병 위협 + 회복 코어 관리</li>
+            <li><strong>EX8:</strong> 아군 호위 + 다방면 전투</li>
+            <li><strong>EX9:</strong> 강력한 보스 조합 + 히든 스테이지</li>
+            <li><strong>EX10:</strong> 다방면 전투 + 회복 코어. 공/방 버프 가더 점거 필수</li>
+            <li><strong>EX11:</strong> 탈출전. 극한 기동력 + 찬스스텝 전술 필수</li>
+          </ul>
+          <p style="margin-top:8px;">각 스테이지별로 개발 기체 활용 / 중복 금지 / UR 파일럿 미사용 조건의 변형 공략이 디시 마갤에 존재</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ===== 육성 로드맵 ===== -->
+  <section class="section" id="er-roadmap">
+    <div class="section-header">
+      <div class="section-icon gold">▶</div>
+      <div class="section-title">이터널 로드 육성 로드맵</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>단계별 육성 시나리오</div>
+
+      <div class="flow-step">
+        <div class="flow-line"><div class="flow-dot" style="background:var(--accent-blue)"></div><div class="flow-connector"></div></div>
+        <div class="flow-content"><strong>1단계 — 노멀 진입 (스토리 진행 중)</strong>메인 스토리 클리어하며 배포 기체 수집 → SR 프리덤 제작(최우선) → SR ZZ건담 제작 → 각 시리즈 방어형 SR 1기 확보 → 레벨 40~50에서 노멀 1~4 도전</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-line"><div class="flow-dot" style="background:var(--accent-gold)"></div><div class="flow-connector"></div></div>
+        <div class="flow-content"><strong>2단계 — 하드 진입</strong>SR 프리덤 SP화(최우선 투자) → SSR 제타건담 개발 → ULT 제타3호기 P2 개발 → 부족한 시리즈 공격기 보충 → 레벨 60~80에서 하드 도전. 진행 순서: 1st→Z→SEED→ZZ→W→역샤→X/G</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-line"><div class="flow-dot" style="background:var(--accent-red)"></div><div class="flow-connector" style="background:transparent"></div></div>
+        <div class="flow-content"><strong>3단계 — 익스퍼트 진입</strong>주력 기체 레벨 80~100 → I-필드 방어기(퀸만사/사이코건담) 확보 → 맵병기 기체 최대한 확보 → 진행 순서: EX1(우주세기)→EX3(SEED)→EX2(비우주세기)→EX4~6→EX7+</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>SP화 투자 우선순위 (이터널 로드 기준)</div>
+      <ol class="priority-list">
+        <li><strong>SR 프리덤 건담</strong> — 범용성 최고. SEED+데스티니 양쪽 출전. 맵병기 보유. 무조건 1순위</li>
+        <li><strong>SR ZZ건담</strong> — 프리덤에 필적하는 화력. 우주세기 태그 범용</li>
+        <li><strong>SR 샤이닝 건담</strong> — G건담 하드/익스 필수. UR/SSR이 없는 시리즈</li>
+        <li><strong>SR 건담X</strong> — 건담X 하드/익스 필수. 역시 UR/SSR 부족 시리즈</li>
+        <li><strong>SSR 바이아란 2호기</strong> — 익스퍼트 우주세기 핵심 디버퍼</li>
+      </ol>
+    </div>
+
+    <div class="warn">
+      <strong>핵심 팁</strong><br>
+      · 위력 4500 이상 무장 보유 기체를 우선 육성<br>
+      · 지형 적성(우주/지상/공중) 반드시 확인 — 미스매치 시 능력치 대폭 하락<br>
+      · ULT 기체 개발에는 이터널 로드 클리어 보상이 필요 → 진행 자체가 전력 강화의 선순환<br>
+      · R등급 이하는 SP화 비추. 파일럿은 유닛 획득 시 함께 영입되므로 유닛 티어를 따라가면 됨
+    </div>
+  </section>
+
+
+  </main>
+</div>
+
+<div id="제네타워" class="tab-panel">
+  <main class="content">
+
+  <div class="section-nav">
+    <a href="javascript:void(0)" onclick="jumpTo('타워-overview')" class="nav-purple">개요</a>
+    <a href="javascript:void(0)" onclick="jumpTo('타워-strategy')" class="nav-green">공통전략</a>
+    <a href="javascript:void(0)" onclick="jumpTo('타워-1to9')" class="nav-blue">1-9층</a>
+    <a href="javascript:void(0)" onclick="jumpTo('타워-10to12')" class="nav-gold">10-12층</a>
+    <a href="javascript:void(0)" onclick="jumpTo('타워-13')" class="nav-red">13층</a>
+    <a href="javascript:void(0)" onclick="jumpTo('타워-14')" class="nav-gold">14층</a>
+    <a href="javascript:void(0)" onclick="jumpTo('타워-15')" class="nav-red">15층</a>
+    <a href="javascript:void(0)" onclick="jumpTo('타워-west')" class="nav-purple">웨스트</a>
+    <a href="javascript:void(0)" onclick="jumpTo('타워-tips')" class="nav-green">효율팁</a>
+  </div>
+
+  <!-- ===== 기본 정보 ===== -->
+  <section class="section" id="타워-overview">
+    <div class="section-header">
+      <div class="section-icon purple">&#9650;</div>
+      <div class="section-title">제네레이션 타워 개요</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot purple"></span>기본 정보</div>
+      <ul>
+        <li>기믹 활용 층 클리어 형식의 기간 한정 타워 배틀 이벤트</li>
+        <li>현재 <strong>이스트 타워</strong>(15층)와 <strong>웨스트 타워</strong>(15층) 두 종류 운영</li>
+        <li><strong>2부대 편성</strong>으로 각 층을 공략 &mdash; 부대 편성 제한 없음 (보유 기체 자유 투입)</li>
+        <li>14층에서 배포 UR 파일럿 획득 (이스트: <strong>라크스 클라인</strong>, 웨스트: <strong>티파 아딜</strong>) &rarr; 최소 14층 클리어 목표</li>
+        <li>1~9층 오토 OK, <strong>10층부터 기믹 이해 필수</strong></li>
+        <li><strong>1주년 편의성 패치:</strong> 과거 도달 층수 스킵 기능 추가</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>층별 보상 요약</div>
+      <table class="tier-table">
+        <thead>
+          <tr><th>층</th><th>주요 보상</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1~5층</td><td>다이아, 강화 데이터, 기본 파츠</td></tr>
+          <tr><td>6~9층</td><td>다이아(증가), SSR 파츠, SP칩</td></tr>
+          <tr><td>10~13층</td><td>다이아(대량), UR 파츠, SP칩, 고급 강화 소재</td></tr>
+          <tr><td>14층</td><td><strong>UR 배포 파일럿</strong> (라크스/티파 등)</td></tr>
+          <tr><td>15층</td><td>최고급 보상 &mdash; UR 무장 파츠, 한정 칭호, 대량 다이아</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <strong>효율 팁:</strong> 타워는 기간 한정이므로 오픈 즉시 도전 권장. 과거 타워의 스킵 기능이 추가되었으므로 재개방 시 이전 클리어 층까지 바로 진행 가능.
+    </div>
+  </section>
+
+  <!-- ===== 공통 전략 ===== -->
+  <section class="section" id="타워-strategy">
+    <div class="section-header">
+      <div class="section-icon green">&#9670;</div>
+      <div class="section-title">공통 전략 원칙</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot green"></span>타워 클리어 3대 원칙</div>
+      <ol class="priority-list">
+        <li><strong>버프 가더 점거가 최우선</strong> &mdash; 공격/방어 버프 영역이 승패를 좌우. 메인 DPS는 반드시 공격 버프 가더 위에, 탱커는 방어 버프 가더 위에 배치</li>
+        <li><strong>고위협 타겟 우선 처치</strong> &mdash; 맵병기 적, 고공격 엘리트를 먼저 제거. 화력 절대 분산 금지</li>
+        <li><strong>NPC/지원기 보호</strong> &mdash; 특정 층에서 NPC 또는 아군 지원기 생존이 클리어 조건. 보호 유닛 배치 필수</li>
+      </ol>
+    </div>
+
+    <div class="warn">
+      <strong>주의:</strong> 10층 이상에서는 기믹을 무시하고 힘으로 밀면 거의 100% 실패. 각 층의 기믹을 반드시 이해하고 진입할 것.
+    </div>
+  </section>
+
+  <!-- ===== 1~9층 ===== -->
+  <section class="section" id="타워-1to9">
+    <div class="section-header">
+      <div class="section-icon blue">1-9</div>
+      <div class="section-title">1~9층 &mdash; 입문 구간</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot blue"></span>1~9층 간략 가이드</div>
+      <ul>
+        <li>기믹 거의 없음, 오토 플레이로 충분히 클리어 가능</li>
+        <li>보유한 최강 유닛 5기씩 2부대 편성하면 무난</li>
+        <li>5층부터 적 HP 소폭 증가하지만 UR 딜러 1기면 처리 가능</li>
+        <li>9층: 가더 기믹이 처음 등장 &mdash; 10층 이후 연습이라 생각하고 가더 점거 연습 추천</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== 10~12층 ===== -->
+  <section class="section" id="타워-10to12">
+    <div class="section-header">
+      <div class="section-icon gold">10-12</div>
+      <div class="section-title">10~12층 &mdash; 가더 버프 활용</div>
+    </div>
+
+    <details>
+      <summary>10층 &mdash; 가더 기믹 본격화</summary>
+      <div class="details-body">
+        <div class="highlight">
+          <strong>기믹:</strong> 맵에 공격/방어 버프 가더 등장. 점거 시 해당 스탯 대폭 상승.
+        </div>
+        <ul>
+          <li><strong>1부대:</strong> 공격 버프 가더 점거 &rarr; 딜러 집중 배치</li>
+          <li><strong>2부대:</strong> 방어 버프 가더 점거 &rarr; 탱커 배치, 적 공격 흡수 역할</li>
+          <li>좌우 <strong>백식</strong>(엘리트 적)을 먼저 처치 &rarr; 한줄 배치로 보스의 범위 공격 회피</li>
+          <li>보스는 가더 버프 없이는 데미지가 부족하므로, 가더 점거 전에 보스를 공격하지 말 것</li>
+        </ul>
+        <div class="tip">
+          <strong>추천:</strong> 이동력이 높은 유닛을 1턴에 가더 위로 이동시키는 것이 핵심. 이동력 3 이상 유닛 편성 권장.
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>11층 &mdash; 집중 화력전</summary>
+      <div class="details-body">
+        <ul>
+          <li>가더 기믹은 10층과 유사하나 적 HP/공격력 상승</li>
+          <li>적 엘리트 2기가 맵병기 보유 &rarr; <strong>맵병기 적을 1턴 내 우선 처치</strong></li>
+          <li>맵병기 적 처치 후 보스에 집중</li>
+          <li>2부대로 양쪽 엘리트 동시 처리하는 분할 전략 유효</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>12층 &mdash; 복합 가더 + 턴 제한</summary>
+      <div class="details-body">
+        <ul>
+          <li>턴 제한이 추가됨 &mdash; 느긋하게 진행 불가</li>
+          <li>공격 버프 가더를 빠르게 점거하고 즉시 보스 공격 개시</li>
+          <li>보스의 지원 방어 유닛이 등장 &rarr; 맵병기로 보스 + 친위대 동시 타격 추천</li>
+          <li>DPS 부족 시 서포터의 공격 버프를 중첩하여 화력 보강</li>
+        </ul>
+        <div class="warn">
+          <strong>실패 원인:</strong> 턴 제한 내 보스를 처치하지 못하는 경우 대부분 가더 미점거 또는 화력 분산이 원인.
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ===== 13층 ===== -->
+  <section class="section" id="타워-13">
+    <div class="section-header">
+      <div class="section-icon red">13</div>
+      <div class="section-title">13층 &mdash; 거점 방어 (시간 제한)</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>13층 기믹 & 전략</div>
+      <div class="highlight">
+        <strong>기믹:</strong> 거점 방어 형식 + 턴 제한. 게스트 유닛(샤이닝 건담) 활용이 핵심.
+      </div>
+      <ul>
+        <li><strong>1부대 전략:</strong>
+          <ul>
+            <li>공격력 버프 가더 즉시 점거</li>
+            <li>게스트 <strong>샤이닝 건담</strong> 활용 &mdash; 찬스 스탭 5회 보유, 강력한 화력</li>
+            <li>단, 샤이닝 건담 방어력이 약함 &rarr; 반드시 탱커로 보호</li>
+            <li>샤이닝 건담을 공격 버프 가더 위에 배치 &rarr; 찬스 스탭으로 보스 집중 딜</li>
+          </ul>
+        </li>
+        <li><strong>2부대 전략:</strong>
+          <ul>
+            <li>첫 턴: <strong>데빌건담</strong> 우선 처치 (맵병기 + 지원공격 집중)</li>
+            <li>다음 턴: <strong>마스터건담</strong> 처리</li>
+            <li>2부대 DPS가 부족하면 데빌건담을 1턴에 못 잡아 실패 확률 급상승</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <strong>주의:</strong> 게스트 샤이닝 건담이 격파당하면 클리어 거의 불가. 탱커를 샤이닝 건담 옆에 반드시 배치하고, 적의 집중 공격을 대신 받도록 설정.
+    </div>
+  </section>
+
+  <!-- ===== 14층 ===== -->
+  <section class="section" id="타워-14">
+    <div class="section-header">
+      <div class="section-icon gold">14</div>
+      <div class="section-title">14층 &mdash; UR 파일럿 획득</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>14층 기믹 & 전략</div>
+      <div class="highlight">
+        <strong>보상:</strong> 이스트 타워 &rarr; UR 라크스 클라인, 웨스트 타워 &rarr; UR 티파 아딜
+      </div>
+      <ul>
+        <li><strong>이스트 14층:</strong> 이터널(기체) 먼저 처리가 핵심
+          <ul>
+            <li>이터널의 텐션을 깎으면 빠르게 무력화 가능</li>
+            <li>텐션 깎기 스킬 보유 유닛 편성 권장</li>
+            <li>이터널 격파 후 남은 적을 순차 처리</li>
+          </ul>
+        </li>
+        <li><strong>웨스트 14층:</strong> 프리덤 + 저스티스 2페이즈 전투
+          <ul>
+            <li>1페이즈: 프리덤/저스티스 등 SEED 기체 상대</li>
+            <li>2페이즈: 강화된 보스 등장 &mdash; 1페이즈에서 HP/텐션을 최대한 보존할 것</li>
+            <li>2부대를 2페이즈 전용으로 온존시키는 전략 유효</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <strong>최소 스펙:</strong> UR 딜러 2기 이상 + SP화 탱커 1기면 14층 클리어 가능. UR 파일럿은 즉시 전력이 되므로 반드시 획득하자.
+    </div>
+  </section>
+
+  <!-- ===== 15층 ===== -->
+  <section class="section" id="타워-15">
+    <div class="section-header">
+      <div class="section-icon red">15</div>
+      <div class="section-title">15층 &mdash; 최고 난도</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>15층 기믹 & 전략</div>
+      <div class="warn">
+        <strong>최고 난도:</strong> 복합 기믹 + 극한 턴 제한 + 보스 HP 극대화. 풀돌 UR 유닛 다수 필요.
+      </div>
+      <ul>
+        <li>보스 HP가 14층 대비 약 1.5~2배 &mdash; 턴당 요구 DPS 극도로 높음</li>
+        <li>복수 기믹 동시 적용: 가더 버프 + NPC 보호 + 턴 제한 + 특수 조건 등</li>
+        <li>2부대 모두 풀 파워 편성 필요 &mdash; 한쪽이라도 약하면 턴 내 클리어 불가</li>
+        <li>서포터 버프 중첩 + 지원공격 시너지 극대화가 핵심</li>
+        <li>실패 시 재도전 AP 소모 &rarr; 반드시 가이드 숙지 후 진입</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>15층 추천 편성 예시</div>
+      <table class="tier-table">
+        <thead>
+          <tr><th>부대</th><th>역할</th><th>추천 유닛 (예시)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1부대 딜러</td><td>메인 DPS</td><td>스트라이크 프리덤, 유니콘건담, 더블오 라이저</td></tr>
+          <tr><td>1부대 탱커</td><td>가더 방어</td><td>사자비, 풀아머 유니콘, 큐베레이</td></tr>
+          <tr><td>2부대 딜러</td><td>서브 DPS</td><td>데스티니, Hi-v건담, 갓건담</td></tr>
+          <tr><td>2부대 서포터</td><td>버프/디버프</td><td>라크스(공버프), 하만(디버프)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="highlight">
+      <strong>15층 클리어 = 최강 도달 증명.</strong> 보상도 최고급이지만 무리하지 말고, 14층 UR 파일럿 확보를 우선 목표로 잡자.
+    </div>
+  </section>
+
+  <!-- ===== 웨스트 타워 ===== -->
+  <section class="section" id="타워-west">
+    <div class="section-header">
+      <div class="section-icon purple">W</div>
+      <div class="section-title">웨스트 타워 추가 정보</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot purple"></span>웨스트 타워 특징</div>
+      <ul>
+        <li>이스트 타워와 별도의 타워로, 다른 기믹 구성 + 다른 UR 파일럿 보상</li>
+        <li>웨스트 타워 14층: <strong>UR 티파 아딜</strong> 획득</li>
+        <li>전체적으로 이스트 타워보다 기믹이 복잡한 편</li>
+        <li>특히 11층은 이동하지 않고 클리어하는 전략이 유효 (무과금 공략 존재)</li>
+      </ul>
+    </div>
+
+    <details>
+      <summary>웨스트 11층 &mdash; 이동 없이 클리어 전략</summary>
+      <div class="details-body">
+        <ul>
+          <li>유닛을 이동시키지 않고 초기 배치 위치에서 반격 + 지원공격으로 처리</li>
+          <li>초기 배치 위치가 가더 위에 있으므로 별도 이동 불필요</li>
+          <li>고내구 탱커 위주 편성 &rarr; 적이 공격해올 때 반격으로 피해 누적</li>
+          <li>저스펙 유저도 클리어 가능한 전략 (디시 마갤 공략 참고)</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>웨스트 12층 &mdash; 복합 기믹</summary>
+      <div class="details-body">
+        <ul>
+          <li>복수 가더 + 적 강화 기믹 동시 적용</li>
+          <li>2부대 분할 운용: 한쪽이 가더 점거, 다른 쪽이 적 엘리트 처치</li>
+          <li>맵병기 적이 2기 등장하므로 1턴 내 처치 우선</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>웨스트 14층 &mdash; 2페이즈 전투</summary>
+      <div class="details-body">
+        <ul>
+          <li>1페이즈에서 프리덤/저스티스 계열 적 상대</li>
+          <li>2페이즈에서 강화 보스 등장 &mdash; HP와 텐션을 1페이즈에서 보존해야 함</li>
+          <li>2부대를 2페이즈까지 온존시키는 전략이 핵심</li>
+          <li>텐션 관리가 중요 &mdash; 불필요한 스킬 사용 자제</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ===== 효율 클리어 팁 ===== -->
+  <section class="section" id="타워-tips">
+    <div class="section-header">
+      <div class="section-icon green">&#10003;</div>
+      <div class="section-title">효율적 클리어 팁</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot green"></span>시간 절약 & 효율 극대화</div>
+      <ul>
+        <li><strong>1~9층은 오토로 빠르게 돌파</strong> &mdash; 수동 조작 불필요</li>
+        <li><strong>스킵 기능 활용:</strong> 1주년 이후 과거 클리어 층까지 스킵 가능. 재개방 시 처음부터 다시 할 필요 없음</li>
+        <li><strong>2부대 편성 미리 준비:</strong> 타워 진입 전 2부대 편성을 미리 저장해두면 매 층마다 재편성 시간 절약</li>
+        <li><strong>10층 이상은 가이드 먼저 확인:</strong> 실패하면 AP 낭비. 디시 마갤/Vortex Gaming 가이드를 미리 읽고 진입</li>
+        <li><strong>기간 한정 주의:</strong> 타워는 상시 콘텐츠가 아니므로, 오픈 기간 내 최대한 높은 층까지 도달해야 보상 극대화</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <strong>최소 목표:</strong> 14층 클리어로 UR 파일럿 확보. 15층은 전력이 충분할 때 도전. 13층까지만 해도 다이아/파츠 보상이 풍성하므로 충분히 가치 있음.
+    </div>
+  </section>
+
+
+  </main>
+</div>
+
+<div id="맵이벤트" class="tab-panel">
+  <main class="content">
+
+  <div class="section-nav">
+    <a href="javascript:void(0)" onclick="jumpTo('맵-overview')" class="nav-red">개요</a>
+    <a href="javascript:void(0)" onclick="jumpTo('맵-mechanism')" class="nav-gold">메커니즘</a>
+    <a href="javascript:void(0)" onclick="jumpTo('맵-comp')" class="nav-blue">편성</a>
+    <a href="javascript:void(0)" onclick="jumpTo('맵-boss')" class="nav-red">보스전</a>
+    <a href="javascript:void(0)" onclick="jumpTo('맵-schedule')" class="nav-green">일정</a>
+    <a href="javascript:void(0)" onclick="jumpTo('맵-beginner')" class="nav-purple">초보자</a>
+  </div>
+
+  <!-- ===== 맵 이벤트 개요 ===== -->
+  <section class="section" id="맵-overview">
+    <div class="section-header">
+      <div class="section-icon red">◆</div>
+      <div class="section-title">맵 이벤트 (대규모 공략전) 개요</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>맵 이벤트란?</div>
+      <ul>
+        <li>맵 위에 배치된 다수의 스테이지를 순서대로 공략하며 진행하는 대규모 이벤트</li>
+        <li>각 스테이지마다 <strong>출격 태그 제한</strong>이 걸려 있어, 해당 태그를 가진 유닛만 출격 가능</li>
+        <li>태그는 <strong>작품 태그</strong>(예: Z건담, 건담W)와 <strong>특성 태그</strong>(예: 돌파력, 견고)의 두 종류가 있음</li>
+        <li>맵의 각 칸을 클리어하면 보상(다이아, 맵 메달, PP 등)을 획득</li>
+        <li>최종 보스 격파 후에는 <strong>스코어 어택</strong> 모드가 개방 -- 이터널 로드 익스트림급에 맞먹는 난이도</li>
+        <li>이벤트 기간 한정이므로 효율적인 진행이 중요</li>
+      </ul>
+    </div>
+
+    <div class="highlight">
+      <strong>맵 이벤트 보상 구조</strong><br>
+      · 각 칸 클리어 보상: 다이아, 맵 메달, PP, 강화 소재<br>
+      · 맵 메달: 이벤트 교환소에서 한정 아이템과 교환 가능<br>
+      · 누적 포인트 보상: 일정 포인트 달성 시 추가 다이아, 티켓 등<br>
+      · 최종 보스 클리어 보상: 대량의 다이아 + 한정 칭호<br>
+      · 스코어 어택 랭킹: 상위권 진입 시 추가 보상
+    </div>
+  </section>
+
+  <!-- ===== 핵심 메커니즘 ===== -->
+  <section class="section" id="맵-mechanism">
+    <div class="section-header">
+      <div class="section-icon gold">◎</div>
+      <div class="section-title">핵심 메커니즘 상세</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>태그 시스템과 출격 제한</div>
+      <ul>
+        <li><strong>작품 태그:</strong> 기동전사 Z건담, 신기동전기 건담W, 기동전사 건담SEED 등 시리즈별 태그</li>
+        <li><strong>특성 태그:</strong> 돌파력, 견고, 기동, 화력, 지원 등 유닛의 역할 태그</li>
+        <li>각 스테이지에서 요구하는 태그 조건을 만족하지 못하면 <strong>출격 자체가 불가</strong></li>
+        <li>일부 스테이지는 작품 태그 + 특성 태그를 동시에 요구 -- 조건이 까다로움</li>
+        <li>이벤트 부스트 기체(해당 이벤트 픽업 유닛)는 스탯 보너스 + 이벤트 포인트 추가 획득</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>버프 시스템</div>
+      <ul>
+        <li>맵 위의 특정 칸에서 <strong>버프 아이템</strong>을 획득할 수 있음</li>
+        <li>버프 종류: 공격력 UP, 방어력 UP, SP 게이지 가속 등</li>
+        <li>버프를 최대한 많이 모은 상태에서 보스에 도전하면 유리</li>
+        <li><strong>이중 버프:</strong> 작품 태그와 특성 태그 양쪽에 해당하는 유닛은 버프 효과가 중첩</li>
+        <li>루트 선택 시 버프 칸을 우선 경유하는 것이 효율적</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>맵 구조와 루트 선택</div>
+      <ul>
+        <li>맵은 여러 지역(Area)으로 나뉘며, 지역마다 요구 태그가 다름</li>
+        <li>일부 칸은 갈림길이 있어 루트 선택이 가능</li>
+        <li>쉬운 루트: 보스까지 빠르게 도달, 버프 적음</li>
+        <li>우회 루트: 시간은 더 걸리지만 버프와 보상을 더 많이 획득 가능</li>
+        <li>초보자는 먼저 <strong>쉬운 루트로 클리어</strong> 후, 여유 있을 때 우회 루트 도전 추천</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <strong>주의: 지역3 TR-5 스테이지</strong><br>
+      지역3의 9번 스테이지에 등장하는 TR-5(건담 TR-1 계열)는 초보자에게 최종 보스보다 어려울 수 있습니다. 이 스테이지는 가급적 우회하거나, 충분히 육성된 부대로 도전하세요.
+    </div>
+  </section>
+
+  <!-- ===== 편성 전략 ===== -->
+  <section class="section" id="맵-comp">
+    <div class="section-header">
+      <div class="section-icon blue">▣</div>
+      <div class="section-title">편성 전략과 사전 준비</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot blue"></span>사전 육성 필수 태그 (우선순위)</div>
+      <ol class="priority-list">
+        <li><strong>기동전사 Z건담</strong> -- 맵 이벤트에서 가장 자주 요구되는 작품 태그. Z건담, 백식, 큐베레이 등 확보 권장</li>
+        <li><strong>신기동전기 건담W</strong> -- W 시리즈 기체를 3~4기 이상 SP화해두면 안정적</li>
+        <li><strong>돌파력 + 견고</strong> -- 가장 범용적인 특성 태그 조합. 대부분의 맵에서 활용 가능</li>
+        <li><strong>기동전사 건담SEED</strong> -- SEED 시리즈도 빈번하게 등장. 프리덤, 저스티스 계열 육성</li>
+        <li><strong>화력 + 기동</strong> -- 스코어 어택 고득점을 위한 특성 태그 조합</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot blue"></span>부대 편성 팁</div>
+      <ul>
+        <li><strong>부대 저장 기능 필수 활용:</strong> 태그마다 다른 편성이 필요하므로, 주요 태그별로 부대를 미리 저장해두면 교체가 빠름</li>
+        <li>최소 <strong>3~4개 시리즈</strong>의 부대를 사전 저장 추천</li>
+        <li>이벤트 부스트 기체는 반드시 편성에 포함 -- 포인트 효율이 크게 차이남</li>
+        <li>서포터도 태그에 영향받으므로, 서포터 태그도 확인할 것</li>
+        <li>같은 시리즈 유닛끼리 편성하면 시리즈 보너스 발동 가능</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <strong>무과금/초보 유저를 위한 현실적 전략</strong><br>
+      · 모든 태그를 준비하려 하지 말고, <strong>Z건담 + 견고/돌파력</strong> 조합을 우선 완성<br>
+      · SR 유닛도 SP화하면 충분히 전력이 됨 -- UR만 고집하지 말 것<br>
+      · 이벤트 교환소에서 획득 가능한 유닛을 활용하면 기체풀을 넓힐 수 있음<br>
+      · 클리어가 어려운 스테이지는 스킵하고 보스 루트를 우선 확보<br>
+      · 친구/동맹의 지원 유닛을 적극 활용
+    </div>
+  </section>
+
+  <!-- ===== 최종 보스 공략 ===== -->
+  <section class="section" id="맵-boss">
+    <div class="section-header">
+      <div class="section-icon red">★</div>
+      <div class="section-title">보스전 공략</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>최종 보스 공략 가이드</div>
+      <ul>
+        <li>최종 보스는 이벤트마다 변경됨 -- 해당 이벤트의 테마 작품에서 등장</li>
+        <li>보스의 사용 태그를 확인하고 <strong>상성이 유리한 유닛</strong>으로 편성</li>
+        <li>버프를 최대한 모은 상태에서 도전하면 난이도가 크게 내려감</li>
+        <li>보스전에서는 <strong>SP 스킬 타이밍</strong>이 핵심 -- 보스 HP가 50% 이하일 때 집중 사용</li>
+        <li>이중 버프(작품+특성)를 받는 유닛이 있다면 그 유닛을 주력으로 운용</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>스코어 어택 고득점 전략</div>
+      <ul>
+        <li>보스 클리어 후 개방되는 <strong>스코어 어택</strong>은 이터널 로드 익스트림급 수준의 난이도</li>
+        <li>클리어 턴 수가 적을수록 높은 점수</li>
+        <li>오버킬(과잉 대미지)이 점수에 반영 -- 한 방에 큰 대미지를 주는 것이 유리</li>
+        <li>연계 공격(체인) 횟수도 점수에 영향</li>
+        <li>SSP화된 UR 유닛이 있다면 스코어 어택에서 압도적 유리</li>
+        <li>랭킹 보상은 상위 일정 비율까지 지급 -- 무리하게 경쟁하지 않아도 기본 보상은 확보 가능</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== 1주년 이후 이벤트 일정 ===== -->
+  <section class="section" id="맵-schedule">
+    <div class="section-header">
+      <div class="section-icon green">●</div>
+      <div class="section-title">이벤트 일정 (1주년 이후)</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot green"></span>4월 이벤트 캘린더</div>
+      <table class="tier-table">
+        <tr><th>날짜</th><th>이벤트</th><th>비고</th></tr>
+        <tr><td>4/1~</td><td>건담 00 후반 + W EW 메인 스테이지</td><td>신규 참전작 개방</td></tr>
+        <tr><td>4/1~</td><td>강적습격 -- 스콜피오</td><td>건담W 보스 이벤트</td></tr>
+        <tr><td>4/1~</td><td>1주년 가챠 (47연뽑 포함)</td><td>한정 UR 픽업</td></tr>
+        <tr><td>4/16~</td><td>대규모 공략전 (맵 이벤트)</td><td>새 동료 합류</td></tr>
+        <tr><td>4/16</td><td>프리미엄 유닛 조립 Ver.2</td><td>비한정 UR 확정 선택</td></tr>
+        <tr><td>4월</td><td>이터널 로드 신규 스테이지</td><td>태그 스테이지 추가</td></tr>
+        <tr><td>진행중</td><td>마스터 리그 시즌 10</td><td>3/25 개막</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot green"></span>5~6월 예정 이벤트</div>
+      <ul>
+        <li><strong>건담 NT</strong> 참전 관련 이벤트 (4~5월)</li>
+        <li><strong>선더볼트 BANDIT FLOWER / CROSS DIMENSION 0079 / SEED STARGAZER</strong> 스토리 이벤트 (5~6월)</li>
+        <li>히스토리 스테이지에 건담 외전 복각 예정</li>
+        <li>각 신규 참전작에 맞춘 픽업 가챠 및 강적습격이 순차적으로 진행될 가능성 높음</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <strong>이벤트 효율 극대화 팁</strong><br>
+      · 맵 이벤트는 AP(행동력)를 많이 소모하므로, AP 회복 아이템을 미리 비축해두세요<br>
+      · 이벤트 첫날에 몰아서 하기보다는, 보상 구간을 확인하고 <strong>목표 보상까지만 효율적으로</strong> 진행<br>
+      · 이벤트 부스트 기체가 없어도 클리어 자체는 가능 -- 부스트 기체는 포인트 효율에만 영향<br>
+      · 이벤트 교환소의 한정 아이템(SSP 소재, 한정 파일럿 등)을 우선적으로 교환
+    </div>
+  </section>
+
+  <!-- ===== 초보자 가이드 ===== -->
+  <section class="section" id="맵-beginner">
+    <div class="section-header">
+      <div class="section-icon purple">◈</div>
+      <div class="section-title">초보자 맵 이벤트 가이드</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot purple"></span>맵 이벤트 처음 참여하는 유저를 위한 안내</div>
+      <ul>
+        <li><strong>Q. 기체풀이 부족한데 참여해도 되나요?</strong><br>→ 가능한 데까지만 진행해도 보상은 받을 수 있습니다. 클리어한 칸의 보상은 모두 획득됩니다.</li>
+        <li><strong>Q. 출격 제한에 걸려서 진행이 안 됩니다</strong><br>→ 해당 태그의 SR 유닛이라도 있으면 편성하세요. SR도 SP화하면 충분한 전력이 됩니다. 이벤트 교환소에서 획득 가능한 유닛도 확인하세요.</li>
+        <li><strong>Q. 어떤 루트로 가야 하나요?</strong><br>→ 처음이라면 보스까지의 최단 루트를 먼저 확보하세요. 우회 루트의 추가 보상은 나중에 여유가 생겼을 때 회수하면 됩니다.</li>
+        <li><strong>Q. 스코어 어택은 해야 하나요?</strong><br>→ 고난이도 콘텐츠이므로 초보자는 무리하지 마세요. 기본 보스 클리어만으로도 핵심 보상은 확보 가능합니다.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot purple"></span>맵 이벤트 대비 체크리스트</div>
+      <ol class="priority-list">
+        <li>주요 시리즈(Z건담, W, SEED)의 유닛을 최소 3~4기씩 확보</li>
+        <li>확보한 유닛을 SR 이상으로 육성 + SP화</li>
+        <li>돌파력/견고 태그를 가진 유닛을 우선 육성</li>
+        <li>시리즈별 부대 편성을 저장 (부대 저장 기능)</li>
+        <li>AP 회복 아이템 비축 (이벤트 기간 중 효율적 사용)</li>
+        <li>이벤트 시작 전 공지사항에서 요구 태그 미리 확인</li>
+      </ol>
+    </div>
+
+    <div class="warn">
+      <strong>기체풀 부족 시 최소 전략</strong><br>
+      Z건담 유닛 + 견고/돌파력 태그 조합이 현실적으로 가장 범용성이 높습니다. 이 조합으로 대부분의 맵 이벤트 스테이지를 커버할 수 있으며, 부족한 부분은 친구 지원 유닛으로 보충하세요. 이벤트마다 무료로 획득 가능한 이벤트 유닛도 반드시 챙기세요.
+    </div>
+  </section>
+
+
+  </main>
+</div>
+
+<div id="참고" class="tab-panel">
+  <main class="content">
+
+  <div class="section-nav">
+    <a href="javascript:void(0)" onclick="jumpTo('참고-official')" class="nav-red">공식</a>
+    <a href="javascript:void(0)" onclick="jumpTo('참고-kr')" class="nav-blue">한국</a>
+    <a href="javascript:void(0)" onclick="jumpTo('참고-jp')" class="nav-gold">일본위키</a>
+    <a href="javascript:void(0)" onclick="jumpTo('참고-en')" class="nav-green">영어</a>
+    <a href="javascript:void(0)" onclick="jumpTo('참고-yt')" class="nav-red">유튜브</a>
+    <a href="javascript:void(0)" onclick="jumpTo('참고-db')" class="nav-purple">DB/티어</a>
+    <a href="javascript:void(0)" onclick="jumpTo('참고-sns')" class="nav-green">SNS</a>
+    <a href="javascript:void(0)" onclick="jumpTo('참고-tools')" class="nav-purple">도구</a>
+  </div>
+
+  <!-- ===== 공식 & 필수 ===== -->
+  <section class="section" id="참고-official">
+    <div class="section-header">
+      <div class="section-icon red">&#9733;</div>
+      <div class="section-title">공식 사이트 &amp; 필수 즐겨찾기</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>공식 &amp; 핵심 사이트</div>
+      <div class="link-grid">
+        <a class="link-card" href="https://gget.ggame.jp/kr/" target="_blank">
+          <div class="link-name">공식 사이트 (한국어)</div>
+          <div class="link-desc">반다이남코 공식 &middot; 업데이트 소식 &middot; 이벤트 공지</div>
+        </a>
+        <a class="link-card" href="https://gget.ggame.jp/en/" target="_blank">
+          <div class="link-name">공식 사이트 (영어)</div>
+          <div class="link-desc">영문 공식 &middot; 글로벌 업데이트 정보</div>
+        </a>
+        <a class="link-card" href="https://namu.wiki/w/SD%EA%B1%B4%EB%8B%B4%20%EC%A7%80%20%EC%A0%9C%EB%84%A4%EB%A0%88%EC%9D%B4%EC%85%98%20%EC%9D%B4%ED%84%B0%EB%84%90" target="_blank">
+          <div class="link-name">나무위키</div>
+          <div class="link-desc">한국어 종합 위키 &middot; 시스템/유닛/이벤트 총정리</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 한국 커뮤니티 ===== -->
+  <section class="section" id="참고-kr">
+    <div class="section-header">
+      <div class="section-icon blue">&#9672;</div>
+      <div class="section-title">한국어 커뮤니티 &amp; 공략</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot blue"></span>디시인사이드 마이너 갤러리 (가장 활발)</div>
+      <div class="link-grid">
+        <a class="link-card" href="https://gall.dcinside.com/mgallery/board/lists/?id=sdggeneeternal" target="_blank">
+          <div class="link-name">SD건담G제네이터널 마갤 (메인)</div>
+          <div class="link-desc">국내 최대 커뮤니티 &middot; 실시간 공략/토론/질문</div>
+        </a>
+        <a class="link-card" href="https://gall.dcinside.com/mgallery/board/view/?id=sdggeneeternal&no=65870" target="_blank">
+          <div class="link-name">기초 &amp; 초반 공략 모음</div>
+          <div class="link-desc">리세마라 &middot; 육성 &middot; 기초 팁 총정리 (2025.08 기준)</div>
+        </a>
+        <a class="link-card" href="https://gall.dcinside.com/mgallery/board/view/?id=sdggeneeternal&no=1282" target="_blank">
+          <div class="link-name">심화 &amp; 콘텐츠 공략 모음</div>
+          <div class="link-desc">이터널 로드 &middot; 맵 이벤트 &middot; 제네타워 공략 모음</div>
+        </a>
+        <a class="link-card" href="https://gall.dcinside.com/mgallery/board/view/?id=sdggeneeternal&no=66336" target="_blank">
+          <div class="link-name">[필독] 입문자 가이드</div>
+          <div class="link-desc">효율적 스토리 진행 &amp; 기체개발 가이드</div>
+        </a>
+        <a class="link-card" href="https://gall.dcinside.com/mgallery/board/view/?id=sdggeneeternal&no=46799" target="_blank">
+          <div class="link-name">시즌1 스토리 진행 공략</div>
+          <div class="link-desc">이터널 미션까지 육성 우선순위</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot blue"></span>기타 한국어 커뮤니티</div>
+      <div class="link-grid">
+        <a class="link-card" href="https://bbs.ruliweb.com/game/86858" target="_blank">
+          <div class="link-name">루리웹 게시판</div>
+          <div class="link-desc">한국어 커뮤니티 &middot; 리뷰/질문/토론</div>
+        </a>
+        <a class="link-card" href="https://kr.ldplayer.net/blog/sdgundam-g-generation-eternal-reroll-tier-guide.html" target="_blank">
+          <div class="link-name">LD플레이어 리세마라 &amp; 티어 가이드</div>
+          <div class="link-desc">리세마라 방법 &middot; 유닛 티어 등급표 (한국어)</div>
+        </a>
+        <a class="link-card" href="https://kr.ldplayer.net/blog/sd-gundam-g-generation-eternal-supporter-tier-list.html" target="_blank">
+          <div class="link-name">LD플레이어 서포터 티어표</div>
+          <div class="link-desc">서포터 유닛 평가 &middot; 추천 서포터 정리</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 일본 공략 위키 ===== -->
+  <section class="section" id="참고-jp">
+    <div class="section-header">
+      <div class="section-icon gold">&#9670;</div>
+      <div class="section-title">일본 공략 위키 (가장 정확 &amp; 빠른 업데이트)</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot gold"></span>일본 4대 공략 위키</div>
+      <div class="highlight">
+        <strong>참고:</strong> 일본 공략 위키가 가장 빠르고 정확한 데이터를 제공. 유닛 스탯, 티어, 이벤트 정보는 일본 위키 우선 확인 추천.
+      </div>
+      <div class="link-grid">
+        <a class="link-card" href="https://gamerch.com/ggene-et/" target="_blank">
+          <div class="link-name">Gamerch (게이마치)</div>
+          <div class="link-desc">타입별 분류 &middot; 파일럿/서포터 티어 가장 정확 &middot; 유닛 DB 최고</div>
+        </a>
+        <a class="link-card" href="https://altema.jp/ggeneeternal/" target="_blank">
+          <div class="link-name">Altema (알테마)</div>
+          <div class="link-desc">기체 지형별 정리 &middot; 리세마라 랭킹 &middot; 이벤트 공략</div>
+        </a>
+        <a class="link-card" href="https://game8.jp/ggeneeternal" target="_blank">
+          <div class="link-name">Game8 (게임에이트)</div>
+          <div class="link-desc">종합 공략 &middot; 이벤트 정보 &middot; 초보 가이드</div>
+        </a>
+        <a class="link-card" href="https://gamewith.jp/ggeneeternal/" target="_blank">
+          <div class="link-name">GameWith (게임위즈)</div>
+          <div class="link-desc">종합 공략 &middot; 최신 업데이트 가장 빠른 반영</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 영어 공략 & 글로벌 ===== -->
+  <section class="section" id="참고-en">
+    <div class="section-header">
+      <div class="section-icon green">&#9672;</div>
+      <div class="section-title">영어 공략 사이트</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot green"></span>영문 공략 &amp; 가이드</div>
+      <div class="link-grid">
+        <a class="link-card" href="https://www.ldshop.gg/blog/sd-gundam-gget/eternal-road-ex-1-3.html" target="_blank">
+          <div class="link-name">LDShop &mdash; 이터널 로드 EX 가이드</div>
+          <div class="link-desc">익스퍼트 1~11 스테이지별 상세 공략 (영문)</div>
+        </a>
+        <a class="link-card" href="https://www.ldshop.gg/blog/guide/gundam-g-tower-10f-15f-guide.html" target="_blank">
+          <div class="link-name">LDShop &mdash; 제네타워 10F~15F 가이드</div>
+          <div class="link-desc">이스트 타워 고층 기믹/전략 해설 (영문)</div>
+        </a>
+        <a class="link-card" href="https://vortexgaming.io/en/postdetail/582706" target="_blank">
+          <div class="link-name">Vortex Gaming &mdash; SP 추천 유닛 공략</div>
+          <div class="link-desc">이터널 로드 익스퍼트 SP유닛 올클리어 가이드</div>
+        </a>
+        <a class="link-card" href="https://vortexgaming.io/en/postdetail/589031" target="_blank">
+          <div class="link-name">Vortex Gaming &mdash; EX 15 무사망 가이드</div>
+          <div class="link-desc">건설 유닛 한정 무사망 클리어 공략</div>
+        </a>
+        <a class="link-card" href="https://gamewith.net/ggene-eternal/" target="_blank">
+          <div class="link-name">GameWith (영문판)</div>
+          <div class="link-desc">영문 종합 공략 &middot; 파밍 가이드 &middot; 전략 해설</div>
+        </a>
+        <a class="link-card" href="https://www.thegamer.com/sd-gundam-g-generation-eternal-beginner-tips-tricks-guide/" target="_blank">
+          <div class="link-name">TheGamer &mdash; 초보 팁 &amp; 트릭</div>
+          <div class="link-desc">영문 입문 가이드 &middot; 시스템 기초 설명</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 유튜브 채널 ===== -->
+  <section class="section" id="참고-yt">
+    <div class="section-header">
+      <div class="section-icon red">&#9654;</div>
+      <div class="section-title">유튜브 공략 채널</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot red"></span>추천 유튜브 채널</div>
+      <div class="highlight">
+        <strong>영상 공략의 장점:</strong> 진형 배치, 이동 순서, 스킬 타이밍을 직접 보고 따라할 수 있어 텍스트 가이드보다 이해가 빠름.
+      </div>
+      <div class="link-grid">
+        <a class="link-card" href="https://www.youtube.com/@SCat_1" target="_blank">
+          <div class="link-name">SCat_1</div>
+          <div class="link-desc">저스펙 공략 전문 &middot; 무과금/저육성 클리어 영상 다수 &middot; 요구 스펙이 낮아 실용적</div>
+        </a>
+        <a class="link-card" href="https://www.youtube.com/@marofullGames" target="_blank">
+          <div class="link-name">marofullGames</div>
+          <div class="link-desc">저스펙 공략 &middot; 이터널 로드/타워 등 엔드 콘텐츠 공략 영상</div>
+        </a>
+        <a class="link-card" href="https://www.youtube.com/@TheAirRyu" target="_blank">
+          <div class="link-name">TheAirRyu</div>
+          <div class="link-desc">캐릭터/기체 리뷰 &middot; 뽑기 가이드 &middot; 공략 (적당히 걸러서 참고)</div>
+        </a>
+        <a class="link-card" href="https://www.youtube.com/@arbell311" target="_blank">
+          <div class="link-name">arbell311</div>
+          <div class="link-desc">이터널 로드 익스퍼트 공략 영상 &middot; 단편 클리어 영상 위주</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="tip">
+      <strong>활용 팁:</strong> 유튜브에서 "G제네 이터널 이터널로드 익스퍼트" 또는 "ggeneeternal expert" 검색 시 최신 공략 영상을 빠르게 찾을 수 있음.
+    </div>
+  </section>
+
+  <!-- ===== 티어 & 데이터베이스 ===== -->
+  <section class="section" id="참고-db">
+    <div class="section-header">
+      <div class="section-icon purple">&#9851;</div>
+      <div class="section-title">유닛 DB &amp; 티어표</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot purple"></span>유닛 조회 &amp; 티어 분석</div>
+      <div class="link-grid">
+        <a class="link-card" href="https://gamerch.com/ggene-et/" target="_blank">
+          <div class="link-name">Gamerch 유닛 DB</div>
+          <div class="link-desc">유닛 스탯 &middot; 스킬 &middot; 개발 경로 조회 (일본어, 가장 상세)</div>
+        </a>
+        <a class="link-card" href="https://vortexgaming.io/postdetail/632128" target="_blank">
+          <div class="link-name">최신 티어 등급표 분석</div>
+          <div class="link-desc">캘리번, 데스티니 건담 포함 최신 티어 (2026.1 기준)</div>
+        </a>
+        <a class="link-card" href="https://altema.jp/ggeneeternal/" target="_blank">
+          <div class="link-name">Altema 리세마라 &amp; 티어</div>
+          <div class="link-desc">리세마라 랭킹 &middot; 유닛 개별 평가 &middot; 지형별 분류</div>
+        </a>
+        <a class="link-card" href="https://game8.jp/ggeneeternal" target="_blank">
+          <div class="link-name">Game8 유닛 평가</div>
+          <div class="link-desc">유닛별 상세 평가 &middot; 추천 편성 &middot; 개발 트리</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SNS & 커뮤니티 ===== -->
+  <section class="section" id="참고-sns">
+    <div class="section-header">
+      <div class="section-icon green">&#9672;</div>
+      <div class="section-title">SNS &amp; 글로벌 커뮤니티</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot green"></span>공식 SNS &amp; 커뮤니티</div>
+      <div class="link-grid">
+        <a class="link-card" href="https://x.com/ggene_eternalEN" target="_blank">
+          <div class="link-name">공식 X (영어)</div>
+          <div class="link-desc">영어 공식 계정 &middot; 이벤트/업데이트 속보</div>
+        </a>
+        <a class="link-card" href="https://x.com/ggene_eternal" target="_blank">
+          <div class="link-name">공식 X (일본어)</div>
+          <div class="link-desc">일본어 공식 계정 &middot; 가장 빠른 업데이트 소식</div>
+        </a>
+        <a class="link-card" href="https://www.facebook.com/groups/993133569537731/" target="_blank">
+          <div class="link-name">Facebook 글로벌 커뮤니티</div>
+          <div class="link-desc">영어권 유저 커뮤니티 &middot; 제네타워/이터널로드 질문 활발</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot green"></span>게임 뉴스 &amp; 업데이트 정보</div>
+      <div class="link-grid">
+        <a class="link-card" href="https://www.gameple.co.kr/news/articleView.html?idxno=213208" target="_blank">
+          <div class="link-name">게임플 &mdash; 이터널 로드 풀 공략</div>
+          <div class="link-desc">한국어 게임 뉴스 &middot; 이터널 로드 상세 공략</div>
+        </a>
+        <a class="link-card" href="https://www.gameple.co.kr/news/articleView.html?idxno=213735" target="_blank">
+          <div class="link-name">게임플 &mdash; 제네타워 UR 라크스 공략</div>
+          <div class="link-desc">제네레이션 타워 UR 라크스 획득 공략</div>
+        </a>
+        <a class="link-card" href="https://www.gamevu.co.kr/news/articleView.html?idxno=51942" target="_blank">
+          <div class="link-name">게임뷰 &mdash; 반주년 업데이트 로드맵</div>
+          <div class="link-desc">업데이트 로드맵 총정리</div>
+        </a>
+        <a class="link-card" href="https://www.gamevu.co.kr/news/articleView.html?idxno=54602" target="_blank">
+          <div class="link-name">게임뷰 &mdash; 1주년 작품 추가 정보</div>
+          <div class="link-desc">3월까지 8개 작품 추가 소식</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 에뮬레이터 ===== -->
+  <section class="section" id="참고-tools">
+    <div class="section-header">
+      <div class="section-icon purple">&#9881;</div>
+      <div class="section-title">도구 &amp; 에뮬레이터</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot purple"></span>PC 에뮬레이터 &amp; 도구</div>
+      <div class="link-grid">
+        <a class="link-card" href="https://kr.ldplayer.net/" target="_blank">
+          <div class="link-name">LD플레이어</div>
+          <div class="link-desc">PC 안드로이드 에뮬레이터 &middot; G제네 이터널 PC 플레이 가능</div>
+        </a>
+        <a class="link-card" href="https://www.mumuplayer.com/" target="_blank">
+          <div class="link-name">MuMu Player</div>
+          <div class="link-desc">PC 에뮬레이터 &middot; G제네 이터널 호환 확인됨</div>
+        </a>
+      </div>
+      <div class="tip">
+        <strong>팁:</strong> PC 에뮬레이터로 플레이하면 큰 화면에서 진형 배치가 쉽고, 멀티태스킹으로 가이드를 보면서 플레이 가능.
+      </div>
+    </div>
+  </section>
+
+
+  </main>
+</div>
+
+<footer class="footer">
+  디시 지제네 마갤 · Gameple · 나무위키 · 게임뷰 · 게임메카 · 일본 공략위키 등에서 수집·정리<br>
+  게임 업데이트에 따라 내용이 변경될 수 있음 · 2026년 3월 1주년 업데이트 기준
+</footer>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-selected', 'false');
+  });
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  event.target.setAttribute('aria-selected', 'true');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+function jumpTo(id) {
+  var el = document.getElementById(id);
+  if (el) {
+    var offset = el.getBoundingClientRect().top + window.pageYOffset - 100;
+    window.scrollTo({top: offset, behavior: 'smooth'});
+  }
+}
+window.addEventListener('scroll', function() {
+  var btn = document.querySelector('.scroll-top');
+  if (window.scrollY > 400) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+</script>
+<button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">&#9650;</button>
+</body>
+</html>
